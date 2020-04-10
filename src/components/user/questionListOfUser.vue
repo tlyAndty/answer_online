@@ -299,32 +299,6 @@
           console.log('错误信息：' + error)
         })*/
       },
-      orderById: function () {
-        this.$axios.get(
-          '127.0.0.1/online_answer/user/login'
-        ).then(response => {
-          const res = response.data
-          if (res.data) {
-            const data = res.data
-            this.qListData = data.qListData
-          }
-        }).catch(error => {
-          console.log('错误信息：' + error)
-        })
-      },
-      orderByTime: function () {
-        this.$axios.get(
-          '127.0.0.1/online_answer/user/login'
-        ).then(response => {
-          const res = response.data
-          if (res.data) {
-            const data = res.data
-            this.qListData = data.qListData
-          }
-        }).catch(error => {
-          console.log('错误信息：' + error)
-        })
-      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.limit = val

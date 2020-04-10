@@ -4,6 +4,7 @@ import main from '../components/main'
 import login from '../components/login'
 import loginSuccess from '../components/loginSuccess'
 import register from '../components/register'
+import question from "../components/question";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
 import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";
@@ -44,6 +45,11 @@ export default new Router({
       path: '/register',
       name:'register',
       component: register
+    },
+    {
+      path: '/question',
+      name:'question',
+      component: question
     },
     {
       path: '/userGuide',
