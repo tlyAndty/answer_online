@@ -1,6 +1,7 @@
 <template>
   <div class="hometext">
     欢迎进入探源问答
+    更新测试
     <div style="margin: 30px">
       <div class="time_order" style="float: left;width: 50%">
         <h1>最新内容</h1>
