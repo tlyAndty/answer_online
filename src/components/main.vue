@@ -1,10 +1,10 @@
 <template>
   <div class="hometext" style="margin-top: 20px">
-    <p>
-      <span style="font-size: 30px;">欢迎进入探源问答</span>
-    </p>
 
     <div class="main" style="float: left;width: 70%;">
+      <p>
+        <span style="font-size: 30px;">欢迎进入探源问答</span>
+      </p>
       <div style="padding-inline-start: 40px;">
         <a style="width:100%;display: block;position: relative;background-color: lightcoral; color: #fff;">最新内容</a>
       </div>
