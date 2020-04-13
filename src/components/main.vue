@@ -13,14 +13,15 @@
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                  <a  style="font-size: 30px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a>
+                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_title}}</router-link>
+                  <!--a  style="font-size: 30px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a-->
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <a  style="color: #8a8a8a;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_content}}</a>
+                <router-link style style="color: #8a8a8a;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_content}}</router-link>
               </div>
               <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
                 <div class="name" style="float: left">
-                  <a  style="color: #8a8a8a;text-decoration:none" href="'/userguide/'+item.ques_id">{{item.name}}</a>
+                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="'/userPage/'+item.ques_id">{{item.name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
                   <span>{{item.ques_time}}</span>
@@ -83,10 +84,10 @@
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <a  style="font-size: 20px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a>
+                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_title}}</router-link>
               </div>
-              <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 12px;line-height: 24px;">
-                <span>{{item.ques_content}}</span>
+              <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
+                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_content}}</router-link>
               </div>
             </div>
           </li>

@@ -3,8 +3,8 @@
     <header>
       <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     </header>
-
     <h2>{{list.ques_title}}</h2>
+
     <div class="cont" v-html="list.ques_content"></div>
   </div>
 
@@ -23,8 +23,7 @@
       },
       methods:{
         getData(id){
-          var api='http://www.phonegap100.com/appapi.php?a=getPortalArticle&aid='+id;
-          Axios.get(api).then((response)=>{
+          this.axios.get('127.0.0.1/online_answer/user/login'+id).then((response)=>{
             console.log(response);
             this.list=response.data.result[0];
             //console.log(response.data.result);
