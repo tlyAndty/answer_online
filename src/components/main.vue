@@ -1,25 +1,25 @@
 <template>
-  <div class="hometext">
-    欢迎进入探源问答
-    <div style="margin: 30px">
+  <div class="hometext" style="margin-top: 20px">
+    <span style="font-size: 30px;">欢迎进入探源问答</span>
+    <div style="margin: 20px">
       <div class="time_order" style="float: left;width: 50%">
         <h1>最新内容</h1>
-        <ul class="list" v-for="item in list" style="list-style: none;">
+        <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
-            <div class="list_con">
-              <div class="title">
-                <h2>
-                  <a href="'localhost:8088/question/'+item.ques_id">{{item.ques_title}}</a>
-                </h2>
-              </div>
-              <div class="time" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                {{item.ques_time}}
+            <div class="list_con" style="text-align: left">
+              <div class="title" style="">
+                  <a  style="font-size: 30px;color: #333333;text-decoration:none" href="'localhost:8088/question/'+item.ques_id">{{item.ques_title}}</a>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <span>{{item.ques_content}}</span>
+                {{item.ques_content}}
               </div>
-              <div class="list_userbar">
-                <dd class="name"></dd>
+              <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
+                <div class="name" style="float: left">
+                  {{item.name}}
+                </div>
+                <div class="time" style="float: right">
+                  <span>{{item.ques_time}}</span>
+                </div>
               </div>
             </div>
             <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
@@ -67,7 +67,7 @@
       </el-table-->
       </div>
 
-      <div class="good_order" style="float: right;width: 40%">
+      <!--div class="good_order" style="float: right;width: 40%">
         <h1>点赞最多</h1>
         <ul class="list" v-for="item in list" style="list-style: none;">
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
@@ -87,10 +87,10 @@
                 <dd class="name"></dd>
               </div>
             </div>
-            <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
+            <router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link>
           </li>
         </ul>
-        <!--el-table
+        <el-table
           class="questionList"
           :data="qListData"
           style="width: 100%">
@@ -127,8 +127,8 @@
             :show-overflow-tooltip="true">
           </el-table-column>
 
-        </el-table-->
-      </div>
+        </el-table>
+      </div-->
 
     </div>
   </div>
@@ -142,25 +142,35 @@
       return {
         list:[{
           ques_id: '1',
+          user_id: '1',
           ques_title: 'hhh',
+          name:'张三',
           ques_time: '2011',
+          ques_content:'奇葩说杨奇函每日一省',
           ques_ans_state: '1',
           ques_state: '2',
-        },
+          },
           {
             ques_id: '2',
+            user_id: '3',
             ques_title: 'yyy',
+            name:'李四',
             ques_time: '2016',
+            ques_content:'奇葩说杨奇函每日两省',
             ques_ans_state: '1',
             ques_state: '2',
           },
           {
             ques_id: '3',
+            user_id: '9',
             ques_title: 'ttt',
+            name:'王五',
             ques_time: '2014',
+            ques_content:'奇葩说杨奇函每日三省',
             ques_ans_state: '1',
             ques_state: '2',
-          }]
+          }
+          ],
       }
     },
     methods: {
@@ -188,4 +198,7 @@
   .hometext{
     text-align:center;
   }
+  /*.list_con,.summary_oneline,.list_userbar{
+    float: left;
+  }*/
 </style>
