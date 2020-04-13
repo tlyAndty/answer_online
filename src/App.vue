@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header class="header" height="60px" width="100%">
+    <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
       <span style="font-size: 30px; position:relative; top:5px ">探源问答</span>
       <span v-if="user" style="position:relative; left: 1050px; top:4px"> {{user.name}}
         <a id="logout_link" href="localhost:8080/logout" style="color: white;text-decoration:none">登出</a>

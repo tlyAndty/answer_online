@@ -29,12 +29,18 @@ export default new Router({
     {
       path: '/',
       name:'main',
-      component: main
+      component: main,
+      meta:{
+        keepAlive:true
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: login,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       path: '/loginSuccess',
@@ -44,53 +50,83 @@ export default new Router({
     {
       path: '/register',
       name:'register',
-      component: register
+      component: register,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       path: '/question',
       name:'question',
-      component: question
+      component: question,
+      meta:{
+        keepAlive:true
+      }
     },
     {
       path: '/userGuide',
       name:'userGuide',
       component: userGuide,
+      meta:{
+        keepAlive:true
+      },
       //redirect:'/main',
       children:[
         {
           path:'/questionListOfUser',
           name:'questionListOfUser',
-          component:questionListOfUser
+          component:questionListOfUser,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/blockedQuestionListOfUser',
           name:'blockedQuestionListOfUser',
-          component:blockedQuestionListOfUser
+          component:blockedQuestionListOfUser,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/answerList',
           name:'answerList',
-          component:answerList
+          component:answerList,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/blockedAnswerList',
           name:'blockedAnswerList',
-          component:blockedAnswerList
+          component:blockedAnswerList,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/commentList',
           name:'commentList',
-          component:commentList
+          component:commentList,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/blockedCommentList',
           name:'blockedCommentList',
-          component:blockedCommentList
+          component:blockedCommentList,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/personalInformationOfUser',
           name:'personalInformationOfUser',
-          component:personalInformationOfUser
+          component:personalInformationOfUser,
+          meta:{
+            keepAlive:true
+          },
         }
       ]
     },
@@ -98,36 +134,57 @@ export default new Router({
       path: '/adminGuide',
       name: 'adminGuide',
       component: adminGuide,
+      meta:{
+        keepAlive:true
+      },
       children:[
         {
           path:'/questionListOfAdmin',
           name:'questionListOfAdmin',
-          component:questionListOfAdmin
+          component:questionListOfAdmin,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/blockedQuestionListOfAdmin',
           name:'blockedQuestionListOfAdmin',
-          component:blockedQuestionListOfAdmin
+          component:blockedQuestionListOfAdmin,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/userList',
           name:'userList',
-          component:userList
+          component:userList,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/blacklistedUserList',
           name:'blacklistedUserList',
-          component:blacklistedUserList
+          component:blacklistedUserList,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/registrationAudit',
           name:'registrationAudit',
-          component:registrationAudit
+          component:registrationAudit,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/personalInformationOfAdmin',
           name:'personalInformationOfAdmin',
-          component:personalInformationOfAdmin
+          component:personalInformationOfAdmin,
+          meta:{
+            keepAlive:true
+          },
         },
       ]
     }

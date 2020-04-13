@@ -4,7 +4,6 @@
       <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     </header>
     <h2>{{list.ques_title}}</h2>
-
     <div class="cont" v-html="list.ques_content"></div>
   </div>
 
@@ -13,9 +12,10 @@
 <script>
     export default {
       name: "question",
-      data(){
-        return{
-          list:[]
+      data() {
+        return {
+          list: [
+          ],
         }
       },
       created() {
@@ -23,7 +23,7 @@
       },
       methods:{
         getData(id){
-          this.axios.get('127.0.0.1/online_answer/user/login'+id).then((response)=>{
+          this.axios.get('127.0.0.1/online_answer/user/login&ques_id='+id).then((response)=>{
             console.log(response);
             this.list=response.data.result[0];
             //console.log(response.data.result);
@@ -32,7 +32,7 @@
           });
         }
       },
-      mounted(){
+      created(){
         this.getData(this.$route.params.id);
       }
     }
