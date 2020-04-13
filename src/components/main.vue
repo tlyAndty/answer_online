@@ -1,12 +1,28 @@
 <template>
   <div class="hometext">
-    <h1>主页面</h1>
     欢迎进入探源问答
     <div style="margin: 30px">
       <div class="time_order" style="float: left;width: 50%">
+        <h1>最新内容</h1>
         <ul class="list" v-for="item in list" style="list-style: none;">
-          <li >
-            <router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link>
+          <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
+            <div class="list_con">
+              <div class="title">
+                <h2>
+                  <a href="'localhost:8088/question/'+item.ques_id">{{item.ques_title}}</a>
+                </h2>
+              </div>
+              <div class="time" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
+                {{item.ques_time}}
+              </div>
+              <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
+                <span>{{item.ques_content}}</span>
+              </div>
+              <div class="list_userbar">
+                <dd class="name"></dd>
+              </div>
+            </div>
+            <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
           </li>
         </ul>
         <!--el-table
@@ -52,22 +68,26 @@
       </div>
 
       <div class="good_order" style="float: right;width: 40%">
+        <h1>点赞最多</h1>
         <ul class="list" v-for="item in list" style="list-style: none;">
-          <li>
+          <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con">
               <div class="title">
                 <h2>
                   <a href="'localhost:8088/question/'+item.ques_id">{{item.ques_title}}</a>
                 </h2>
               </div>
+              <div class="time">
+                {{item.ques_time}}
+              </div>
               <div class="summary_oneline">
-                {{item.ques_content}}
+                <span>{{item.ques_content}}</span>
               </div>
               <div class="list_userbar">
                 <dd class="name"></dd>
               </div>
             </div>
-            <router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link>
+            <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
           </li>
         </ul>
         <!--el-table
