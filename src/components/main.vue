@@ -1,21 +1,26 @@
 <template>
   <div class="hometext" style="margin-top: 20px">
-    <span style="font-size: 30px;">欢迎进入探源问答</span>
-    <div style="margin: 20px">
-      <div class="time_order" style="float: left;width: 50%">
-        <h1>最新内容</h1>
+    <p>
+      <span style="font-size: 30px;">欢迎进入探源问答</span>
+    </p>
+
+    <div class="main" style="float: left;width: 70%;">
+      <div style="padding-inline-start: 40px;">
+        <a style="width:100%;display: block;position: relative;background-color: lightcoral; color: #fff;">最新内容</a>
+      </div>
+      <div class="time_order">
         <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
-              <div class="title" style="">
-                  <a  style="font-size: 30px;color: #333333;text-decoration:none" href="'localhost:8088/question/'+item.ques_id">{{item.ques_title}}</a>
+              <div class="title">
+                  <a  style="font-size: 30px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                {{item.ques_content}}
+                <a  style="color: #8a8a8a;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_content}}</a>
               </div>
               <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
                 <div class="name" style="float: left">
-                  {{item.name}}
+                  <a  style="color: #8a8a8a;text-decoration:none" href="'/userguide/'+item.ques_id">{{item.name}}</a>
                 </div>
                 <div class="time" style="float: right">
                   <span>{{item.ques_time}}</span>
@@ -67,30 +72,26 @@
       </el-table-->
       </div>
 
-      <!--div class="good_order" style="float: right;width: 40%">
-        <h1>点赞最多</h1>
-        <ul class="list" v-for="item in list" style="list-style: none;">
+    </div>
+    <div class="aside" style="float: right;width: 30%">
+      <div class="good_order" style="">
+        <h3>
+          <span class="line"></span>
+          <span class="txt">最热推荐</span>
+        </h3>
+        <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
-            <div class="list_con">
+            <div class="list_con" style="text-align: left">
               <div class="title">
-                <h2>
-                  <a href="'localhost:8088/question/'+item.ques_id">{{item.ques_title}}</a>
-                </h2>
+                <a  style="font-size: 20px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a>
               </div>
-              <div class="time">
-                {{item.ques_time}}
-              </div>
-              <div class="summary_oneline">
+              <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 12px;line-height: 24px;">
                 <span>{{item.ques_content}}</span>
               </div>
-              <div class="list_userbar">
-                <dd class="name"></dd>
-              </div>
             </div>
-            <router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link>
           </li>
         </ul>
-        <el-table
+        <!--el-table
           class="questionList"
           :data="qListData"
           style="width: 100%">
@@ -127,9 +128,8 @@
             :show-overflow-tooltip="true">
           </el-table-column>
 
-        </el-table>
-      </div-->
-
+        </el-table-->
+      </div>
     </div>
   </div>
 </template>
