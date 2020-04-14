@@ -3,7 +3,7 @@
     <header>
       <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     </header>
-    <h1>hh</h1>
+    <h1>hhh</h1>
     <h2>{{list.ques_title}}</h2>
     <div class="cont" v-html="list.ques_content"></div>
   </div>
