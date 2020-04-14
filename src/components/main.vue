@@ -13,15 +13,15 @@
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_title}}</router-link>
+                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
                   <!--a  style="font-size: 30px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a-->
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <router-link style style="color: #8a8a8a;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_content}}</router-link>
+                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
               </div>
               <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
                 <div class="name" style="float: left">
-                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="'/userPage/'+item.ques_id">{{item.name}}</router-link>
+                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{u_id:item.user_id}}">{{item.name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
                   <span>{{item.ques_time}}</span>
@@ -31,49 +31,9 @@
             <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
           </li>
         </ul>
-        <!--el-table
-        class="questionList"
-        :data="qListData"
-        style="width: 100%"
-        :default-sort = "{prop: 'ques_time', order: 'descending'}">
-
-        <el-table-column
-         prop="ques_id"
-         label="问题id"
-         header-align="left"
-         align="left"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="ques_title"
-          label="问题标题"
-          header-align="left"
-          align="left"
-          :show-overflow-tooltip="true"
-         >
-        </el-table-column>
-
-        <el-table-column
-          prop="ques_time"
-          label="发布的最新时间"
-          header-align="left"
-          align="left"
-          :show-overflow-tooltip="true">
-        </el-table-column>
-
-
-        <el-table-column
-          prop="ques_ans_state"
-          label="问题解决状态"
-          header-align="left"
-          align="left"
-          :show-overflow-tooltip="true">
-        </el-table-column>
-
-      </el-table-->
       </div>
-
     </div>
+
     <div class="aside" style="float: right;width: 30%">
       <div class="good_order" style="">
         <h3>
@@ -84,52 +44,14 @@
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_title}}</router-link>
+                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
-                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="'/question/'+item.ques_id">{{item.ques_content}}</router-link>
+                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
               </div>
             </div>
           </li>
         </ul>
-        <!--el-table
-          class="questionList"
-          :data="qListData"
-          style="width: 100%">
-          <el-table-column
-           prop="ques_id"
-            label="问题id"
-            header-align="left"
-            align="left"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="ques_title"
-            label="问题标题"
-            header-align="left"
-            align="left"
-            :show-overflow-tooltip="true"
-          >
-          </el-table-column>
-
-          <el-table-column
-            prop="ques_time"
-            label="发布的最新时间"
-            header-align="left"
-            align="left"
-            :show-overflow-tooltip="true">
-          </el-table-column>
-
-
-          <el-table-column
-            prop="ques_ans_state"
-            label="问题解决状态"
-            header-align="left"
-            align="left"
-            :show-overflow-tooltip="true">
-          </el-table-column>
-
-        </el-table-->
       </div>
     </div>
   </div>
@@ -176,14 +98,14 @@
     },
     methods: {
       getData() {
-        this.$axios.get('127.0.0.1/online_answer/user/login'
+        this.$axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo'
         ).then((response) => {
           this.list = response.data.result;
           //console.log(response.data.result);
         }).catch((error) => {
           console.log(error);
         });
-      }
+      },
     },
    created(){
       this.getData();

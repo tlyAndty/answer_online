@@ -5,6 +5,7 @@ import login from '../components/login'
 import loginSuccess from '../components/loginSuccess'
 import register from '../components/register'
 import question from "../components/question";
+import userPage from "../components/userPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
 import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";
@@ -32,7 +33,7 @@ export default new Router({
       component: main,
       meta:{
         keepAlive:true
-      }
+      },
     },
     {
       path: '/login',
@@ -61,7 +62,27 @@ export default new Router({
       component: question,
       meta:{
         keepAlive:true
-      }
+      },
+      children: [
+        {
+          path: ':q_id',
+          component: question,
+        }
+      ]
+    },
+    {
+      path: '/userPage',
+      name:'userPage',
+      component: userPage,
+      meta:{
+        keepAlive:true
+      },
+      children: [
+        {
+          path: ':u_id',
+          component: userPage,
+        }
+      ]
     },
     {
       path: '/userGuide',
