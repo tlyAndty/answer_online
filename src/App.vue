@@ -3,13 +3,13 @@
     <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
       <span style="font-size: 30px; position:relative; top:5px ">探源问答</span>
       <span v-if="user" style="position:relative; left: 1050px; top:4px"> {{user.name}}
-        <a id="logout_link" href="localhost:8080/logout" style="color: white;text-decoration:none">登出</a>
+        <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
         <!--el-button  @click="logout">注销</el-button-->
       </span>
       <span v-else style="position:relative; left: 80%; top:4px" >
-        <a id="login_link" href="localhost:8080/login" style="color: white;text-decoration:none">登录</a>
+        <a id="login_link" href="/login" style="color: white;text-decoration:none">登录</a>
         /
-        <a id="register_link" href="localhost:8080/register" style="color: white;text-decoration:none">注册</a>
+        <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
         <!--el-button  @click="login" >登录</-el-button> /<el-button  @click="register" >注册</el-button-->
       </span>
 
