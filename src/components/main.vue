@@ -14,7 +14,6 @@
             <div class="list_con" style="text-align: left">
               <div class="title">
                 <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
-                  <!--a  style="font-size: 30px;color: #333333;text-decoration:none" href="'/question/'+item.ques_id">{{item.ques_title}}</a-->
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
                 <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
