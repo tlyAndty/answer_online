@@ -1,41 +1,44 @@
 <template>
-  <div class="questionInfo">
+  <div class="questionInfo" style="background: white;padding: 0px">
     <router-link to="/" class="gobackLink"><< 返回列表</router-link>
-    <div class="main clearfix">
-      <div class="q_info" v-for="q in list" style="float: left;width: 70%;margin: 20px 20px; ">
-          <div class="common_con clearfix" style="margin-top: 1px;border: 2px solid #fbfdf8;">
-            <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.ques_title}}</div>
-            <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.ques_content}}</div>
-            <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.ques_time}}</div>
-            <div class="tags" style="width:850px">
-              <a href="question">vue.js</a>
-              <a href="question">ajax</a>
-              <a href="question">mysql</a>
-            </div>
-            <div class="share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin: 10px 20px 10px 0;background: none;height: 30px;">
-              <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
-              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-              <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
-              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-              <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" onclick="window.csdn.loginBox.show()" href="javascript:;" rel="nofollow" title="收藏">
-                收藏
-              </a>
-              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-              <a class="collection" style="text-decoration:none;color: #999;" href="javascript:;">浏览342</a>
-              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-              <i class="el-icon-thumb"></i>
-              <em>0</em>
+    <div class="main clearfix" style="margin: 0px;">
+      <div style="margin-bottom: 10px;"></div>
+      <div class="q_info" v-for="q in list" style="width: 892px;float: left;margin-bottom: 0px;margin-right: 8px;" >
+          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;border: 1px solid #fbfdf8;">
+            <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
+              <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.ques_title}}</div>
+              <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.ques_content}}</div>
+              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.ques_time}}</div>
+              <div class="tags" style="width:850px">
+                <a href="question">vue.js</a>
+                <a href="question">ajax</a>
+                <a href="question">mysql</a>
+              </div>
+              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin: 10px 20px 10px 0;background: none;height: 30px;">
+                <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" onclick="window.csdn.loginBox.show()" href="javascript:;" rel="nofollow" title="收藏">
+                  收藏
+                </a>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <a class="collection" style="text-decoration:none;color: #999;" href="javascript:;">浏览342</a>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <i class="el-icon-thumb"></i>
+                <em>0</em>
 
-              <!--i class="el-icon-share"></i>
-              <span class="interval">|</span>
-              <i class="el-icon-s-comment"></i-->
+                <!--i class="el-icon-share"></i>
+                <span class="interval">|</span>
+                <i class="el-icon-s-comment"></i-->
+              </div>
             </div>
           </div>
-          <div class="common_con clearfix" style="margin-top: 1px;border: 1px solid #fbfdf8;">
-            <div class="answer_sort_con  q_operate" style="height: 50px;:middle">
-              <p style="font-size: 16px;height: 50px;line-height: 50px;float: left;margin-left: 20px;color: #333;">1个回答</p>
-
-                <el-dropdown style="float: right;margin-right: 20px;top:50%;position: relative;">
+          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;border: 1px solid #fbfdf8;">
+            <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #fbfdf8;">
+              <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">1个回答</p>
+              <div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
+                <el-dropdown style="height: 50px;line-height: 50px;font-size: 14px;color: #666;cursor: pointer;">
                   <span class="el-dropdown-link">
                     按赞数排序<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
@@ -45,19 +48,61 @@
                     <el-dropdown-item disabled>按赞数排序</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-
+              </div>
               </div>
             </div>
             <div class="answer_list">
-              <div class="answer_detail_con">
+              <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
                 <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <p>评论内容</p>
                 </div>
+                <div class="ask_date" style="margin: 0 20px;padding: 16px 0 10px;">
+                  <div class="ask_edit_wrap" style="position: relative;font-weight: normal;margin-bottom: 0;cursor: pointer;">
+                    <span style="display: inline-block;vertical-align: middle;font-size: 12px;color: #999;margin-right: 45px;">{{q.ques_time}}</span>
+                  </div>
+                </div>
+                <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;padding-left: 20px;margin: 10px 20px 10px 0;height: 30px">
+                  <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
+                  <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                  <i class="el-icon-thumb"></i>
+                  <em>0</em>
+                  <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                  <span style="color: #999;text-decoration:none"> 已采纳会显示，未采纳不显示</span>
+
+                </div>
+              </div>
+              <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
+                <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
+                  <p>评论内容</p>
+                </div>
+                <div class="ask_date" style="margin: 0 20px;padding: 16px 0 10px;">
+                  <div class="ask_edit_wrap" style="position: relative;font-weight: normal;margin-bottom: 0;cursor: pointer;">
+                    <span style="display: inline-block;vertical-align: middle;font-size: 12px;color: #999;margin-right: 45px;">{{q.ques_time}}</span>
+                  </div>
+                </div>
+                <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;padding-left: 20px;margin: 10px 20px 10px 0;height: 30px">
+                  <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
+                  <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                  <i class="el-icon-thumb"></i>
+                  <em>0</em>
+                  <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                  <span style="color: #999;text-decoration:none"> 已采纳会显示，未采纳不显示</span>
+
+                </div>
               </div>
             </div>
-            <div id="author_answer_form"></div>
+            <div id="author_answer_form" style="border: 1px solid #fbfdf8;">
+              <div class="answer_form_con" style="overflow: hidden;margin: 20px;position: relative;">
+                <form class="new_answer" id="answer_form" @submit.prevent="submit">
+                  <div class="form_textarea" style="position: relative;width: 850px;height: 200px;">
+                    <quill-editor v-model="content" ref="myQuillEditor" style="height: 500px;" :options="editorOption">
+                    </quill-editor>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-      <div class="user_info" v-for="q in list" style="float: right; width: 20%">
+      <div class="user_info" v-for="q in list" style="float: left;">
       个人信息
     </div>
     </div>
@@ -66,8 +111,21 @@
 </template>
 
 <script>
+  import {
+    quillEditor
+  } from 'vue-quill-editor'
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
+
+  import '../assets/css/font.css'
+
+
     export default {
       name: "question",
+      components:{
+        quillEditor
+      },
       data() {
         return {
           list: [
@@ -82,6 +140,9 @@
               ques_state: '2',
             },
           ],
+          content: null,
+          editorOption: {
+          }
         }
       },
       created(){
@@ -112,6 +173,9 @@
               console.log(error);
             });
         },
+        submit:function () {
+
+        }
       },
 
     }
