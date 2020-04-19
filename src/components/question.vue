@@ -3,8 +3,8 @@
     <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     <div class="main clearfix" style="margin: 0px;">
       <div style="margin-bottom: 10px;"></div>
-      <div class="q_info" v-for="q in list" style="width: 892px;float: left;margin-bottom: 0px;margin-right: 8px;" >
-          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;border: 1px solid #fbfdf8;">
+      <div class="q_info" v-for="q in list" style="width: 80%;float: left;margin-bottom: 0px;margin-right: 8px;" >
+          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;border: 1px solid #f0f0f0;">
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.ques_title}}</div>
               <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.ques_content}}</div>
@@ -34,8 +34,8 @@
               </div>
             </div>
           </div>
-          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;border: 1px solid #fbfdf8;">
-            <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #fbfdf8;">
+          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;">
+            <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #f0f0f0;">
               <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">1个回答</p>
               <div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
                 <el-dropdown style="height: 50px;line-height: 50px;font-size: 14px;color: #666;cursor: pointer;">
@@ -52,7 +52,7 @@
               </div>
             </div>
             <div class="answer_list">
-              <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
+              <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <p>评论内容</p>
                 </div>
@@ -71,7 +71,7 @@
 
                 </div>
               </div>
-              <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
+              <!--div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
                 <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <p>评论内容</p>
                 </div>
@@ -89,22 +89,84 @@
                   <span style="color: #999;text-decoration:none"> 已采纳会显示，未采纳不显示</span>
 
                 </div>
-              </div>
+              </div-->
             </div>
-            <div id="author_answer_form" style="border: 1px solid #fbfdf8;">
+            <div id="author_answer_form" style="border: 1px solid #f0f0f0;">
               <div class="answer_form_con" style="overflow: hidden;margin: 20px;position: relative;">
-                <form class="new_answer" id="answer_form" @submit.prevent="submit">
-                  <div class="form_textarea" style="position: relative;width: 850px;height: 200px;">
-                    <quill-editor v-model="content" ref="myQuillEditor" style="height: 500px;" :options="editorOption">
+                <el-form ref="answerForm" :model="answerForm" :rules="rules">
+                  <el-form-item style="margin-bottom: 0px">
+                    <div class="edit_container" style="position: relative;width: 100%;height: 280px;">
+                      <quill-editor v-model="answerForm.a_content" ref="myQuillEditor"  class="editor" style="height: 200px;" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
+                      <!-- 自定义toolar -->
+                      <div id="toolbar" slot="toolbar">
+                        <!-- Add a bold button -->
+                        <button class="ql-bold" title="加粗">Bold</button>
+                        <button class="ql-italic" title="斜体">Italic</button>
+                        <button class="ql-underline" title="下划线">underline</button>
+                        <button class="ql-strike" title="删除线">strike</button>
+                        <button class="ql-blockquote" title="引用"></button>
+                        <button class="ql-code-block" title="代码"></button>
+                        <button class="ql-header" value="1" title="标题1"></button>
+                        <button class="ql-header" value="2" title="标题2"></button>
+                        <!--Add list -->
+                        <button class="ql-list" value="ordered" title="有序列表"></button>
+                        <button class="ql-list" value="bullet" title="无序列表"></button>
+                        <!-- Add font size dropdown -->
+                        <select class="ql-header" title="段落格式">
+                          <option selected>段落</option>
+                          <option value="1">标题1</option>
+                          <option value="2">标题2</option>
+                          <option value="3">标题3</option>
+                          <option value="4">标题4</option>
+                          <option value="5">标题5</option>
+                          <option value="6">标题6</option>
+                        </select>
+                        <select class="ql-size" title="字体大小">
+                          <option value="10px">10px</option>
+                          <option value="12px">12px</option>
+                          <option value="14px">14px</option>
+                          <option value="16px" selected>16px</option>
+                          <option value="18px">18px</option>
+                          <option value="20px">20px</option>
+                        </select>
+                        <select class="ql-font" title="字体">
+                          <option value="SimSun">宋体</option>
+                          <option value="SimHei">黑体</option>
+                          <option value="Microsoft-YaHei">微软雅黑</option>
+                          <option value="KaiTi">楷体</option>
+                          <option value="FangSong">仿宋</option>
+                          <option value="Arial">Arial</option>
+                        </select>
+                        <!-- Add subscript and superscript buttons -->
+                        <select class="ql-color" value="color" title="字体颜色"></select>
+                        <select class="ql-background" value="background" title="背景颜色"></select>
+                        <select class="ql-align" value="align" title="对齐"></select>
+                        <button class="ql-clean" title="还原"></button>
+                        <!-- You can also add your own -->
+                      </div>
                     </quill-editor>
+                    <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 15px">{{TiLength}}</span>
                   </div>
-                </form>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button style="float: right" @click="onsubmit" >确认提交</el-button>
+                  </el-form-item>
+                </el-form>
               </div>
             </div>
           </div>
-      <div class="user_info" v-for="q in list" style="float: left;">
+      <div class="user_info" v-for="q in list" style="float: left;width: 18%">
       个人信息
-    </div>
+        <div class="newquestion">
+          <el-button style="display:inline-block;width: 100%;height: 36px;font-size: 14px;background-color: lightcoral;border-radius:5px;text-align: center ">我要提问</el-button>
+        </div>
+        <span>插图</span>
+        <div class="mod_other_ask">
+          <div class="other_ask" style="border: 1px solid #f0f0f0;">
+            <h3>相似问题</h3>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -140,9 +202,30 @@
               ques_state: '2',
             },
           ],
-          content: null,
+          answerForm:{
+            a_title: 'list.ques_title',
+            a_content:'',
+          },
           editorOption: {
+            placeholder: "请输入",
+            theme: "snow", // or 'bubble'
+            modules: {
+              toolbar: {
+                container: '#toolbar'
+              }
+            },
+          },
+          TiLength:0,
+          rules:{
+            a_content: [
+              {required: true, message: '请输入详细内容', trigger: 'blur'}
+            ]
           }
+        }
+      },
+      computed:{
+        editor(){
+          return this.$refs.myQuillEditor.quill
         }
       },
       created(){
@@ -175,6 +258,40 @@
         },
         submit:function () {
 
+        },
+        check_user_status(){
+
+        },
+        onEditorChange(event){
+          event.quill.deleteText(800,4)
+          if(this.content === ''){
+            this.TiLength = 0
+          }else{
+            this.TiLength = event.quill.getLength() - 1
+          }
+        },
+        onEditorReady(editor){
+
+        },
+        onSubmit(){
+          this.$refs.answerForm.validate((valid) => {
+            if(valid){
+              this.$post('',this.answerForm).then(res => {
+                if(res.errCode == 200){
+                  this.$message({
+                    message: res.errMsg,
+                    type:'success'
+                  });
+                  this.$router.push('');
+                }else{
+                  this.$message({
+                    message: res.errMsg,
+                    type:'error'
+                  });
+                }
+              });
+            }
+          });
         }
       },
 

@@ -1,10 +1,22 @@
 <template>
-  <div class="userInfo">
-    <header>
+  <div class="userInfo" >
       <router-link to="/" class="gobackLink"><< 返回列表</router-link>
-    </header>
-    <h1>uuu</h1>
-    <h2>{{list.ques_title}}</h2>
+    <div class="u_Info_cont" >
+      <div class="u_info_title" v-for="u in u_info" style="border: 1px solid #fbfdf8;">
+        <div class="headshot" style="float: left">
+          头像图片
+        </div>
+        <div class="user_name" style="float:left">
+          {{u.name}}
+        </div>
+      </div>
+      <div class="u_info_detail" style="border: 1px solid #f4f4f4;">
+        <div class="detail_bar">
+          问题在这里
+          <a class="u_ques"></a>
+        </div>
+      </div>
+    </div>
     <div class="cont" v-html="list.ques_content"></div>
   </div>
 
@@ -15,8 +27,16 @@
     name: "userPage",
     data() {
       return {
-        list: [
+        u_info: [
+          {
+            mail:'1@qq.com',
+            name:'u1',
+          },
         ],
+        list:[
+
+        ],
+
       }
     },
     created(){
@@ -32,14 +52,20 @@
         this.textareText = id
       },
       getData(id){
-        this.axios.get('127.0.0.1/online_answer/user/login')
+        this.axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo',
+          {
+            params:{
+              user_id:this.id
+            }
+          })
           .then((response)=>{
             console.log(response);
-            this.list=response.data.result[0];
+            this.u_info=response.data.result[0];
             //console.log(response.data.result);
-          }).catch((error)=>{
-          console.log(error);
-        });
+          })
+          .catch((error)=>{
+            console.log(error);
+          });
       },
     },
 
