@@ -19,7 +19,7 @@
                  width: 100px;
                  height: 100px;
                  line-height: 100px;
-                 text-align: center;"
+                 margin-left: 150px;"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>

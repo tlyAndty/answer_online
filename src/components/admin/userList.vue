@@ -1,22 +1,26 @@
 <template>
   <div class="top">
     <span style="font-size: 30px">用户列表</span>
-    <div class="span1" style="text-align: right; font-size: 16px">
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 5px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="orderById">用户id</el-dropdown-item>
-          <el-dropdown-item @click.native="orderByTime">注册时间</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <span style="margin-right: 15px">排序</span>
+    <div>
+      <el-row>
+        <el-col :span="4">
+          <el-input v-model="search_input" placeholder="请输入用户名" ></el-input>
+        </el-col>
+        <el-col :span="2">
+          <el-button @click="search">搜索</el-button>
+        </el-col>
+        <el-col></el-col>
+      </el-row>
     </div>
-    <el-table
+    <div style="margin: 20px 0">
+      <el-table
       class="userList"
       :data="uListData"
-      style="width: 100%">
+      style="width: 100%"
+      :default-sort = "{prop: 'add_time', order: 'descending'}">
 
       <el-table-column
+        sortable
         prop="user_id"
         label="用户id"
         header-align="left"
@@ -26,6 +30,7 @@
       </el-table-column>
 
       <el-table-column
+        sortable
         prop="mail"
         label="用户邮箱"
         header-align="left"
@@ -35,6 +40,7 @@
       </el-table-column>
 
       <el-table-column
+        sortable
         prop="name"
         label="用户名字"
         header-align="left"
@@ -42,9 +48,8 @@
         :show-overflow-tooltip="true">
       </el-table-column>
 
-
-
       <el-table-column
+        sortable
         prop="state"
         label="用户状态"
         header-align="left"
@@ -53,6 +58,7 @@
       </el-table-column>
 
       <el-table-column
+        sortable
         prop="add_time"
         label="注册时间"
         header-align="left"
@@ -62,81 +68,98 @@
 
 
     </el-table>
+    </div>
+    <div>
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
+                     :page-sizes="[1, 2,5, 10]" :page-size="limit" layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+    var listJson={
+      uListData:[{
+        user_id:'1',
+        mail:'1@qq.com',
+        name:'小明',
+        state:'0',
+        add_time:'2020-03-27 13:07:40',
+      },
+        {
+          user_id:'2',
+          mail:'1@qq.com',
+          name:'小红',
+          state:'0',
+          add_time:'2020-03-27 13:07:40',
+        },
+        {
+          user_id:'3',
+          mail:'1@qq.com',
+          name:'小王',
+          state:'0',
+          add_time:'2020-03-27 13:07:40',
+        }],
+    }
     export default {
       name: "userList",
       data() {
         return {
-          uListData:[{
-            user_id:'1',
-            mail:'1@qq.com',
-            name:'小明',
-            state:'0',
-            add_time:'2020-03-27 13:07:40',
-          },
-            {
-              user_id:'2',
-              mail:'1@qq.com',
-              name:'小明',
-              state:'0',
-              add_time:'2020-03-27 13:07:40',
-            },
-            {
-              user_id:'3',
-              mail:'1@qq.com',
-              name:'小明',
-              state:'0',
-              add_time:'2020-03-27 13:07:40',
-            }],
+          uListData:[],
+          data: [],
+          search_input: '',
+          timeout: null,
+          limit: 5,
+          total: null,
+          page:1,
         }
       },
-      mounted(){
-        this.getuListData();
+      created() {
+        this.pageList()
       },
       methods: {
-        getuListData:function() {
-          this.$axios.get(
+        pageList() {
+          // 发请求拿到数据并暂存全部数据,方便之后操作
+          this.data = listJson.uListData
+          this.getuListData()
+        },
+        getuListData: function () {
+          let uListData = this.data.filter((item,index) =>
+            item.name.includes(this.search_input)
+          )
+          this.uListData=uListData.filter((item,index)=>
+            index < this.page * this.limit && index >= this.limit * (this.page - 1)
+          )
+          this.total = uListData.length
+          /*this.$axios.get(
             '127.0.0.1/online_answer/user/login'
           ).then(response => {
             const res = response.data
             if (res.data) {
               const data = res.data
-              this.uListData = data.uListData
+              this.qListData = data.qListData
             }
           }).catch(error => {
             console.log('错误信息：' + error)
-          })
+          })*/
         },
-        orderById:function () {
-          this.$axios.get(
-            '127.0.0.1/online_answer/user/login'
-          ).then(response => {
-            const res = response.data
-            if (res.data) {
-              const data = res.data
-              this.uListData = data.uListData
-            }
-          }).catch(error => {
-            console.log('错误信息：' + error)
-          })
+        handleSizeChange(val) {
+          console.log(`每页 ${val} 条`);
+          this.limit = val
+          this.getuListData()
         },
-        orderByTime:function () {
-          this.$axios.get(
-            '127.0.0.1/online_answer/user/login'
-          ).then(response => {
-            const res = response.data
-            if (res.data) {
-              const data = res.data
-              this.uListData = data.uListData
-            }
-          }).catch(error => {
-            console.log('错误信息：' + error)
-          })
+        handleCurrentChange(val) {
+          console.log(`当前页: ${val}`);
+          this.page = val
+          this.getuListData()
         },
-      }
+        search() {
+          this.page = 1
+          this.getuListData()
+        }
+
+      },
     }
 </script>
 

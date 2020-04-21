@@ -177,7 +177,7 @@
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.limit = val
-        this.bgetqListData()
+        this.getbqListData()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);

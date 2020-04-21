@@ -2,7 +2,7 @@
   <div class="top">
     <span style="font-size: 30px">个人信息</span>
     <el-form :model="infoForm" status-icon :rules="rules" ref="infoForm" class="demo-infoForm" style="width: 400px; margin:20px auto;">
-      <el-form-item label="头像" prop="headshot">
+      <el-form-item label="头像" prop="headshot" style="">
         <el-upload
           class="avatar-uploader"
           action="https://jsonplaceholder.typicode.com/posts/"
@@ -19,7 +19,8 @@
                  width: 100px;
                  height: 100px;
                  line-height: 100px;
-                 text-align: center;"
+                 margin-left: 150px;
+                 "
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
