@@ -1,28 +1,30 @@
 <template>
   <div class="userInfo" >
       <router-link to="/" class="gobackLink"><< 返回列表</router-link>
-    <div class="u_Info_cont" style="width: 100%;height:20%;text-align: center">
-      <div class="u_info_title" v-for="u in u_info" style="border: 1px solid #fbfdf8;">
-        <div class="headshot" style="text-align: center">
+    <div class="u_Info_cont" style="width: 100%;height:20%;text-align: center;">
+      <div class="u_info_title" v-for="u in u_info" style="margin-right:80px;margin-left:80px;border: 1px solid #f4f4f4;background-color: #fbfdf8">
+        <div class="headshot" style="text-align: center;margin-top: 10px">
           <img src="../assets/headshot.png" style="width: auto;height: auto;max-width: 100px;max-height: 100px">
         </div>
-        <div class="user_name" style="text-align: center">
+        <div class="user_name" style="text-align: center;margin-bottom: 5px">
           {{u.name}}
         </div>
       </div>
-      <div class="u_info_detail" style="border: 1px solid #f4f4f4;">
+      <div class="u_info_detail" style="margin-right:80px;margin-left:80px;margin-top:5px;border: 1px solid #f4f4f4;background-color: #fbfdf8">
         <div class="detail_bar" style="margin-top: 10px">
           <div class="function_choice">
               <el-button label="提问" @click="get_q_list()">提问</el-button>
               <el-button label="回答" @click="get_a_list()">回答</el-button>
           </div>
-          <div class="choice_list" >
-            <div class="q_list" v-if="q_flag">
+          <div class="choice_list">
+            <div class="q_list" >
               <el-table
               class="questionList"
               :data="qListData"
               style="width: 100%"
-              :default-sort = "{prop: 'ques_time', order: 'descending'}">
+              :default-sort = "{prop: 'ques_time', order: 'descending'}"
+              v-if="q_flag"
+              >
 
               <el-table-column
                 prop="ques_title"
@@ -60,12 +62,14 @@
 
             </el-table>
             </div>
-            <div class="a_list" v-if="a_flag">
+            <div class="a_list" >
               <el-table
                 class="answerList"
                 :data="aListData"
                 style="width: 100%"
-                :default-sort = "{prop: 'ans_time', order: 'descending'}">
+                :default-sort = "{prop: 'ans_time', order: 'descending'}"
+                v-if="a_flag"
+              >
 
                 <el-table-column
                   prop="ans_content"
@@ -94,13 +98,6 @@
                   :show-overflow-tooltip="true">
                 </el-table-column>
 
-                <el-table-column
-                  prop="bad_count"
-                  label="踩的个数"
-                  header-align="left"
-                  align="left"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
 
                 <el-table-column
                   prop="ans_state"
@@ -136,7 +133,7 @@
 
         ],
         radio: '提问',
-        q_flag: true,
+        q_flag: false,
         a_flag: false,
         qListData: [{
           ques_id: '1',
@@ -222,7 +219,8 @@
         this.q_flag= false;
         this.a_flag= true;
         console.log(this.a_flag);
-      }
+      },
+
     },
 
   }
@@ -231,5 +229,8 @@
 <style scoped>
   .quetsion {
     padding: 0 15px;
+  }
+  .el-table{
+    background-color: #fbfdf8;
   }
 </style>
