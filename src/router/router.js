@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import main from '../components/main'
 import login from '../components/login'
 import userlogin from '../components/userlogin'
-import loginSuccess from '../components/loginSuccess'
 import register from '../components/register'
 import questionPage from "../components/questionPage";
 import userPage from "../components/userPage";
@@ -48,11 +47,6 @@ export default new Router({
       path: '/userlogin',
       name: 'userlogin',
       component: userlogin
-    },
-    {
-      path: '/loginSuccess',
-      name: 'loginSuccess',
-      component: loginSuccess
     },
     {
       path: '/register',
