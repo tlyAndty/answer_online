@@ -2,6 +2,29 @@
   <div class="top">
     <span style="font-size: 30px">个人信息</span>
     <el-form :model="infoForm" status-icon :rules="rules" ref="infoForm" class="demo-infoForm" style="width: 400px; margin:20px auto;">
+      <el-form-item label="头像" prop="headshot">
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+          style="border: 1px dashed #DCDFE6;
+                 border-radius: 6px;
+                 cursor: pointer;
+                 position: relative;
+                 overflow: hidden;
+                 font-size: 28px;
+                 color: #8c939d;
+                 width: 100px;
+                 height: 100px;
+                 line-height: 100px;
+                 text-align: center;"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
+          <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
+        </el-upload>
+      </el-form-item>
       <el-form-item label="名字" prop="name">
         <el-input class="text" placeholder=data.name v-model="infoForm.name" autocomplete="off"></el-input>
       </el-form-item>
@@ -74,7 +97,8 @@
             age: [
               { validator: checkAge, trigger: 'blur' }
             ]
-          }
+          },
+          imageUrl:'',
         };
       },
       methods: {
@@ -90,6 +114,21 @@
         },
         resetForm(formName) {
           this.$refs[formName].resetFields();
+        },
+        handleAvatarSuccess(res, file) {
+          this.imageUrl = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+          const isJPG = file.type === 'image/jpeg';
+          const isLt2M = file.size / 1024 / 1024 < 2;
+
+          if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+          }
+          if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+          }
+          return isJPG && isLt2M;
         }
       }
     }

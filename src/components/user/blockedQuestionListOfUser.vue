@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">屏蔽问题列表</span>
+    <span style="font-size: 30px">被屏蔽问题列表</span>
     <div>
       <el-row>
         <el-col :span="4">

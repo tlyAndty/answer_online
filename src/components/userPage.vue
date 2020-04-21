@@ -11,8 +11,8 @@
         </div>
       </div>
       <div class="u_info_detail" style="margin-right:80px;margin-left:80px;margin-top:5px;border: 1px solid #f4f4f4;background-color: #fbfdf8">
-        <div class="detail_bar" style="margin-top: 10px">
-          <div class="function_choice">
+        <div class="detail_bar" style="">
+          <div class="function_choice" style="">
               <el-button label="提问" @click="get_q_list()">提问</el-button>
               <el-button label="回答" @click="get_a_list()">回答</el-button>
           </div>

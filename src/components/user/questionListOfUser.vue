@@ -68,11 +68,11 @@
         :show-overflow-tooltip="true">
       </el-table-column>
 
-    </el-table>
+      </el-table>
     </div>
 
     <div>
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
                    :page-sizes="[1, 2,5, 10]" :page-size="limit" layout="total, sizes, prev, pager, next, jumper"
                    :total="total">
     </el-pagination>

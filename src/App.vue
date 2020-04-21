@@ -2,7 +2,26 @@
   <el-container>
     <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
       <span style="font-size: 30px; position:relative; top:5px ">探源问答</span>
-      <span v-if="user" style="position:relative; left: 1050px; top:4px"> {{user.name}}
+      <span v-if="user" style="position:relative; left: 1000px; top:4px">
+        <el-dropdown trigger="click" style="color: white;margin-right: 10px">
+          <span class="el-dropdown-link">
+            消息
+            <i class="el-icon-caret-bottom el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item class="clearfix">
+              <a href="" style="text-decoration:none">回答</a>
+              <el-badge class="mark" :value="12" />
+            </el-dropdown-item>
+            <el-dropdown-item class="clearfix">
+              <a href="" style="text-decoration:none">评论</a>
+              <el-badge class="mark" :value="3" />
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <span style="margin-right: 5px">{{user}}</span>
+        <a id="main_link" href="/" style="color: white;text-decoration:none">首页</a>
+        /
         <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
         <!--el-button  @click="logout">注销</el-button-->
       </span>
@@ -39,6 +58,8 @@
     },
     computed: {
       user () {
+        //假定已登录
+        this.$store.state.user = 'test'
         return this.$store.state.user
       }
     }

@@ -5,7 +5,7 @@ import login from '../components/login'
 import userlogin from '../components/userlogin'
 import loginSuccess from '../components/loginSuccess'
 import register from '../components/register'
-import question from "../components/question";
+import questionPage from "../components/questionPage";
 import userPage from "../components/userPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
@@ -63,16 +63,16 @@ export default new Router({
       }
     },
     {
-      path: '/question',
-      name:'question',
-      component: question,
+      path: '/questionPage',
+      name:'questionPage',
+      component: questionPage,
       meta:{
         keepAlive:true
       },
       children: [
         {
           path: ':q_id',
-          component: question,
+          component: questionPage,
         }
       ]
     },
