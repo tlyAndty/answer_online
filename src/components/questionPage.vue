@@ -2,9 +2,8 @@
   <div class="questionInfo" style="background: white;padding: 0px">
     <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     <div class="main clearfix" style="margin: 0px;">
-      <div style="margin-bottom: 10px;"></div>
-      <div class="q_info" v-for="q in list" style="width: 80%;float: left;margin-bottom: 0px;margin-right: 8px;" >
-          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;border: 1px solid #f0f0f0;">
+      <div class="q_info" v-for="q in list" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
+          <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;border: 1px solid #f0f0f0;">
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.ques_title}}</div>
               <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.ques_content}}</div>
@@ -14,7 +13,7 @@
                 <a href="question">ajax</a>
                 <a href="question">mysql</a>
               </div>
-              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin: 10px 20px 10px 0;background: none;height: 30px;">
+              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-top:10px;margin-bottom:10px;background: none;height: 30px;">
                 <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
@@ -31,10 +30,14 @@
                 <!--i class="el-icon-share"></i>
                 <span class="interval">|</span>
                 <i class="el-icon-s-comment"></i-->
+
               </div>
+              <!--div class="headshot" style="margin-left:60%;width:40%">
+                <img src="../assets/headshot.png" style="width: auto;height: auto;max-width: 40px;max-height: 40px;margin-left: 180px">
+              </div-->
             </div>
           </div>
-          <div class="common_con clearfix" style="margin-top: 1px;background: #fff;">
+          <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;">
             <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #f0f0f0;">
               <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">1个回答</p>
               <div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
@@ -51,7 +54,7 @@
               </div>
               </div>
             </div>
-            <div class="answer_list">
+            <div class="answer_list" style="background: #fcfcff;">
               <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <p>评论内容</p>
@@ -91,7 +94,7 @@
                 </div>
               </div-->
             </div>
-            <div id="author_answer_form" style="border: 1px solid #f0f0f0;">
+            <div id="author_answer_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
               <div class="answer_form_con" style="overflow: hidden;margin: 20px;position: relative;">
                 <el-form ref="answerForm" :model="answerForm" :rules="rules">
                   <el-form-item style="margin-bottom: 0px">
@@ -155,18 +158,6 @@
               </div>
             </div>
           </div>
-      <div class="user_info" v-for="q in list" style="float: left;width: 18%">
-      个人信息
-        <div class="newquestion">
-          <el-button style="display:inline-block;width: 100%;height: 36px;font-size: 14px;background-color: lightcoral;border-radius:5px;text-align: center ">我要提问</el-button>
-        </div>
-        <span>插图</span>
-        <div class="mod_other_ask">
-          <div class="other_ask" style="border: 1px solid #f0f0f0;">
-            <h3>相似问题</h3>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -182,9 +173,8 @@
 
   import '../assets/css/font.css'
 
-
     export default {
-      name: "question",
+      name: "questionPage",
       components:{
         quillEditor
       },

@@ -1,8 +1,23 @@
 <template>
   <el-container>
     <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
-      <span style="font-size: 30px; position:relative; top:5px ">探源问答</span>
-      <span v-if="user" style="position:relative; left: 1000px; top:4px">
+      <span style="font-size: 30px; position:relative; top:5px ">
+        探源问答
+      </span>
+      <span style="position:relative;left: 30px;top:4px">
+        <el-button class="new_question" style="display:inline-block;
+                                               width: 100px;
+                                               height: 36px;
+                                               font-size: 14px;
+                                               background-color: lightcoral;
+                                               border-radius:5px;
+                                               text-align: center;
+                                               color: white;
+                                               border-color: white;">
+          我要提问
+        </el-button>
+      </span>
+      <span v-if="user" style="position:relative; left: 900px; top:4px">
         <el-dropdown trigger="click" style="color: white;margin-right: 10px">
           <span class="el-dropdown-link">
             消息

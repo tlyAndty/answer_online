@@ -5,6 +5,7 @@ import login from '../components/login'
 import userlogin from '../components/userlogin'
 import register from '../components/register'
 import questionPage from "../components/questionPage";
+import newquestionPage from "../components/newquestionPage";
 import userPage from "../components/userPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
@@ -54,6 +55,14 @@ export default new Router({
       component: register,
       meta:{
         keepAlive:false
+      }
+    },
+    {
+      path: '/newquestionPage',
+      name: 'newquestionPage',
+      component: newquestionPage,
+      meta: {
+        keepAlive:true
       }
     },
     {
