@@ -5,7 +5,7 @@
         探源问答
       </span>
       <span style="position:relative;left: 30px;top:4px">
-        <el-button class="new_question" style="display:inline-block;
+        <el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
                                                font-size: 14px;

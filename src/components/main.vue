@@ -43,10 +43,10 @@
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
+                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
-                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'question',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
+                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
               </div>
             </div>
           </li>
