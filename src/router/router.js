@@ -4,9 +4,9 @@ import main from '../components/main'
 import login from '../components/login'
 import userlogin from '../components/userlogin'
 import register from '../components/register'
-import questionPage from "../components/questionPage";
-import newquestionPage from "../components/newquestionPage";
 import userPage from "../components/userPage";
+import questionPage from "../components/question/questionPage";
+import newquestionPage from "../components/question/newquestionPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
 import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";

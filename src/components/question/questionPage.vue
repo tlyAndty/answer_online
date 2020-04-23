@@ -9,9 +9,9 @@
               <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.ques_content}}</div>
               <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.ques_time}}</div>
               <div class="tags" style="width:850px">
-                <a href="question">vue.js</a>
-                <a href="question">ajax</a>
-                <a href="question">mysql</a>
+                <a href="">vue.js</a>
+                <a href="">ajax</a>
+                <a href="">mysql</a>
               </div>
               <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-top:10px;margin-bottom:10px;background: none;height: 30px;">
                 <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
@@ -171,7 +171,7 @@
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
 
-  import '../assets/css/font.css'
+  import '../../assets/css/font.css'
 
     export default {
       name: "questionPage",

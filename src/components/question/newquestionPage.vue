@@ -61,10 +61,44 @@
                 </div>
               </el-form-item>
               <el-form-item>
-
-              </el-form-item>
-              <el-form-item>
-                <el-button style="float: right" @click="onsubmit" >发布</el-button>
+                <el-button style="float: right" @click="dialogVisible=true" >发布</el-button>
+                <el-dialog
+                  title="发布问题"
+                  :visible.sync="dialogVisible"
+                  width="30%"
+                  :before-close="handleClose">
+                  <div>
+                    <span>添加标签：</span>
+                    <el-checkbox-group v-model="checkList">
+                      <el-checkbox label="标签 A"></el-checkbox>
+                      <el-checkbox label="标签 B"></el-checkbox>
+                      <el-checkbox label="标签 C"></el-checkbox>
+                      <el-checkbox label="标签 D"></el-checkbox>
+                    </el-checkbox-group>
+                  </div>
+                  <div>
+                    <span>添加自定义标签</span>
+                    <el-input
+                      class="input-new-tag"
+                      v-if="inputVisible"
+                      v-model="inputValue"
+                      ref="saveTagInput"
+                      size="small"
+                      @keyup.enter.native="handleInputConfirm"
+                      @blur="handleInputConfirm"
+                    >
+                    </el-input>
+                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+                  </div>
+                  <div>
+                    <span>悬赏：</span>
+                    <el-input v-model="input" placeholder="请输入悬赏积分"></el-input>
+                  </div>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                  </span>
+                </el-dialog>
               </el-form-item>
             </el-form>
           </div>
@@ -83,7 +117,7 @@
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
 
-  import '../assets/css/font.css'
+  import '../../assets/css/font.css'
 
   export default {
     name: "newquestionPage",
@@ -122,7 +156,12 @@
           a_content: [
             {required: true, message: '请输入详细内容', trigger: 'blur'}
           ]
-        }
+        },
+        dialogVisible: false,
+        inputVisible: false,
+        inputValue: '',
+        checkList: [],
+        input:''
       }
     },
     computed:{
@@ -175,25 +214,26 @@
       onEditorReady(editor){
 
       },
-      onSubmit(){
-        this.$refs.answerForm.validate((valid) => {
-          if(valid){
-            this.$post('',this.answerForm).then(res => {
-              if(res.errCode == 200){
-                this.$message({
-                  message: res.errMsg,
-                  type:'success'
-                });
-                this.$router.push('');
-              }else{
-                this.$message({
-                  message: res.errMsg,
-                  type:'error'
-                });
-              }
-            });
-          }
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
+      showInput() {
+        this.inputVisible = true;
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
         });
+      },
+      handleInputConfirm() {
+        let inputValue = this.inputValue;
+        if (inputValue) {
+          this.dynamicTags.push(inputValue);
+        }
+        this.inputVisible = false;
+        this.inputValue = '';
       }
     },
 
@@ -215,5 +255,12 @@
     color: #4d4d4d;
     font-size: 12px;
     border: 1px solid #CCCCCC;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 </style>
