@@ -3,7 +3,7 @@
     <div class="panel">
       <el-row type="flex" justify="center">
         <el-form ref="registerForm" :model="user" :rules="rules" status-icon label-width="120px">
-          <h1 style="padding-left:90px;">用户注册</h1>
+          <h1 style="padding-left:90px;">用户注册1</h1>
           <el-form-item label="昵称" prop="name">
             <el-input v-model="user.name"></el-input>
           </el-form-item>
