@@ -66,6 +66,15 @@
           :show-overflow-tooltip="true">
         </el-table-column>
 
+        <el-table-column
+          label="操作"
+          align="center"
+          min-width="100">
+          <template slot-scope="scope">
+            <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
+            <el-button type="text" @click="unblacklistUser(scope.row.phone)">取消拉黑</el-button>
+          </template>
+        </el-table-column>
 
       </el-table>
     </div>
@@ -157,7 +166,15 @@
         search() {
           this.page = 1
           this.getbuListData()
-        }
+        },
+        unblacklistUser(val){
+          console.log(val)
+        },
+        checkDetail(val){
+          window.location.href='/userPage'
+          console.log(val)
+        },
+
 
       },
     }
