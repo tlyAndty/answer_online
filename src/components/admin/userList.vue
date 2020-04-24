@@ -170,8 +170,6 @@
         },
         unblacklistUser(val){
           console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
         },
         blacklistUser(val){
           console.log(val)
