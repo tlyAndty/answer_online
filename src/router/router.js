@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import main from '../components/main'
-import login from '../components/login'
 import userlogin from '../components/userlogin'
+import adminlogin from '../components/adminlogin'
 import register from '../components/register'
 import userPage from "../components/userPage";
 import questionPage from "../components/question/questionPage";
@@ -37,17 +37,20 @@ export default new Router({
       },
     },
     {
-      path: '/login',
-      name: 'login',
-      component: login,
+      path: '/userlogin',
+      name: 'userlogin',
+      component: userlogin,
       meta:{
         keepAlive:false
       }
     },
     {
-      path: '/userlogin',
-      name: 'userlogin',
-      component: userlogin
+      path: '/adminlogin',
+      name: 'adminlogin',
+      component: adminlogin,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       path: '/register',
