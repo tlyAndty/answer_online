@@ -56,6 +56,17 @@
         :show-overflow-tooltip="true">
       </el-table-column>
 
+      <el-table-column
+        label="操作"
+        align="center"
+        min-width="100">
+        <template slot-scope="scope">
+          <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
+          <el-button type="text" @click="acceptUser(scope.row.phone)">通过</el-button>
+          <el-button type="text" @click="rejectUser(scope.row.phone)">拒绝</el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
     </div>
     <div>
@@ -146,7 +157,19 @@
         search() {
           this.page = 1
           this.getrListData()
-        }
+        },
+        rejectUser(val){
+          console.log(val)
+
+//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+        },
+        acceptUser(val){
+          let self = this;
+        },
+        checkDetail(val){
+          window.location.href='/questionPage'
+          console.log(val)
+        },
 
       },
     }

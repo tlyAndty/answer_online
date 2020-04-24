@@ -66,8 +66,18 @@
         :show-overflow-tooltip="true">
       </el-table-column>
 
+      <el-table-column
+        label="操作"
+        align="center"
+        min-width="100">
+        <template slot-scope="scope">
+          <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
+          <el-button type="text" @click="blacklistUser(scope.row.phone)">拉黑</el-button>
+          <el-button type="text" @click="unblacklistUser(scope.row.phone)">取消拉黑</el-button>
+        </template>
+      </el-table-column>
 
-    </el-table>
+      </el-table>
     </div>
     <div>
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
@@ -157,7 +167,19 @@
         search() {
           this.page = 1
           this.getuListData()
-        }
+        },
+        unblacklistUser(val){
+          console.log(val)
+
+//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+        },
+        blacklistUser(val){
+          console.log(val)
+        },
+        checkDetail(val){
+          window.location.href='/userPage'
+          console.log(val)
+        },
 
       },
     }

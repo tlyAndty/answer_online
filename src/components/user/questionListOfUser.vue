@@ -68,6 +68,17 @@
         :show-overflow-tooltip="true">
       </el-table-column>
 
+      <el-table-column
+        label="操作"
+        align="center"
+        min-width="100">
+        <template slot-scope="scope">
+          <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
+          <el-button type="text" @click="modifyUser(scope.row.phone)">修改</el-button>
+          <el-button type="text" @click="deleteUser(scope.row.phone)">删除</el-button>
+        </template>
+      </el-table-column>
+
       </el-table>
     </div>
 
@@ -162,7 +173,19 @@
       search() {
         this.page = 1
         this.getqListData()
-      }
+      },
+      deleteUser(val){
+        console.log(val)
+
+//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+      },
+      modifyUser(val){
+        let self = this;
+      },
+      checkDetail(val){
+        window.location.href='/questionPage'
+        console.log(val)
+      },
 
     },
   }
