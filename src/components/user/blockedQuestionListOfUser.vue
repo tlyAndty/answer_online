@@ -174,14 +174,10 @@
       },
       deleteUser(val){
         console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
       },
-//修改用户
       modifyUser(val){
         let self = this;
       },
-//查看详情
       checkDetail(val){
         window.location.href='/questionPage'
         console.log(val)

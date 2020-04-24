@@ -3,12 +3,15 @@
     <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     <div class="main clearfix" style="margin: 0px;">
       <div class="q_info" v-for="q in list" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
-        <div id="author_answer_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
-          <div class="answer_form_con" style="overflow: hidden;margin: 20px;position: relative;">
-            <el-form ref="answerForm" :model="answerForm" :rules="rules">
+        <div id="question_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
+          <div class="question_form_con" style="overflow: hidden;margin: 20px;position: relative;">
+            <el-form ref="questionForm" :model="questionForm" :rules="rules">
               <el-form-item style="margin-bottom: 0px">
-                <div class="edit_container" style="position: relative;width: 100%;height: 380px;">
-                  <quill-editor v-model="answerForm.a_content" ref="myQuillEditor"  class="editor" style="height: 300px;" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
+                <div class="edit_title" style="position: relative;width: 100%;">
+                  <el-input placeholder="输入问题标题" style="margin-bottom: 10px;"></el-input>
+                </div>
+                <div class="edit_container" style="position: relative;width: 100%;height: 340px;background-color: white">
+                  <quill-editor v-model="questionForm.a_content" ref="myQuillEditor"  class="editor" style="height: 300px;background-color: white" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
                     <!-- 自定义toolar -->
                     <div id="toolbar" slot="toolbar">
                       <!-- Add a bold button -->
@@ -57,7 +60,7 @@
                       <!-- You can also add your own -->
                     </div>
                   </quill-editor>
-                  <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 15px">{{TiLength}}</span>
+                  <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 10px">{{TiLength}}</span>
                 </div>
               </el-form-item>
               <el-form-item>
@@ -138,7 +141,7 @@
             ques_state: '2',
           },
         ],
-        answerForm:{
+        questionForm:{
           a_title: 'list.ques_title',
           a_content:'',
         },
