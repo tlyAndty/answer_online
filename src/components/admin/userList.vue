@@ -178,6 +178,7 @@
           window.location.href='/userPage'
           console.log(val)
         },
+
       },
     }
 </script>
