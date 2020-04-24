@@ -8,10 +8,10 @@
             <el-form ref="questionForm" :model="questionForm" :rules="rules">
               <el-form-item style="margin-bottom: 0px">
                 <div class="edit_title" style="position: relative;width: 100%;">
-                  标题
+                  <el-input placeholder="输入问题标题" style="margin-bottom: 10px;"></el-input>
                 </div>
-                <div class="edit_container" style="position: relative;width: 100%;height: 380px;">
-                  <quill-editor v-model="questionForm.a_content" ref="myQuillEditor"  class="editor" style="height: 300px;" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
+                <div class="edit_container" style="position: relative;width: 100%;height: 340px;background-color: white">
+                  <quill-editor v-model="questionForm.a_content" ref="myQuillEditor"  class="editor" style="height: 300px;background-color: white" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
                     <!-- 自定义toolar -->
                     <div id="toolbar" slot="toolbar">
                       <!-- Add a bold button -->
@@ -60,7 +60,7 @@
                       <!-- You can also add your own -->
                     </div>
                   </quill-editor>
-                  <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 15px">{{TiLength}}</span>
+                  <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 10px">{{TiLength}}</span>
                 </div>
               </el-form-item>
               <el-form-item>
