@@ -16,7 +16,7 @@
       <div class="u_info_detail" style="margin-right:80px;margin-left:80px;margin-top:5px;border: 1px solid #f4f4f4;background-color: #fbfdf8">
         <div class="detail_bar" style="">
           <div class="function_choice" style="">
-            <el-tabs v-model="activeName" @tab-click="handleClick" style="" >
+            <el-tabs v-model="activeName" @tab-click="handleClick" stretch="true" style="" >
               <el-tab-pane label="提问" name="first" ></el-tab-pane>
               <el-tab-pane label="回答" name="second"></el-tab-pane>
             </el-tabs>
