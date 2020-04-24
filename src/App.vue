@@ -40,7 +40,7 @@
         <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
         <!--el-button  @click="logout">注销</el-button-->
       </span>
-      <span v-else style="position:relative; left: 80%; top:4px" >
+      <span v-else style="position:relative; left: 70%; top:4px" >
         <a id="login_link" href="/login" style="color: white;text-decoration:none">登录</a>
         /
         <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
@@ -74,7 +74,7 @@
     computed: {
       user () {
         //假定已登录
-        this.$store.state.user = 'test'
+        //this.$store.state.user = 'test'
         return this.$store.state.user
       }
     }
