@@ -100,6 +100,7 @@ export default {
     letter-spacing: 0.1em;
     font-family: STHupo, serif;
     width: 600px;
+    text-shadow: 5px 3px orangered;
   }
 </style>
 
