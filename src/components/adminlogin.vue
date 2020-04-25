@@ -1,5 +1,6 @@
 <template>
   <div class="bg">
+    <div class="title">探源问答</div>
     <div class="panel">
       <el-row type="flex" justify="center">
         <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="100px">
@@ -77,16 +78,28 @@ export default {
     position: relative;
     float:right;
     right:10%;
-    top:30%;
+    /*top:30%;*/
     width:350px;
     background-color: #333333;
     background: rgba(242,217,217,0.7);
+    margin-top: 40px;
     padding-right: 100px;
     padding-top: 10px;
   }
   .loginBtn{
     background-color:#f08080;
     color:white;
+  }
+
+  .title {
+    padding-top: 5%;
+    position: relative;
+    left: 52%;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 8em;
+    letter-spacing: 0.1em;
+    font-family: STHupo, serif;
+    width: 600px;
   }
 </style>
 
