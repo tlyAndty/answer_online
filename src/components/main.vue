@@ -100,18 +100,21 @@
         good_order_list:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
+        ques_time: '',
+        ques_col_num:'',
       }
     },
     methods: {
       getData() {
         this.$axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo'
         ).then((response) => {
+          console.log(response.data.result);
           this.list = response.data.result;
           this.time_order_list = response.data.result;
           this.good_order_list = this.list;
           this.time_order_sort();
           this.good_order_sort();
-          //console.log(response.data.result);
+
         }).catch((error) => {
           console.log(error);
         });
