@@ -9,7 +9,7 @@
         <a style="width:100%;display: block;position: relative;background-color: lightcoral; color: #fff;">最新内容</a>
       </div>
       <div class="time_order">
-        <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
+        <ul class="list" v-for="item in time_order_list" style="margin:0px;list-style: none;">
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
@@ -71,6 +71,7 @@
           ques_content:'奇葩说杨奇函每日一省',
           ques_ans_state: '1',
           ques_state: '2',
+          ques_col_num: '3',
           },
           {
             ques_id: '2',
@@ -81,6 +82,7 @@
             ques_content:'奇葩说杨奇函每日两省',
             ques_ans_state: '1',
             ques_state: '2',
+            ques_col_num: '0',
           },
           {
             ques_id: '3',
@@ -91,20 +93,67 @@
             ques_content:'奇葩说杨奇函每日三省',
             ques_ans_state: '1',
             ques_state: '2',
+            ques_col_num: '2',
           }
           ],
+        time_order_list:[],
+        good_order_list:[],
+        sortType: null,                 // 数组对象中的哪一个属性进行排序
+        order: false,                   // 升序还是降序
       }
     },
     methods: {
       getData() {
-        this.$axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo'
+        this.$axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo'
         ).then((response) => {
           this.list = response.data.result;
+          this.time_order_list = response.data.result;
+          this.good_order_list = this.list;
+          this.time_order_sort();
+          this.good_order_sort();
           //console.log(response.data.result);
         }).catch((error) => {
           console.log(error);
         });
       },
+      time_order_sort(){
+        this.order = false;
+        this.sortType = this.time_order_list.ques_time;
+        this.time_order_list.time_order_sort(this.compare(this.time_order_list.ques_time));
+      },
+      good_order_sort(){
+        this.order = false;
+        this.sortType = this.good_order_list.ques_col_num;
+        this.good_order_list.good_order_sort(this.compare(this.good_order_list.ques_col_num));
+      },
+      /*sort(type){                     // 排序
+        this.order = !this.order;		// 更改为 升序或降序
+        this.sortType = type;
+        this.list.sort(this.compare(type));
+        // 调用下面 compare 方法 并传值
+      },*/
+      compare(attr){                  // 排序方法
+        let that = this;
+        return function(a,b){
+          let val1 = a[attr];
+          let val2 = b[attr];
+
+          if(that.order){
+            if(that.sortType == 'time'){            // 如果是时间就转换成时间格式
+              return new Date(val2.replace(/-/,'/')) - new Date(val1.replace(/-/,'/'));
+            }else{
+              return val2 - val1;
+            }
+
+          }else{
+            if(that.sortType == 'time'){
+              return new Date(val1.replace(/-/,'/')) - new Date(val2.replace(/-/,'/'));
+            }else{
+              return val1 - val2;
+            }
+          }
+        }
+      }
     },
    created(){
       this.getData();
