@@ -108,9 +108,9 @@
       getData() {
         this.$axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo'
         ).then((response) => {
-          console.log(response.data.result);
-          this.list = response.data.result;
-          this.time_order_list = response.data.result;
+          console.log(response.data);
+          this.list = response.data;
+          this.time_order_list = this.list;
           this.good_order_list = this.list;
           this.time_order_sort();
           this.good_order_sort();
