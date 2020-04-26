@@ -106,7 +106,7 @@
     },
     methods: {
       getData() {
-        this.$axios.post('/online_answer/admin/searchQuestionsByState',
+        this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
           {
             params: {
               quesState: '3',
