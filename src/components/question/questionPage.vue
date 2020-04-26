@@ -5,9 +5,9 @@
       <div class="q_info" v-for="q in list" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
           <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;border: 1px solid #f0f0f0;">
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
-              <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.ques_title}}</div>
-              <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.ques_content}}</div>
-              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.ques_time}}</div>
+              <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.quesTitle}}</div>
+              <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.quesContent}}</div>
+              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.quesTime}}</div>
               <div class="tags" style="width:850px">
                 <a href="">vue.js</a>
                 <a href="">ajax</a>
@@ -152,7 +152,7 @@
                   </div>
                   </el-form-item>
                   <el-form-item>
-                    <el-button style="float: right" @click="onsubmit" >确认提交</el-button>
+                    <el-button style="float: right" @click.native="onsubmit" >确认提交</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -182,18 +182,18 @@
         return {
           list: [
             {
-              ques_id: '1',
-              user_id: '1',
-              ques_title: 'hhh',
+              quesId: '1',
+              userId: '1',
+              quesTitle: 'hhh',
               name:'张三',
-              ques_time: '2011',
-              ques_content:'奇葩说杨奇函每日一省',
-              ques_ans_state: '1',
-              ques_state: '2',
+              quesTime: '2011',
+              quesContent:'奇葩说杨奇函每日一省',
+              quesAnsState: '1',
+              quesState: '2',
             },
           ],
           answerForm:{
-            a_title: 'list.ques_title',
+            a_title: 'list.quesTitle',
             a_content:'',
           },
           editorOption: {
@@ -231,15 +231,15 @@
           this.textareText = id
         },
         getData(id){
-          this.axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo',
+          this.axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo',
             {
               params:{
-                ques_id:this.id
+                quesId:this.id
               }
             })
             .then((response)=>{
-              console.log(response);
-              this.list=response.data.result[0];
+              console.log(response.data);
+              this.list=response.data;
             //console.log(response.data.result);
             })
             .catch((error)=>{

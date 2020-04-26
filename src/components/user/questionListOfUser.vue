@@ -18,11 +18,11 @@
       class="questionList"
       :data="qListData"
       style="width: 100%"
-      :default-sort = "{prop: 'ques_time', order: 'descending'}">
+      :default-sort = "{prop: 'quesTime', order: 'descending'}">
 
       <el-table-column
         sortable
-        prop="ques_id"
+        prop="quesId"
         label="问题id"
         header-align="left"
         align="left"
@@ -32,7 +32,7 @@
 
       <el-table-column
         sortable
-        prop="ques_title"
+        prop="quesTitle"
         label="问题标题"
         header-align="left"
         align="left"
@@ -42,7 +42,7 @@
 
       <el-table-column
         sortable
-        prop="ques_time"
+        prop="quesTime"
         label="发布的最新时间"
         header-align="left"
         align="left"
@@ -52,7 +52,7 @@
 
       <el-table-column
         sortable
-        prop="ques_ans_state"
+        prop="quesAnsState"
         label="问题解决状态"
         header-align="left"
         align="left"
@@ -61,7 +61,7 @@
 
       <el-table-column
         sortable
-        prop="ques_state"
+        prop="quesState"
         label="问题状态"
         header-align="left"
         align="left"
@@ -94,25 +94,25 @@
 <script>
   var listJson = {
     qListData: [{
-      ques_id: '1',
-      ques_title: 'hhh',
-      ques_time: '2011',
-      ques_ans_state: '1',
-      ques_state: '2',
+      quesId: '1',
+      quesTitle: 'hhh',
+      quesTime: '2011',
+      quesAnsState: '1',
+      quesState: '2',
     },
       {
-        ques_id: '2',
-        ques_title: 'yyy',
-        ques_time: '2016',
-        ques_ans_state: '1',
-        ques_state: '2',
+        quesId: '2',
+        quesTitle: 'yyy',
+        quesTime: '2016',
+        quesAnsState: '1',
+        quesState: '2',
       },
       {
-        ques_id: '3',
-        ques_title: 'ttt',
-        ques_time: '2014',
-        ques_ans_state: '1',
-        ques_state: '2',
+        quesId: '3',
+        quesTitle: 'ttt',
+        quesTime: '2014',
+        quesAnsState: '1',
+        quesState: '2',
       }],
   }
   export default {
@@ -142,7 +142,7 @@
       },
       getqListData: function () {
         let qListData = this.data.filter((item,index) =>
-          item.ques_title.includes(this.search_input)
+          item.quesTitle.includes(this.search_input)
         )
         this.qListData=qListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)

@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 570px; border: 1px solid #eee">
+  <el-container style="height: 560px; border: 1px solid #eee">
     <el-aside width="200px" >
       <el-menu :unique-opened="true" :default-active="$route.path"            @select="handleSelect">
         <el-submenu index="1">

@@ -9,18 +9,18 @@
         <a style="width:100%;display: block;position: relative;background-color: lightcoral; color: #fff;">最新内容</a>
       </div>
       <div class="time_order">
-        <ul class="list" v-for="item in time_order_list" style="margin:0px;list-style: none;">
+        <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
+                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
+                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesContent}}</router-link>
               </div>
               <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
                 <div class="name" style="float: left">
-                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{u_id:item.user_id}}">{{item.name}}</router-link>
+                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{u_id:item.userId}}">{{item.name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
                   <span>{{item.ques_time}}</span>
@@ -43,10 +43,10 @@
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.ques_id}}">{{item.ques_title}}</router-link>
+                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
-                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.ques_id}}">{{item.ques_content}}</router-link>
+                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesContent}}</router-link>
               </div>
             </div>
           </li>
@@ -63,36 +63,36 @@
     data() {
       return {
         list:[{
-          ques_id: '1',
-          user_id: '1',
-          ques_title: 'hhh',
+          quesId: '1',
+          userId: '1',
+          quesTitle: 'hhh',
           name:'张三',
-          ques_time: '2011',
-          ques_content:'奇葩说杨奇函每日一省',
-          ques_ans_state: '1',
-          ques_state: '2',
+          quesTime: '2011',
+          quesContent:'奇葩说杨奇函每日一省',
+          quesAnsAtate: '1',
+          quesState: '2',
           ques_col_num: '3',
           },
           {
-            ques_id: '2',
-            user_id: '3',
-            ques_title: 'yyy',
+            quesId: '2',
+            userId: '3',
+            quesTitle: 'yyy',
             name:'李四',
-            ques_time: '2016',
-            ques_content:'奇葩说杨奇函每日两省',
-            ques_ans_state: '1',
-            ques_state: '2',
+            quesTime: '2016',
+            quesContent:'奇葩说杨奇函每日两省',
+            quesAnsState: '1',
+            quesState: '2',
             ques_col_num: '0',
           },
           {
-            ques_id: '3',
-            user_id: '9',
-            ques_title: 'ttt',
+            quesId: '3',
+            userId: '9',
+            quesTitle: 'ttt',
             name:'王五',
-            ques_time: '2014',
-            ques_content:'奇葩说杨奇函每日三省',
-            ques_ans_state: '1',
-            ques_state: '2',
+            quesTime: '2014',
+            quesContent:'奇葩说杨奇函每日三省',
+            quesAnsState: '1',
+            quesState: '2',
             ques_col_num: '2',
           }
           ],
@@ -100,13 +100,18 @@
         good_order_list:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
-        ques_time: '',
+        quesTime: '',
         ques_col_num:'',
       }
     },
     methods: {
       getData() {
-        this.$axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo'
+        this.$axios.post('/online_answer/admin/searchQuestionsByState',
+          {
+            params: {
+              quesState: '3',
+            }
+          }
         ).then((response) => {
           console.log(response.data);
           this.list = response.data;
@@ -121,8 +126,8 @@
       },
       time_order_sort(){
         this.order = false;
-        this.sortType = this.time_order_list.ques_time;
-        this.time_order_list.time_order_sort(this.compare(this.time_order_list.ques_time));
+        this.sortType = this.time_order_list.quesTime;
+        this.time_order_list.time_order_sort(this.compare(this.time_order_list.quesTime));
       },
       good_order_sort(){
         this.order = false;

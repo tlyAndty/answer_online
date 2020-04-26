@@ -31,8 +31,11 @@
       <el-form-item label="邮箱" prop="mail">
         <el-input class="text" placeholder=data.mail v-model="infoForm.mail" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pwd">
+      <el-form-item label="旧密码" prop="pwd">
         <el-input class="text" placeholder=data.pwd v-model.number="infoForm.pwd"></el-input>
+      </el-form-item>
+      <el-form-item label="新密码" prop="newPwd">
+        <el-input class="text" placeholder=data.newPwd v-model.number="infoForm.newPwd"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('infoForm')">修改</el-button>
@@ -75,28 +78,26 @@
         var validatePass2 = (rule, value, callback) => {
           if (value === '') {
             callback(new Error('请再次输入密码'));
-          } else if (value !== this.infoForm.pass) {
-            callback(new Error('两次输入密码不一致!'));
+          } else if (value == this.infoForm.pwd) {
+            callback(new Error('新密码不能与旧密码相同!'));
           } else {
             callback();
           }
         };
         return {
           infoForm: {
-            pass: '',
-            checkPass: '',
-            age: ''
+            name: '',
+            mail: '',
+            pwd: '',
+            newPwd:'',
           },
           rules: {
-            pass: [
+            pwd: [
               { validator: validatePass, trigger: 'blur' }
             ],
-            checkPass: [
+            newPwd: [
               { validator: validatePass2, trigger: 'blur' }
             ],
-            age: [
-              { validator: checkAge, trigger: 'blur' }
-            ]
           },
           imageUrl:'',
         };
@@ -105,6 +106,12 @@
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
+              this.$axios.post('http://localhost:8080/online_answer/user/modifyUserInfo',
+                {
+                  params: {
+                    quesState: '3',
+                  }
+                })
               alert('submit!');
             } else {
               console.log('error submit!!');

@@ -16,7 +16,7 @@
       <div class="u_info_detail" style="margin-right:80px;margin-left:80px;margin-top:5px;border: 1px solid #f4f4f4;background-color: #fbfdf8">
         <div class="detail_bar" style="">
           <div class="function_choice" style="">
-            <el-tabs v-model="activeName" @tab-click="handleClick" stretch="true" style="" >
+            <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true" >
               <el-tab-pane label="提问" name="first" ></el-tab-pane>
               <el-tab-pane label="回答" name="second"></el-tab-pane>
             </el-tabs>
@@ -29,12 +29,12 @@
               class="questionList"
               :data="qListData"
               style="width: 100%"
-              :default-sort = "{prop: 'ques_time', order: 'descending'}"
+              :default-sort = "{prop: 'quesTime', order: 'descending'}"
               v-if="q_flag"
               >
 
               <el-table-column
-                prop="ques_title"
+                prop="quesTitle"
                 label="问题标题"
                 header-align="left"
                 align="left"
@@ -43,7 +43,7 @@
               </el-table-column>
 
               <el-table-column
-                prop="ques_time"
+                prop="quesTime"
                 label="发布的最新时间"
                 header-align="left"
                 align="left"
@@ -52,7 +52,7 @@
 
 
               <el-table-column
-                prop="ques_ans_state"
+                prop="quesAnsState"
                 label="问题解决状态"
                 header-align="left"
                 align="left"
@@ -60,7 +60,7 @@
               </el-table-column>
 
               <el-table-column
-                prop="ques_state"
+                prop="quesState"
                 label="问题状态"
                 header-align="left"
                 align="left"
@@ -120,7 +120,7 @@
         </div>
       </div>
     </div>
-    <div class="cont" v-html="list.ques_content"></div>
+    <div class="cont" v-html="list.quesContent"></div>
   </div>
 
 </template>
@@ -133,7 +133,7 @@
         u_info: [
           {
             mail:'1@qq.com',
-            name:'u1',
+            name:'李四',
           },
         ],
         list:[
@@ -143,25 +143,25 @@
         q_flag: false,
         a_flag: false,
         qListData: [{
-          ques_id: '1',
-          ques_title: 'hhh',
-          ques_time: '2011',
-          ques_ans_state: '1',
-          ques_state: '2',
+          quesId: '1',
+          quesTitle: 'hhh',
+          quesTime: '2011',
+          quesAnsState: '1',
+          quesState: '2',
         },
           {
-            ques_id: '2',
-            ques_title: 'yyy',
-            ques_time: '2016',
-            ques_ans_state: '1',
-            ques_state: '2',
+            quesId: '2',
+            quesTitle: 'yyy',
+            quesTime: '2016',
+            quesAnsState: '1',
+            quesState: '2',
           },
           {
-            ques_id: '3',
-            ques_title: 'ttt',
-            ques_time: '2014',
-            ques_ans_state: '1',
-            ques_state: '2',
+            quesId: '3',
+            quesTitle: 'ttt',
+            quesTime: '2014',
+            quesAnsState: '1',
+            quesState: '2',
           }],
         aListData: [{
           ans_id:'1',
@@ -187,6 +187,7 @@
             bad_count:'2',
             ans_state:'0',
           }],
+        activeName: 'first'
       }
     },
     created(){
@@ -202,15 +203,15 @@
         this.textareText = id
       },
       getData(id){
-        this.axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo',
+        this.axios.get('http://localhost:8080/online_answer/user/displayPersonalCollections',
           {
             params:{
-              user_id:this.id
+              userId:this.id
             }
           })
           .then((response)=>{
             console.log(response);
-            this.u_info=response.data.result[0];
+            this.u_info=response.data.result;
             //console.log(response.data.result);
           })
           .catch((error)=>{
