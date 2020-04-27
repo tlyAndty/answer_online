@@ -72,7 +72,7 @@
           quesAnsAtate: '1',
           quesState: '2',
           ques_col_num: '3',
-          },
+        },
           {
             quesId: '2',
             userId: '3',
@@ -95,7 +95,7 @@
             quesState: '2',
             ques_col_num: '2',
           }
-          ],
+        ],
         time_order_list:[],
         good_order_list:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
@@ -119,7 +119,6 @@
           this.good_order_list = this.list;
           this.time_order_sort();
           this.good_order_sort();
-
         }).catch((error) => {
           console.log(error);
         });
@@ -145,14 +144,12 @@
         return function(a,b){
           let val1 = a[attr];
           let val2 = b[attr];
-
           if(that.order){
             if(that.sortType == 'time'){            // 如果是时间就转换成时间格式
               return new Date(val2.replace(/-/,'/')) - new Date(val1.replace(/-/,'/'));
             }else{
               return val2 - val1;
             }
-
           }else{
             if(that.sortType == 'time'){
               return new Date(val1.replace(/-/,'/')) - new Date(val2.replace(/-/,'/'));
@@ -163,7 +160,7 @@
         }
       }
     },
-   created(){
+    created(){
       this.getData();
     }
   }

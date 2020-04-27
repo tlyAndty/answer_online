@@ -182,7 +182,7 @@
       data() {
         return {
           list: [
-            {
+            {/*
               quesId: '1',
               userId: '1',
               quesTitle: 'hhh',
@@ -190,7 +190,7 @@
               quesTime: '2011',
               quesContent:'奇葩说杨奇函每日一省',
               quesAnsState: '1',
-              quesState: '2',
+              quesState: '2',*/
             },
           ],
           answerForm:{

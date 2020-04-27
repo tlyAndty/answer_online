@@ -53,7 +53,7 @@
         <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
       </span>
       <span v-else style="position:relative; left: 70%; top:4px" >
-        <a id="login_link" href="/login" style="color: white;text-decoration:none">登录</a>
+        <a id="login_link" href="/userlogin" style="color: white;text-decoration:none">登录</a>
         /
         <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
         <!--el-button  @click="login" >登录</-el-button> /<el-button  @click="register" >注册</el-button-->
