@@ -9,7 +9,7 @@
         <a style="width:100%;display: block;position: relative;background-color: lightcoral; color: #fff;">最新内容</a>
       </div>
       <div class="time_order">
-        <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
+        <ul class="list" v-for="item in time_order_list" style="margin:0px;list-style: none;">
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
@@ -39,7 +39,7 @@
           <span class="line"></span>
           <span class="txt">最热推荐</span>
         </h3>
-        <ul class="list" v-for="item in list" style="margin:0px;list-style: none;">
+        <ul class="list" v-for="item in good_order_list" style="margin:0px;list-style: none;">
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
@@ -63,7 +63,7 @@
     name: 'mainpage',
     data() {
       return {
-        list:[{
+        list:[/*{
           quesId: '1',
           userId: '1',
           quesTitle: 'hhh',
@@ -95,14 +95,10 @@
             quesAnsState: '1',
             quesState: '2',
             ques_col_num: '2',
-          }
+          }*/
         ],
-        time_order_list:[],
-        good_order_list:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
-        quesTime: '',
-        ques_col_num:'',
       }
     },
     methods: {
@@ -119,54 +115,37 @@
         ).then((response) => {
           console.log(response.data.data);
           this.list = response.data.data;
-          this.time_order_list = this.list;
-          this.good_order_list = this.list;
-          this.time_order_sort();
-          this.good_order_sort();
         }).catch((error) => {
           console.log(error);
         });
       },
-      time_order_sort(){
-        this.order = false;
-        this.sortType = this.time_order_list.quesTime;
-        this.time_order_list.time_order_sort(this.compare(this.time_order_list.quesTime));
+      sortByTime(array,key){
+        return array.sort(function(a,b){
+          var x = a[key];
+          var y = b[key];
+          return ((y<x)?-1:(x>y)?1:0)   //从小到大排序
+        })
       },
-      good_order_sort(){
-        this.order = false;
-        this.sortType = this.good_order_list.ques_col_num;
-        this.good_order_list.good_order_sort(this.compare(this.good_order_list.ques_col_num));
-      },
-      /*sort(type){                     // 排序
-        this.order = !this.order;		// 更改为 升序或降序
-        this.sortType = type;
-        this.list.sort(this.compare(type));
-        // 调用下面 compare 方法 并传值
-      },*/
-      compare(attr){                  // 排序方法
-        let that = this;
-        return function(a,b){
-          let val1 = a[attr];
-          let val2 = b[attr];
-          if(that.order){
-            if(that.sortType == 'time'){            // 如果是时间就转换成时间格式
-              return new Date(val2.replace(/-/,'/')) - new Date(val1.replace(/-/,'/'));
-            }else{
-              return val2 - val1;
-            }
-          }else{
-            if(that.sortType == 'time'){
-              return new Date(val1.replace(/-/,'/')) - new Date(val2.replace(/-/,'/'));
-            }else{
-              return val1 - val2;
-            }
-          }
-        }
+      sortByGood(array,key){
+        return array.sort(function(b,a){
+          var x = a[key];
+          var y = b[key];
+          return ((y<x)?-1:(x>y)?1:0)   //从小到大排序
+        })
       }
+
     },
     created(){
       this.getData();
     },
+    computed:{
+      time_order_list:function(){
+        return this.sortByTime(this.list,'quesTime')
+      },
+      good_order_list:function(){
+        return this.sortByGood(this.list,'quesColNum')
+      }
+    }
   }
 </script>
 
