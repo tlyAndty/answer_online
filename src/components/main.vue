@@ -23,7 +23,7 @@
                   <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{u_id:item.userId}}">{{item.name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
-                  <span>{{item.ques_time}}</span>
+                  <span>{{item.quesTime}}</span>
                 </div>
               </div>
             </div>
@@ -106,7 +106,7 @@
     },
     methods: {
       getData() {
-        this.$axios.post('/online_answer/admin/searchQuestionsByState',
+        this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
           {
             params: {
               quesState: '3',

@@ -4,8 +4,21 @@
       <span style="font-size: 30px; position:relative; top:5px ">
         探源问答
       </span>
-      <span style="position:relative;left: 30px;top:4px">
+      <span v-if="user" style="position:relative;left: 30px;top:4px">
         <el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
+                                               width: 100px;
+                                               height: 36px;
+                                               font-size: 14px;
+                                               background-color: lightcoral;
+                                               border-radius:5px;
+                                               text-align: center;
+                                               color: white;
+                                               border-color: white;">
+          我要提问
+        </el-button>
+      </span>
+      <span v-else style="position:relative;left: 30px;top:4px">
+        <el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
                                                font-size: 14px;
@@ -38,7 +51,6 @@
         <a id="main_link" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
-        <!--el-button  @click="logout">注销</el-button-->
       </span>
       <span v-else style="position:relative; left: 70%; top:4px" >
         <a id="login_link" href="/login" style="color: white;text-decoration:none">登录</a>
