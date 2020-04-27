@@ -23,7 +23,7 @@
                   <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{u_id:item.userId}}">{{item.name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
-                  <span>{{item.quesTime}}</span>
+                  <span>{{item.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
                 </div>
               </div>
             </div>

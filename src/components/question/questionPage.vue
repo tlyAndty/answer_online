@@ -7,7 +7,7 @@
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{q.quesTitle}}</div>
               <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{q.quesContent}}</div>
-              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.quesTime}}</div>
+              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">编辑于：{{q.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</div>
               <div class="tags" style="width:850px">
                 <a href="">vue.js</a>
                 <a href="">ajax</a>
@@ -172,7 +172,6 @@
   import 'quill/dist/quill.bubble.css'
   import qs from 'qs'
   import '../../assets/css/font.css'
-  import moment from 'moment'
 
     export default {
       name: "questionPage",
