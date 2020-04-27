@@ -26,11 +26,9 @@
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <i class="el-icon-thumb"></i>
                 <em>0</em>
-
                 <!--i class="el-icon-share"></i>
                 <span class="interval">|</span>
                 <i class="el-icon-s-comment"></i-->
-
               </div>
               <!--div class="headshot" style="margin-left:60%;width:40%">
                 <img src="../assets/headshot.png" style="width: auto;height: auto;max-width: 40px;max-height: 40px;margin-left: 180px">
