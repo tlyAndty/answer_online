@@ -51,7 +51,6 @@
         <a id="main_link" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
-        <!--el-button  @click="logout">注销</el-button-->
       </span>
       <span v-else style="position:relative; left: 70%; top:4px" >
         <a id="login_link" href="/login" style="color: white;text-decoration:none">登录</a>
