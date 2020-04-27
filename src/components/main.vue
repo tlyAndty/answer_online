@@ -58,6 +58,7 @@
 
 <script>
   import Axios from 'axios';
+  import qs from 'qs';
   export default {
     name: 'mainpage',
     data() {
@@ -107,14 +108,17 @@
     methods: {
       getData() {
         this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
-          {
-            params: {
-              quesState: '3',
-            }
-          }
+         // {
+         //   params: {
+         //     quesState: '3',
+         //   }
+         // }
+          qs.stringify({
+            quesState: '3',
+          })
         ).then((response) => {
-          console.log(response.data);
-          this.list = response.data;
+          console.log(response.data.data);
+          this.list = response.data.data;
           this.time_order_list = this.list;
           this.good_order_list = this.list;
           this.time_order_sort();
@@ -162,7 +166,7 @@
     },
     created(){
       this.getData();
-    }
+    },
   }
 </script>
 
