@@ -131,7 +131,6 @@
       },*/
       methods: {
         pageList() {
-          // 发请求拿到数据并暂存全部数据,方便之后操作
           this.data = listJson.rListData
           this.getrListData()
         },
