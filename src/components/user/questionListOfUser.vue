@@ -47,6 +47,9 @@
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="qListData">
+          {{ qListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+        </template>
       </el-table-column>
 
 
@@ -92,8 +95,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
   var listJson = {
-    qListData: [{
+    qListData: [/*{
       quesId: '1',
       quesTitle: 'hhh',
       quesTime: '2011',
@@ -113,7 +117,7 @@
         quesTime: '2014',
         quesAnsState: '1',
         quesState: '2',
-      }],
+      }*/],
   }
   export default {
     name: "questionListOfUser",
@@ -141,6 +145,17 @@
         this.getqListData()
       },
       getqListData: function () {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+          qs.stringify({
+            userID:'1',
+            quesState: '3',
+          })
+        ).then((response) => {
+          console.log(response.data.data);
+          this.qListData = response.data.data;
+        }).catch((error) => {
+          console.log(error);
+        });
         let qListData = this.data.filter((item,index) =>
           item.quesTitle.includes(this.search_input)
         )

@@ -22,7 +22,7 @@
 
       <el-table-column
         sortable
-        prop="com_id"
+        prop="comId"
         label="评论id"
         header-align="left"
         align="left"
@@ -32,7 +32,7 @@
 
       <el-table-column
         sortable
-        prop="com_content"
+        prop="comContent"
         label="评论内容"
         header-align="left"
         align="left"
@@ -42,18 +42,21 @@
 
       <el-table-column
         sortable
-        prop="com_time"
+        prop="comTime"
         label="评论时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="cListData">
+          {{ cListData.row.comTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+         </template>
       </el-table-column>
 
 
 
       <el-table-column
         sortable
-        prop="com_state"
+        prop="comState"
         label="评论状态"
         header-align="left"
         align="left"
@@ -84,8 +87,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
   var listJson = {
-    cListData: [{
+    cListData: [/*{
       com_id:'1',
       com_content:'内容s',
       com_time:'2020-03-27 13:07:40',
@@ -102,7 +106,7 @@
         com_content:'内容i',
         com_time:'2020-03-26 13:07:40',
         com_state:'0',
-      }],
+      }*/],
   }
   export default {
     name: "commentList",
@@ -130,6 +134,16 @@
         this.getcListData()
       },
       getcListData:function() {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchCommentsByUserId',
+          qs.stringify({
+            userId: '2',
+          })
+        ).then((response) => {
+          console.log(response.data.data);
+          this.cListData = response.data.data;
+        }).catch((error) => {
+          console.log(error);
+        });
         let cListData = this.data.filter((item,index) =>
           item.com_content.includes(this.search_input)
         )
