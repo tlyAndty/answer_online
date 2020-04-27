@@ -17,11 +17,11 @@
       class="userList"
       :data="uListData"
       style="width: 100%"
-      :default-sort = "{prop: 'add_time', order: 'descending'}">
+      :default-sort = "{prop: 'addTime', order: 'descending'}">
 
       <el-table-column
         sortable
-        prop="user_id"
+        prop="userId"
         label="用户id"
         header-align="left"
         align="left"
@@ -59,11 +59,14 @@
 
       <el-table-column
         sortable
-        prop="add_time"
+        prop="addTime"
         label="注册时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="uListData">
+          {{ uListData.row.addTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -89,8 +92,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
     var listJson={
-      uListData:[{
+      uListData:[/*{
         user_id:'1',
         mail:'1@qq.com',
         name:'小明',
@@ -110,7 +114,7 @@
           name:'小王',
           state:'0',
           add_time:'2020-03-27 13:07:40',
-        }],
+        }*/],
     }
     export default {
       name: "userList",
@@ -135,6 +139,16 @@
           this.getuListData()
         },
         getuListData: function () {
+          this.$axios.post('http://localhost:8080/online_answer/admin/searchUsersByState',
+            qs.stringify({
+              userState: '4',
+            })
+          ).then((response) => {
+            console.log(response.data.data);
+            this.uListData = response.data.data;
+          }).catch((error) => {
+            console.log(error);
+          });
           let uListData = this.data.filter((item,index) =>
             item.name.includes(this.search_input)
           )
@@ -178,7 +192,6 @@
           window.location.href='/userPage'
           console.log(val)
         },
-
       },
     }
 </script>
