@@ -130,24 +130,33 @@
         limit: 5,
         total: null,
         page:1,
+        id:'',
       }
     },
     /*mounted() {
       this.getqListData();
     },*/
+    watch:{
+      '$route':'getParams'
+    },
     created() {
       this.pageList()
     },
     methods: {
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的u参数=="+this.id)
+      },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
         this.data = listJson.qListData
+        this.getParams()
         this.getqListData()
       },
       getqListData: function () {
         this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
           qs.stringify({
-            userId:'1',
+            userId: this.id,
             quesState: '3',
           })
         ).then((response) => {

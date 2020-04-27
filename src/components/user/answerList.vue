@@ -143,21 +143,27 @@
         limit: 5,
         total: null,
         page:1,
+        id:'',
       }
     },
     created() {
       this.pageList()
     },
     methods: {
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的a参数=="+this.id)
+      },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
         this.data = listJson.aListData
+        this.getParams()
         this.getaListData()
       },
       getaListData:function() {
         this.$axios.post('http://localhost:8080/online_answer/user/searchAnswersByUserId',
           qs.stringify({
-            userId: '1',
+            userId: this.id,
           })
         ).then((response) => {
           console.log(response.data.data);

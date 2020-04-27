@@ -67,6 +67,8 @@
 </template>
 
 <script>
+  import userGuide from "./components/user/userGuide";
+
   export default {
     name: 'App',
     methods:{
@@ -89,7 +91,7 @@
         //this.$store.state.user = 'test'
         return this.$store.state.user
       }
-    }
+    },
   }
 </script>
 

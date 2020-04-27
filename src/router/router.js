@@ -106,6 +106,10 @@ export default new Router({
       //redirect:'/main',
       children:[
         {
+          path: ':user_id',
+          component: userGuide,
+        },
+        {
           path:'/questionListOfUser',
           name:'questionListOfUser',
           component:questionListOfUser,

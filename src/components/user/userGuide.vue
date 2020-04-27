@@ -1,6 +1,6 @@
 <template>
   <el-container style="height: 560px; border: 1px solid #eee">
-    <el-aside width="200px" >
+    <el-aside width="200px"  >
       <el-menu :unique-opened="true" :default-active="$route.path"            @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>问题管理</template>
@@ -36,36 +36,48 @@
 
         <router-view></router-view>
       </el-main>
-
-
-
   </el-container>
-
 </template>
 
 <script>
   export default {
     name: "userGuide",
     data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
       return {
-        tableData: Array(20).fill(item)
+        id:'',
       }
     },
+    mounted(){
+      this.getParams();
+    },
+    watch:{
+      '$route':'getParams'
+    },
     methods:{
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的参数=="+this.id)
+      },
       handleSelect(path){
-        this.$router.push(path)
+        this.$router.push({path:path,query:{user_id: this.id}})
       },
     }
   };
 </script>
 
-<style>
-
+<style scoped>
+  html,body{
+    /*设置内部填充为0，几个布局元素之间没有间距*/
+    padding: 0px;
+    /*外部间距也是如此设置*/
+    margin: 0px;
+    /*统一设置高度为100%*/
+    height: 100%;
+  }
+  .header{
+    background-color: lightcoral;
+    color: white;
+  }
   .el-aside {
     color: #333;
   }
