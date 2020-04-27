@@ -21,7 +21,7 @@
 
       <el-table-column
         sortable
-        prop="ques_id"
+        prop="quesId"
         label="问题id"
         header-align="left"
         align="left"
@@ -31,7 +31,7 @@
 
       <el-table-column
         sortable
-        prop="ques_title"
+        prop="quesTitle"
         label="问题标题"
         header-align="left"
         align="left"
@@ -41,16 +41,19 @@
 
       <el-table-column
         sortable
-        prop="ques_time"
+        prop="quesTime"
         label="发布的最新时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="qListData">
+          {{ qListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+        </template>
       </el-table-column>
 
       <el-table-column
         sortable
-        prop="ques_ans_state"
+        prop="quesAnsState"
         label="问题解决状态"
         header-align="left"
         align="left"
@@ -59,7 +62,7 @@
 
       <el-table-column
         sortable
-        prop="ques_state"
+        prop="quesState"
         label="问题状态"
         header-align="left"
         align="left"
@@ -89,8 +92,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
   var listJson = {
-    qListData: [{
+    qListData: [/*{
       ques_id: '1',
       ques_title: 'hhh',
       ques_time: '2011',
@@ -110,7 +114,7 @@
         ques_time: '2014',
         ques_ans_state: '1',
         ques_state: '2',
-      }],
+      }*/],
   }
   export default {
     name: "questionListOfAdmin",
@@ -135,6 +139,16 @@
         this.getqListData()
       },
       getqListData: function () {
+        this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
+          qs.stringify({
+            quesState: '3',
+          })
+        ).then((response) => {
+          console.log(response.data.data);
+          this.qListData = response.data.data;
+        }).catch((error) => {
+          console.log(error);
+        });
         let qListData = this.data.filter((item,index) =>
           item.ques_title.includes(this.search_input)
         )

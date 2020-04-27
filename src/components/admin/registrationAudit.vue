@@ -49,11 +49,14 @@
 
       <el-table-column
         sortable
-        prop="add_time"
+        prop="addTime"
         label="注册时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="rListData">
+          {{ rListData.row.addTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -106,7 +109,8 @@
       name: "registrationAudit",
       data() {
         return {
-          rListData:[],
+          ulistData:[],
+          //rListData:[],
           data: [],
           search_input: '',
           timeout: null,
@@ -118,6 +122,13 @@
       created() {
         this.pageList()
       },
+      /*computed(){
+        rlistData:function f() {
+          return this.ulistData.filter(function (row) {
+            return row.state == 0;
+          })
+        }
+      },*/
       methods: {
         pageList() {
           // 发请求拿到数据并暂存全部数据,方便之后操作
@@ -125,6 +136,16 @@
           this.getrListData()
         },
         getrListData: function () {
+          this.$axios.post('http://localhost:8080/online_answer/admin/searchUsersByState',
+            qs.stringify({
+              userState: '4',
+            })
+          ).then((response) => {
+            console.log(response.data.data);
+            this.uListData = response.data.data;
+          }).catch((error) => {
+            console.log(error);
+          });
           let rListData = this.data.filter((item,index) =>
             item.name.includes(this.search_input)
           )
