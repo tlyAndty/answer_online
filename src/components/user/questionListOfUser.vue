@@ -147,7 +147,7 @@
       getqListData: function () {
         this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
           qs.stringify({
-            userID:'1',
+            userId:'1',
             quesState: '3',
           })
         ).then((response) => {
