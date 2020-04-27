@@ -1,6 +1,6 @@
 <template>
-  <el-container style="height: 560px; border: 1px solid #eee">
-    <el-aside width="200px"  >
+  <el-container style="height: 565px; border: 1px solid #eee;">
+    <el-aside width="200px" >
       <el-menu :unique-opened="true" :default-active="$route.path"            @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>问题管理</template>
@@ -32,7 +32,7 @@
         <el-menu-item index="personalInformationOfUser"><i class="el-icon-setting"></i>个人信息</el-menu-item>
       </el-menu>
     </el-aside>
-      <el-main style="background-color: #fbfdf8">
+    <el-main style="background-color: #fbfdf8">
 
         <router-view></router-view>
       </el-main>
@@ -47,7 +47,7 @@
         id:'',
       }
     },
-    mounted(){
+    created(){
       this.getParams();
     },
     watch:{

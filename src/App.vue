@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container direction="vertical">
     <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
       <span style="font-size: 30px; position:relative; top:5px ">
         探源问答
