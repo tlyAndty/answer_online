@@ -103,7 +103,7 @@ export default new Router({
       meta:{
         keepAlive:true
       },
-      //redirect:'/main',
+      //redirect:'/',
       children:[
         {
           path: ':user_id',
