@@ -95,7 +95,7 @@ export default {
     padding-top: 5%;
     position: relative;
     left: 52%;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 8em;
     letter-spacing: 0.1em;
     font-family: STHupo, serif;

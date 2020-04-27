@@ -170,8 +170,9 @@
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
-
+  import qs from 'qs'
   import '../../assets/css/font.css'
+  import moment from 'moment'
 
     export default {
       name: "questionPage",
@@ -221,6 +222,10 @@
       created(){
         this.getParams();
       },
+      mounted() {
+        console.log("mounted中getdata的id" + this.$route.query.q_id)
+        this.getData(this.$route.query.q_id);
+      },
       watch:{
         '$route':'getParams'
       },
@@ -231,15 +236,20 @@
           this.textareText = id
         },
         getData(id){
-          this.axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo',
-            {
-              params:{
-                quesId:this.id
-              }
+          this.$axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo',
+            // {
+            //   params:{
+            //     quesId:this.id
+            //   }
+            // })
+            qs.stringify({
+              quesId: id
             })
-            .then((response)=>{
+          ).then((response) => {
+            console.log("quesId" + id)
               console.log(response.data);
               this.list=response.data;
+            // this.list.quesTime = this.filter().datetranform(response.data.quesTime);
             //console.log(response.data.result);
             })
             .catch((error)=>{
@@ -285,7 +295,12 @@
         }
       },
 
+
     }
+
+  // Vue.filter('dateFormat',function(quesTime){
+  //   return moment(quesTime).format("YYYY-MM-DD HH:mm:ss");
+  // })
 </script>
 
 <style scoped>
