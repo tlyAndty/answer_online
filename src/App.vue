@@ -4,8 +4,21 @@
       <span style="font-size: 30px; position:relative; top:5px ">
         探源问答
       </span>
-      <span style="position:relative;left: 30px;top:4px">
+      <span v-if="user" style="position:relative;left: 30px;top:4px">
         <el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
+                                               width: 100px;
+                                               height: 36px;
+                                               font-size: 14px;
+                                               background-color: lightcoral;
+                                               border-radius:5px;
+                                               text-align: center;
+                                               color: white;
+                                               border-color: white;">
+          我要提问
+        </el-button>
+      </span>
+      <span v-else style="position:relative;left: 30px;top:4px">
+        <el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
                                                font-size: 14px;
