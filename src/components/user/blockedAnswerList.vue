@@ -18,11 +18,11 @@
       class="blockedAnswerList"
       :data="baListData"
       style="width: 100%"
-      :default-sort = "{prop: 'ans_time', order: 'descending'}">
+      :default-sort = "{prop: 'ansTime', order: 'descending'}">
 
       <el-table-column
         sortable
-        prop="ans_id"
+        prop="ansId"
         label="回答id"
         header-align="left"
         align="left"
@@ -32,7 +32,7 @@
 
       <el-table-column
         sortable
-        prop="ans_content"
+        prop="ansContent"
         label="回答内容"
         header-align="left"
         align="left"
@@ -42,16 +42,19 @@
 
       <el-table-column
         sortable
-        prop="ans_time"
+        prop="ansTime"
         label="回答发布时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="baListData">
+          {{ baListData.row.ansTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+        </template>
       </el-table-column>
 
       <el-table-column
         sortable
-        prop="good_count"
+        prop="goodCount"
         label="赞的个数"
         header-align="left"
         align="left"
@@ -60,7 +63,7 @@
 
       <el-table-column
         sortable
-        prop="bad_count"
+        prop="badCount"
         label="踩的个数"
         header-align="left"
         align="left"
@@ -69,7 +72,7 @@
 
       <el-table-column
         sortable
-        prop="ans_state"
+        prop="ansState"
         label="回答的状态"
         header-align="left"
         align="left"
@@ -86,7 +89,7 @@
             <el-button type="text" @click="deleteUser(scope.row.phone)">删除</el-button>
           </template>
         </el-table-column>
-        
+
     </el-table>
     </div>
 
@@ -100,8 +103,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
   var listJson = {
-    baListData: [{
+    baListData: [/*{
       ans_id:'1',
       ans_content:'内容a',
       ans_time:'2020-03-27 13:07:40',
@@ -124,7 +128,7 @@
         good_count:'1',
         bad_count:'2',
         ans_state:'0',
-      }],
+      }*/],
   }
   export default {
     name: "blockedAnswerList",
@@ -137,6 +141,7 @@
         limit: 5,
         total: null,
         page:1,
+        id:'',
       }
     },
     created() {
@@ -147,12 +152,34 @@
       this.getbaListData();
     },*/
     methods: {
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的a参数=="+this.id)
+      },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
         this.data = listJson.baListData
+        this.getParams()
         this.getbaListData()
       },
       getbaListData:function() {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswersByUserId',
+          qs.stringify({
+            userId: this.id,
+          })
+        ).then((response) => {
+          console.log(response.data.data);
+          this.aListData = response.data.data;
+          for(let item of this.aListData) {
+            if(item.ansState!=0){
+              console.log(item.userId)
+              this.baListData.push(item)
+              console.log(item)
+            }
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
         let baListData = this.data.filter((item,index) =>
           item.ans_content.includes(this.search_input)
         )
