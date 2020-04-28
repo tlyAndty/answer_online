@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <span style="font-size: 30px">个人信息</span>
-    <el-form :model="infoForm" status-icon :rules="rules" ref="infoForm" class="demo-infoForm" style="width: 400px; margin:20px auto;">
+    <el-form :model="user" status-icon :rules="rules" ref="infoForm" class="demo-infoForm" style="width: 400px; margin:20px auto;">
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
@@ -25,20 +25,20 @@
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="ID" prop="adminid">
-        <el-input class="text" placeholder=data.userid v-model="infoForm.userid" autocomplete="on"></el-input>
+      <el-form-item label="ID" prop="userid">
+        <el-input class="text" placeholder=data.userid v-model="user.userid" autocomplete="off" :readonly="true"></el-input>
       </el-form-item>
       <el-form-item label="名字" prop="name">
-        <el-input class="text" placeholder=data.name v-model="infoForm.name" autocomplete="off"></el-input>
+        <el-input class="text" placeholder=data.name v-model="user.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail">
-        <el-input class="text" placeholder=data.mail v-model="infoForm.mail" autocomplete="off"></el-input>
+        <el-input class="text" placeholder=data.mail v-model="user.mail" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="旧密码" prop="pwd">
-        <el-input class="text" placeholder=data.pwd v-model.number="infoForm.pwd"></el-input>
+        <el-input class="text" placeholder=data.pwd v-model.number="user.pwd" :readonly="true"></el-input>
       </el-form-item>
       <el-form-item label="新密码" prop="newPwd">
-        <el-input class="text" placeholder=data.newPwd v-model.number="infoForm.newPwd"></el-input>
+        <el-input class="text" placeholder=请输入新密码 v-model.number="user.newPwd"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('infoForm')">修改</el-button>
@@ -54,43 +54,17 @@
     export default {
         name: "personalInformationOfUser",
       data() {
-        var checkAge = (rule, value, callback) => {
-          if (!value) {
-            return callback(new Error('年龄不能为空'));
-          }
-          setTimeout(() => {
-            if (!Number.isInteger(value)) {
-              callback(new Error('请输入数字值'));
-            } else {
-              if (value < 18) {
-                callback(new Error('必须年满18岁'));
-              } else {
-                callback();
-              }
-            }
-          }, 1000);
-        };
         var validatePass = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('请输入密码'));
-          } else {
-            if (this.infoForm.checkPass !== '') {
-              this.$refs.infoForm.validateField('checkPass');
-            }
-            callback();
-          }
-        };
-        var validatePass2 = (rule, value, callback) => {
-          if (value === '') {
             callback(new Error('请再次输入密码'));
-          } else if (value == this.infoForm.pwd) {
+          } else if (value == this.user.pwd) {
             callback(new Error('新密码不能与旧密码相同!'));
           } else {
             callback();
           }
         };
         return {
-          infoForm: {
+          user: {
             userid:'',
             name: '',
             mail: '',
@@ -98,11 +72,8 @@
             newPwd:'',
           },
           rules: {
-            pwd: [
-              { validator: validatePass, trigger: 'blur' }
-            ],
             newPwd: [
-              { validator: validatePass2, trigger: 'blur' }
+              { validator: validatePass, trigger: 'blur' }
             ],
           },
           imageUrl:'',
@@ -127,21 +98,34 @@
           ).then((response) => {
             console.log("uData:",response.data.data);
             this.uData = response.data.data;
-            console.log("uname",this.data.name)
+            this.user.userid = this.uData.userId
+            this.user.name = this.uData.name
+            this.user.mail = this.uData.mail
+            this.user.pwd = this.uData.pwd
+            console.log("uname",this.uData.name)
           }).catch((error) => {
             console.log(error);
           });
         },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
+            console.log("formName:",this.user.name)
             if (valid) {
-              this.$axios.post('http://localhost:8080/online_answer/user/modifyUserInfo',
-                {
-                  params: {
-                    quesState: '3',
-                  }
+              this.$axios.post(
+                'http://localhost:8080/online_answer/user/modifyUserInfo',
+                qs.stringify({
+                  userId: this.user.userid,
+                  mail: this.user.mail,
+                  name: this.user.name,
+                  pwd: this.user.pwd,
+                  newPwd: this.user.newPwd,
                 })
-              alert('submit!');
+              ).then(response => {
+                console.log(response.data.resultCode)
+                console.log("修改成功")
+              }).catch(error => {
+                console.log(error)
+              })
             } else {
               console.log('error submit!!');
               return false;
