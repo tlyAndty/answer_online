@@ -127,15 +127,24 @@
           limit: 5,
           total: null,
           page:1,
+          id:'',
         }
       },
       created() {
         this.pageList()
       },
+      watch:{
+        '$route':'getParams'
+      },
       methods: {
+        getParams:function () {
+          this.id = this.$route.query.admin_id
+          console.log("传来的u参数=="+this.id)
+        },
         pageList() {
           // 发请求拿到数据并暂存全部数据,方便之后操作
           this.data = listJson.uListData
+          this.getParams()
           this.getuListData()
         },
         getuListData: function () {

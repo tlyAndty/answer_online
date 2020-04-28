@@ -83,7 +83,7 @@
 
 <script>
     var listJson={
-    rListData:[{
+    rListData:[/*{
       user_id:'1',
       mail:'1@qq.com',
       name:'小明',
@@ -103,7 +103,7 @@
         name:'小王',
         state:'0',
         add_time:'2020-03-27 13:07:40',
-      }],
+      }*/],
   }
     export default {
       name: "registrationAudit",
@@ -117,6 +117,7 @@
           limit: 5,
           total: null,
           page:1,
+          id:'',
         }
       },
       created() {
@@ -129,9 +130,17 @@
           })
         }
       },*/
+      watch:{
+        '$route':'getParams'
+      },
       methods: {
+        getParams:function () {
+          this.id = this.$route.query.admin_id
+          console.log("传来的u参数=="+this.id)
+        },
         pageList() {
           this.data = listJson.rListData
+          this.getParams()
           this.getrListData()
         },
         getrListData: function () {
