@@ -51,115 +51,112 @@
 
 <script>
   import qs from 'qs';
-    export default {
-        name: "personalInformationOfUser",
-      data() {
-        var validatePass = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请再次输入密码'));
-          } else if (value == this.user.pwd) {
-            callback(new Error('新密码不能与旧密码相同!'));
-          } else {
-            callback();
-          }
-        };
-        return {
-          user: {
-            userid:'',
-            name: '',
-            mail: '',
-            pwd: '',
-            newPwd:'',
-          },
-          rules: {
-            newPwd: [
-              { validator: validatePass, trigger: 'blur' }
-            ],
-          },
-          imageUrl:'',
-          uData:{},
-          id:'',
-        };
-      },
-      created() {
-        this.getParams()
-        this.getqListData()
-      },
-      methods: {
-        getParams:function () {
-          this.id = this.$route.query.user_id
-          console.log("传来的u参数=="+this.id)
-        },
-        getqListData: function () {
-          this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
-            qs.stringify({
-              userId: this.id,
-            })
-          ).then((response) => {
-            console.log("uData:",response.data.data);
-            this.uData = response.data.data;
-            this.user.userid = this.uData.userId
-            this.user.name = this.uData.name
-            this.user.mail = this.uData.mail
-            this.user.pwd = this.uData.pwd
-            console.log("uname",this.uData.name)
-          }).catch((error) => {
-            console.log(error);
-          });
-        },
-        submitForm(formName) {
-          this.$refs[formName].validate((valid) => {
-            console.log("formName:",this.user.name)
-            if (valid) {
-              this.$axios.post(
-                'http://localhost:8080/online_answer/user/modifyUserInfo',
-                qs.stringify({
-                  userId: this.user.userid,
-                  mail: this.user.mail,
-                  name: this.user.name,
-                  pwd: this.user.pwd,
-                  newPwd: this.user.newPwd,
-                })
-              ).then(response => {
-                console.log(response.data.resultCode)
-                console.log("修改成功")
-              }).catch(error => {
-                console.log(error)
-              })
-            } else {
-              console.log('error submit!!');
-              return false;
-            }
-          });
-        },
-        resetForm(formName) {
-          this.$refs[formName].resetFields();
-        },
-        handleAvatarSuccess(res, file) {
-          this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-          const isJPG = file.type === 'image/jpeg';
-          const isLt2M = file.size / 1024 / 1024 < 2;
-          if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
-          }
-          if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
-          }
-          return isJPG && isLt2M;
+  export default {
+    name: "personalInformationOfUser",
+    data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value == this.user.pwd) {
+          callback(new Error('新密码不能与旧密码相同!'));
+        } else {
+          callback();
         }
+      };
+      return {
+        user: {
+          userid:'',
+          name: '',
+          mail: '',
+          pwd: '',
+          newPwd:'',
+        },
+        rules: {
+          newPwd: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+        },
+        imageUrl:'',
+        uData:{},
+        id:'',
+      };
+    },
+    created() {
+      this.getParams()
+      this.getqListData()
+    },
+    methods: {
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的u参数=="+this.id)
+      },
+      getqListData: function () {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
+          qs.stringify({
+            userId: this.id,
+          })
+        ).then((response) => {
+          console.log("uData:",response.data.data);
+          this.uData = response.data.data;
+          this.user.userid = this.uData.userId
+          this.user.name = this.uData.name
+          this.user.mail = this.uData.mail
+          this.user.pwd = this.uData.pwd
+          console.log("uname",this.uData.name)
+        }).catch((error) => {
+          console.log(error);
+        });
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          console.log("formName:",this.user.name)
+          if (valid) {
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/modifyUserInfo',
+              qs.stringify({
+                userId: this.user.userid,
+                mail: this.user.mail,
+                name: this.user.name,
+                pwd: this.user.pwd,
+                newPwd: this.user.newPwd,
+              })
+            ).then(response => {
+              console.log(response.data.resultCode)
+              console.log("修改成功")
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     }
+  }
 </script>
 
 <style scoped>
   .top{
     text-align:center;
   }
-
   .avatar-uploader-icon {
-
   }
-
 </style>
