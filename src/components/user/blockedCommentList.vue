@@ -18,11 +18,11 @@
       class="blockedCommentList"
       :data="bcListData"
       style="width: 100%"
-      :default-sort = "{prop: 'com_time', order: 'descending'}">
+      :default-sort = "{prop: 'comTime', order: 'descending'}">
 
       <el-table-column
         sortable
-        prop="com_id"
+        prop="comId"
         label="评论id"
         header-align="left"
         align="left"
@@ -32,7 +32,7 @@
       </el-table-column>
       <el-table-column
         sortable
-        prop="com_content"
+        prop="comContent"
         label="评论内容"
         header-align="left"
         align="left"
@@ -42,7 +42,7 @@
 
       <el-table-column
         sortable
-        prop="com_time"
+        prop="comTime"
         label="评论时间"
         header-align="left"
         align="left"
@@ -53,7 +53,7 @@
 
       <el-table-column
         sortable
-        prop="com_state"
+        prop="comState"
         label="评论状态"
         header-align="left"
         align="left"
@@ -86,8 +86,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
   var listJson = {
-    bcListData: [{
+    bcListData: [/*{
       com_id:'1',
       com_content:'内容s',
       com_time:'2020-03-27 13:07:40',
@@ -104,12 +105,13 @@
         com_content:'内容i',
         com_time:'2020-03-26 13:07:40',
         com_state:'0',
-      }],
+      }*/],
   }
   export default {
     name: "blockedCommentList",
     data() {
       return {
+        cListData:[],
         bcListData:[],
         data: [],
         search_input: '',
@@ -117,6 +119,7 @@
         limit: 5,
         total: null,
         page:1,
+        id:'',
       }
     },
     /*mounted() {
@@ -126,12 +129,34 @@
       this.pageList()
     },
     methods: {
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的c参数=="+this.id)
+      },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
         this.data = listJson.bcListData
+        this.getParams()
         this.getbcListData()
       },
       getbcListData: function () {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchCommentsByUserId',
+          qs.stringify({
+            userId: this.id,
+          })
+        ).then((response) => {
+          console.log(response.data.data);
+          this.cListData = response.data.data;
+          for(let item of this.cListData) {
+            if(item.comState!=0){
+              console.log(item.userId)
+              this.bcListData.push(item)
+              console.log(item)
+            }
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
         let bcListData = this.data.filter((item,index) =>
           item.com_content.includes(this.search_input)
         )
