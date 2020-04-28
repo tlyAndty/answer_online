@@ -50,6 +50,7 @@
 </template>
 
 <script>
+  import qs from 'qs';
     export default {
         name: "personalInformationOfUser",
       data() {
@@ -105,7 +106,13 @@
             ],
           },
           imageUrl:'',
+          uData:{},
+          id:'',
         };
+      },
+      created() {
+        this.getParams()
+        this.getqListData()
       },
       methods: {
         getParams:function () {
@@ -113,14 +120,14 @@
           console.log("传来的u参数=="+this.id)
         },
         getqListData: function () {
-          this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+          this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
             qs.stringify({
               userId: this.id,
-              quesState: '3',
             })
           ).then((response) => {
-            console.log(response.data.data);
-            this.qListData = response.data.data;
+            console.log("uData:",response.data.data);
+            this.uData = response.data.data;
+            console.log("uname",this.data.name)
           }).catch((error) => {
             console.log(error);
           });
