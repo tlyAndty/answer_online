@@ -18,11 +18,11 @@
       class="blockedQuestionList"
       :data="bqListData"
       style="width: 100%"
-      :default-sort = "{prop: 'ques_time', order: 'descending'}">
+      :default-sort = "{prop: 'quesTime', order: 'descending'}">
 
       <el-table-column
         sortable
-        prop="ques_id"
+        prop="quesId"
         label="问题id"
         header-align="left"
         align="left"
@@ -31,7 +31,7 @@
 
       <el-table-column
         sortable
-        prop="ques_title"
+        prop="quesTitle"
         label="问题标题"
         header-align="left"
         align="left"
@@ -41,17 +41,20 @@
 
       <el-table-column
         sortable
-        prop="ques_time"
+        prop="quesTime"
         label="发布的最新时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
+        <template slot-scope="bqListData">
+          {{ bqListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+        </template>
       </el-table-column>
 
 
       <el-table-column
         sortable
-        prop="ques_ans_state"
+        prop="quesAnsState"
         label="问题解决状态"
         header-align="left"
         align="left"
@@ -60,7 +63,7 @@
 
       <el-table-column
         sortable
-        prop="ques_state"
+        prop="quesState"
         label="问题状态"
         header-align="left"
         align="left"
@@ -89,8 +92,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
   var listJson = {
-    bqListData: [{
+    bqListData: [/*{
       ques_id: '1',
       ques_title: 'hhh',
       ques_time: '2011',
@@ -110,12 +114,13 @@
         ques_time: '2014',
         ques_ans_state: '1',
         ques_state: '2',
-      }],
+      }*/],
   }
   export default {
     name: "blockedQuestionListOfUser",
     data() {
       return {
+        qListData:[],
         bqListData:[],
         data: [],
         search_input: '',
@@ -123,6 +128,7 @@
         limit: 5,
         total: null,
         page:1,
+        id:''
       }
     },
 
@@ -132,13 +138,39 @@
 /*    mounted(){
       this.getbqListData();
     },*/
+    watch:{
+      '$route':'getParams'
+    },
     methods: {
+      getParams:function () {
+        this.id = this.$route.query.user_id
+        console.log("传来的id参数=="+this.id)
+      },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
         this.data = listJson.bqListData
+        this.getParams()
         this.getbqListData()
       },
       getbqListData:function() {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+          qs.stringify({
+            userId: this.id,
+            quesState: '3',
+          })
+        ).then((response) => {
+          console.log("qlist:",response.data.data);
+          this.qListData = response.data.data;
+          for(let item of this.qListData) {
+            if(item.quesState!=0){
+              console.log(item.userId)
+              this.bqListData.push(item)
+              console.log(item)
+            }
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
         let bqListData = this.data.filter((item,index) =>
           item.ques_title.includes(this.search_input)
         )
