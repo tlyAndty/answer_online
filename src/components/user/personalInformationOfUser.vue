@@ -25,6 +25,9 @@
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
       </el-form-item>
+      <el-form-item label="ID" prop="adminid">
+        <el-input class="text" placeholder=data.userid v-model="infoForm.userid" autocomplete="on"></el-input>
+      </el-form-item>
       <el-form-item label="名字" prop="name">
         <el-input class="text" placeholder=data.name v-model="infoForm.name" autocomplete="off"></el-input>
       </el-form-item>
@@ -87,6 +90,7 @@
         };
         return {
           infoForm: {
+            userid:'',
             name: '',
             mail: '',
             pwd: '',
@@ -104,6 +108,23 @@
         };
       },
       methods: {
+        getParams:function () {
+          this.id = this.$route.query.user_id
+          console.log("传来的u参数=="+this.id)
+        },
+        getqListData: function () {
+          this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+            qs.stringify({
+              userId: this.id,
+              quesState: '3',
+            })
+          ).then((response) => {
+            console.log(response.data.data);
+            this.qListData = response.data.data;
+          }).catch((error) => {
+            console.log(error);
+          });
+        },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
