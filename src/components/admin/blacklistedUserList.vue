@@ -17,11 +17,11 @@
         class="buserList"
         :data="buListData"
         style="width: 100%"
-        :default-sort = "{prop: 'add_time', order: 'descending'}">
+        :default-sort = "{prop: 'addTime', order: 'descending'}">
 
         <el-table-column
           sortable
-          prop="user_id"
+          prop="userId"
           label="用户id"
           header-align="left"
           align="left"
@@ -59,11 +59,14 @@
 
         <el-table-column
           sortable
-          prop="add_time"
+          prop="addTime"
           label="注册时间"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
+          <template slot-scope="buListData">
+            {{ buListData.row.addTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          </template>
         </el-table-column>
 
         <el-table-column
@@ -88,8 +91,9 @@
 </template>
 
 <script>
+  import qs from 'qs';
     var listJson={
-    buListData:[{
+    buListData:[/*{
       user_id:'1',
       mail:'1@qq.com',
       name:'小明',
@@ -109,12 +113,13 @@
         name:'小王',
         state:'0',
         add_time:'2020-03-27 13:07:40',
-      }],
+      }*/],
   }
     export default {
       name: "blacklistedUserList",
       data() {
         return {
+          uListData:[],
           buListData:[],
           data: [],
           search_input: '',
@@ -128,12 +133,34 @@
         this.pageList()
       },
       methods: {
+        getParams:function () {
+          this.id = this.$route.query.admin_id
+          console.log("传来的id参数=="+this.id)
+        },
         pageList() {
           // 发请求拿到数据并暂存全部数据,方便之后操作
           this.data = listJson.buListData
+          this.getParams()
           this.getbuListData()
         },
         getbuListData: function () {
+          this.$axios.post('http://localhost:8080/online_answer/admin/searchUsersByState',
+            qs.stringify({
+              userState: '4',
+            })
+          ).then((response) => {
+            console.log("ulist:",response.data.data);
+            this.uListData = response.data.data;
+            for(let item of this.uListData) {
+              if(item.state==2){
+                console.log(item.userId)
+                this.buListData.push(item)
+                console.log(item)
+              }
+            }
+          }).catch((error) => {
+            console.log(error);
+          });
           let buListData = this.data.filter((item,index) =>
             item.name.includes(this.search_input)
           )
