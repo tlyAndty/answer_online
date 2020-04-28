@@ -32,18 +32,23 @@
   export default {
     name: "adminGuide",
     data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
       return {
-        tableData: Array(20).fill(item)
+        id:'',
       }
     },
+    created(){
+      this.getParams();
+    },
+    watch:{
+      '$route':'getParams'
+    },
     methods:{
+      getParams:function () {
+        this.id = this.$route.query.admin_id
+        console.log("传来的参数=="+this.id)
+      },
       handleSelect(path){
-        this.$router.push(path)
+        this.$router.push({path:path,query:{admin_id: this.id}})
       },
     }
   };

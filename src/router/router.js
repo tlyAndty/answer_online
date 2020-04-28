@@ -176,6 +176,10 @@ export default new Router({
       },
       children:[
         {
+          path: ':admin_id',
+          component: adminGuide,
+        },
+        {
           path:'/questionListOfAdmin',
           name:'questionListOfAdmin',
           component:questionListOfAdmin,
