@@ -31,6 +31,7 @@
         </el-button>
       </span>
       <span v-if="user" style="position:relative; left: 900px; top:4px">
+        <span style="margin-right: 5px">{{user}}</span>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px">
           <span class="el-dropdown-link">
             消息
@@ -47,10 +48,9 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span style="margin-right: 5px">{{user}}</span>
         <a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a>
         /
-        <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
+        <a id="logout_link" href="javascript:void(0)" @click="logout" style="color: white;text-decoration:none">登出</a>
       </span>
       <span v-else style="position:relative; left: 70%; top:4px" >
         <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
@@ -58,7 +58,6 @@
         <a id="login_link" href="/userlogin" style="color: white;text-decoration:none">登录</a>
         /
         <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
-        <!--el-button  @click="login" >登录</-el-button> /<el-button  @click="register" >注册</el-button-->
       </span>
 
     </el-header>
@@ -69,11 +68,41 @@
 </template>
 
 <script>
-  import userGuide from "./components/user/userGuide";
 
   export default {
     name: 'App',
     methods:{
+      logout(){
+        console.log("正在登出")
+        this.$store.dispatch('logout')
+        //sessionStorage.removeItem("user")
+        //window.location.reload()
+        //sessionStorage.setItem("store", null)
+        console.log(this.$store.state)
+      },
+    },
+    created() {
+      //在页面刷新时将vuex里的信息保存到sessionStorage里
+      window.addEventListener("beforeunload", () => {
+        console.log("存vuex前的数据")
+        console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
+
+        sessionStorage.setItem("store", JSON.stringify(this.$store.state))
+
+        console.log("存vuex后的数据")
+        console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
+      })
+
+      // 在页面加载时读取sessionStorage里的状态信息
+      if (sessionStorage.getItem("store")) {
+        console.log("读取sessionstorage前的数据")
+        console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
+
+        this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
+
+        console.log("读取sessionstorage后的数据")
+        console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
+      }
     },
     computed: {
       user () {

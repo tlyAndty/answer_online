@@ -1,7 +1,8 @@
 <template>
-  <div class="hometext" style="margin-top: 20px">
-
-    <div class="main" style="float: left;width: 70%;">
+  <div class="hometext" style="margin: 0px">
+    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
+    <div class="maintext" style="margin: 0px">
+      <div class="main" style="float: left;width: 70%;margin-top: 0px">
       <p>
         <span style="font-size: 30px;">欢迎进入探源问答</span>
       </p>
@@ -33,7 +34,7 @@
       </div>
     </div>
 
-    <div class="aside" style="float: right;width: 30%">
+      <div class="aside" style="float: right;width: 30%;margin-top: 0px">
       <div class="good_order" style="">
         <h3>
           <span class="line"></span>
@@ -53,6 +54,7 @@
         </ul>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -68,14 +70,20 @@
         order: false,                   // 升序还是降序
       }
     },
+    created(){
+      this.getData();
+    },
+    computed:{
+      time_order_list:function(){
+        return this.sortByTime(this.list,'quesTime')
+      },
+      good_order_list:function(){
+        return this.sortByGood(this.list,'quesColNum')
+      },
+    },
     methods: {
       getData() {
         this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
-         // {
-         //   params: {
-         //     quesState: '3',
-         //   }
-         // }
           qs.stringify({
             quesState: '3',
           })
@@ -102,17 +110,7 @@
       }
 
     },
-    created(){
-      this.getData();
-    },
-    computed:{
-      time_order_list:function(){
-        return this.sortByTime(this.list,'quesTime')
-      },
-      good_order_list:function(){
-        return this.sortByGood(this.list,'quesColNum')
-      }
-    }
+
   }
 </script>
 
@@ -121,7 +119,7 @@
     background-color: lightcoral;
     color: white;
   }
-  .hometext{
+  .maintext{
     text-align:center;
   }
   /*.list_con,.summary_oneline,.list_userbar{
