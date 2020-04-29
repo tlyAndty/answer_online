@@ -74,8 +74,8 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
-            <el-button type="text" @click="unblockUser(scope.row.phone)">取消屏蔽</el-button>
+            <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
+            <el-button type="text" @click="unblockQues(scope.row.quesId)">取消屏蔽</el-button>
           </template>
         </el-table-column>
 
@@ -93,27 +93,7 @@
 <script>
   import qs from 'qs';
     var listJson = {
-    bqListData: [/*{
-      ques_id: '1',
-      ques_title: 'hhh',
-      ques_time: '2011',
-      ques_ans_state: '1',
-      ques_state: '2',
-    },
-      {
-        ques_id: '2',
-        ques_title: 'yyy',
-        ques_time: '2016',
-        ques_ans_state: '1',
-        ques_state: '2',
-      },
-      {
-        ques_id: '3',
-        ques_title: 'ttt',
-        ques_time: '2014',
-        ques_ans_state: '1',
-        ques_state: '2',
-      }*/],
+    bqListData: [],
   }
     export default {
         name: "blockedQuestionListOfAdmin",
@@ -175,17 +155,6 @@
             index < this.page * this.limit && index >= this.limit * (this.page - 1)
           )
           this.total = bqListData.length
-          /*this.$axios.get(
-            '127.0.0.1/online_answer/user/login'
-          ).then(response => {
-            const res = response.data
-            if (res.data) {
-              const data = res.data
-              this.bqListData = data.bqListData
-            }
-          }).catch(error => {
-            console.log('错误信息：' + error)
-          })*/
         },
         orderById:function () {
           this.$axios.get(
@@ -227,13 +196,21 @@
           this.page = 1
           this.getbqListData()
         },
-        unblockUser(val){
-          console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+        unblockQues(val){
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
+            qs.stringify({
+              quesId: val,
+              quesState: '0',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+          }).catch((error) => {
+            console.log(error);
+          });
         },
         checkDetail(val){
-          window.location.href='/questionPage'
+          this.$router.push({path:'/questionPage',query:{ques_id:val}})
           console.log(val)
         },
       }
