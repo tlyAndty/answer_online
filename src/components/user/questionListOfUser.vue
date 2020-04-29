@@ -76,9 +76,9 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
-          <el-button type="text" @click="modifyUser(scope.row.phone)">修改</el-button>
-          <el-button type="text" @click="deleteUser(scope.row.phone)">删除</el-button>
+          <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
+          <el-button type="text" @click="modifyQues(scope.row.quesId)">修改</el-button>
+          <el-button type="text" @click="deleteQues(scope.row.quesId)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -97,27 +97,7 @@
 <script>
   import qs from 'qs';
   var listJson = {
-    qListData: [/*{
-      quesId: '1',
-      quesTitle: 'hhh',
-      quesTime: '2011',
-      quesAnsState: '1',
-      quesState: '2',
-    },
-      {
-        quesId: '2',
-        quesTitle: 'yyy',
-        quesTime: '2016',
-        quesAnsState: '1',
-        quesState: '2',
-      },
-      {
-        quesId: '3',
-        quesTitle: 'ttt',
-        quesTime: '2014',
-        quesAnsState: '1',
-        quesState: '2',
-      }*/],
+    qListData: [],
   }
   export default {
     name: "questionListOfUser",
@@ -172,17 +152,6 @@
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
         )
         this.total = qListData.length
-        /*this.$axios.get(
-          '127.0.0.1/online_answer/user/login'
-        ).then(response => {
-          const res = response.data
-          if (res.data) {
-            const data = res.data
-            this.qListData = data.qListData
-          }
-        }).catch(error => {
-          console.log('错误信息：' + error)
-        })*/
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -198,16 +167,22 @@
         this.page = 1
         this.getqListData()
       },
-      deleteUser(val){
-        console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+      deleteQues(val){
+        this.$axios.post('http://localhost:8080/online_answer/user/deletePersonalQuestion',
+          qs.stringify({
+            quesId: val,
+          })
+        ).then((response) => {
+          console.log(response.data.resultCode);
+        }).catch((error) => {
+          console.log(error);
+        });
       },
-      modifyUser(val){
+      modifyQues(val){
         let self = this;
       },
       checkDetail(val){
-        window.location.href='/questionPage'
+        this.$router.push({path:'/questionPage',query:{ques_id:val}})
         console.log(val)
       },
 
