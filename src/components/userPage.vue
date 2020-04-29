@@ -1,6 +1,7 @@
 <template>
   <div class="userInfo" >
-      <router-link to="/" class="gobackLink"><< 返回列表</router-link>
+    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
+      <!--router-link to="/" class="gobackLink"><< 返回列表</router-link-->
     <div class="u_Info_cont" style="width: 100%;height:20%;text-align: center;">
       <div class="u_info_title" v-for="u in u_info" style="margin-right:80px;
                                                            margin-left:80px;

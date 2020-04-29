@@ -48,11 +48,13 @@
           </el-dropdown-menu>
         </el-dropdown>
         <span style="margin-right: 5px">{{user}}</span>
-        <a id="main_link" href="/" style="color: white;text-decoration:none">首页</a>
+        <a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="logout_link" href="/logout" style="color: white;text-decoration:none">登出</a>
       </span>
       <span v-else style="position:relative; left: 70%; top:4px" >
+        <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
+        /
         <a id="login_link" href="/userlogin" style="color: white;text-decoration:none">登录</a>
         /
         <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
@@ -72,23 +74,9 @@
   export default {
     name: 'App',
     methods:{
-      /*login () {
-        this.$router.replace('/login')
-      },
-      logout () {
-        this.$store.dispatch('logout').then(() => {
-          this.$router.replace('/')
-        })
-      },
-      register()
-      {
-        this.$router.replace('/register');
-      }*/
     },
     computed: {
       user () {
-        //假定已登录
-        //this.$store.state.user = 'test'
         return this.$store.state.user
       }
     },

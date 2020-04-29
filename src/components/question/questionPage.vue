@@ -1,6 +1,7 @@
 <template>
   <div class="questionInfo" style="background: white;padding: 0px">
-    <router-link to="/" class="gobackLink"><< 返回列表</router-link>
+    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
+    <!--router-link to="/" class="gobackLink"><< 返回列表</router--->
     <div class="main clearfix" style="margin: 0px;">
       <div class="q_info" v-for="q in list" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
           <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;border: 1px solid #f0f0f0;">
