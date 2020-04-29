@@ -88,7 +88,7 @@
           console.log("传来的adminid参数=="+this.id)
         },
         getqListData: function () {
-          this.$axios.post('http://localhost:8080/online_answer/user/searchAdminInfoByAdminId',
+          this.$axios.post('http://localhost:8080/online_answer/admin/searchAdminInfoByAdminId',
             qs.stringify({
               adminId: this.id,
             })
