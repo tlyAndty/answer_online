@@ -74,9 +74,9 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
-          <el-button type="text" @click="blacklistUser(scope.row.phone)">拉黑</el-button>
-          <el-button type="text" @click="unblacklistUser(scope.row.phone)">取消拉黑</el-button>
+          <el-button type="text" @click="checkDetail(scope.row.userId)">查看详情</el-button>
+          <el-button type="text" @click="blacklistUser(scope.row.userId)">拉黑</el-button>
+          <el-button type="text" @click="unblacklistUser(scope.row.userId)">取消拉黑</el-button>
         </template>
       </el-table-column>
 
@@ -94,27 +94,7 @@
 <script>
   import qs from 'qs';
     var listJson={
-      uListData:[/*{
-        user_id:'1',
-        mail:'1@qq.com',
-        name:'小明',
-        state:'0',
-        add_time:'2020-03-27 13:07:40',
-      },
-        {
-          user_id:'2',
-          mail:'1@qq.com',
-          name:'小红',
-          state:'0',
-          add_time:'2020-03-27 13:07:40',
-        },
-        {
-          user_id:'3',
-          mail:'1@qq.com',
-          name:'小王',
-          state:'0',
-          add_time:'2020-03-27 13:07:40',
-        }*/],
+      uListData:[],
     }
     export default {
       name: "userList",
@@ -192,13 +172,33 @@
           this.getuListData()
         },
         unblacklistUser(val){
-          console.log(val)
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+            qs.stringify({
+              userId: val,
+              userState: '1',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+          }).catch((error) => {
+            console.log(error);
+          });
         },
         blacklistUser(val){
-          console.log(val)
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+            qs.stringify({
+              userId: val,
+              userState: '2',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+          }).catch((error) => {
+            console.log(error);
+          });
         },
         checkDetail(val){
-          window.location.href='/userPage'
+          this.$router.push({path:'/userPage',query:{user_id:val}})
           console.log(val)
         },
       },

@@ -220,15 +220,15 @@
         this.getParams();
       },
       mounted() {
-        console.log("mounted中getdata的id" + this.$route.query.q_id)
-        this.getData(this.$route.query.q_id);
+        console.log("mounted中getdata的id" + this.$route.query.ques_id)
+        this.getData(this.$route.query.ques_id);
       },
       watch:{
         '$route':'getParams'
       },
       methods:{
         getParams:function () {
-          var id = this.$route.query.q_id
+          var id = this.$route.query.ques_id
           console.log("传来的参数=="+id)
           this.textareText = id
         },

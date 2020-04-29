@@ -77,7 +77,7 @@ export default new Router({
       },
       children: [
         {
-          path: ':q_id',
+          path: ':ques_id',
           component: questionPage,
         }
       ]
@@ -91,7 +91,7 @@ export default new Router({
       },
       children: [
         {
-          path: ':u_id',
+          path: ':user_id',
           component: userPage,
         }
       ]

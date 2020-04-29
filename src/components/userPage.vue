@@ -198,7 +198,7 @@
     },
     methods:{
       getParams:function () {
-        var id = this.$route.query.u_id
+        var id = this.$route.query.user_id
         console.log("传来的参数=="+id)
         this.textareText = id
       },

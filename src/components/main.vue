@@ -13,14 +13,14 @@
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesTitle}}</router-link>
+                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesContent}}</router-link>
+                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesContent}}</router-link>
               </div>
               <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
                 <div class="name" style="float: left">
-                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{u_id:item.userId}}">{{item.name}}</router-link>
+                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{user_id:item.userId}}">{{item.name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
                   <span>{{item.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
@@ -43,10 +43,10 @@
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesTitle}}</router-link>
+                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
-                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{q_id:item.quesId}}">{{item.quesContent}}</router-link>
+                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesContent}}</router-link>
               </div>
             </div>
           </li>
@@ -63,40 +63,7 @@
     name: 'mainpage',
     data() {
       return {
-        list:[/*{
-          quesId: '1',
-          userId: '1',
-          quesTitle: 'hhh',
-          name:'张三',
-          quesTime: '2011',
-          quesContent:'奇葩说杨奇函每日一省',
-          quesAnsAtate: '1',
-          quesState: '2',
-          ques_col_num: '3',
-        },
-          {
-            quesId: '2',
-            userId: '3',
-            quesTitle: 'yyy',
-            name:'李四',
-            quesTime: '2016',
-            quesContent:'奇葩说杨奇函每日两省',
-            quesAnsState: '1',
-            quesState: '2',
-            ques_col_num: '0',
-          },
-          {
-            quesId: '3',
-            userId: '9',
-            quesTitle: 'ttt',
-            name:'王五',
-            quesTime: '2014',
-            quesContent:'奇葩说杨奇函每日三省',
-            quesAnsState: '1',
-            quesState: '2',
-            ques_col_num: '2',
-          }*/
-        ],
+        list:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
       }
