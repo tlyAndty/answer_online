@@ -84,9 +84,9 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.phone)">查看详情</el-button>
-            <el-button type="text" @click="modifyUser(scope.row.phone)">修改</el-button>
-            <el-button type="text" @click="deleteUser(scope.row.phone)">删除</el-button>
+            <el-button type="text" @click="checkDetail(scope.row.ansId)">查看详情</el-button>
+            <el-button type="text" @click="modifyAns(scope.row.ansId)">修改</el-button>
+            <el-button type="text" @click="deleteAns(scope.row.ansId)">删除</el-button>
           </template>
         </el-table-column>
 
@@ -105,30 +105,7 @@
 <script>
   import qs from 'qs';
   var listJson = {
-    baListData: [/*{
-      ans_id:'1',
-      ans_content:'内容a',
-      ans_time:'2020-03-27 13:07:40',
-      good_count:'1',
-      bad_count:'2',
-      ans_state:'0',
-    },
-      {
-        ans_id:'2',
-        ans_content:'内容g',
-        ans_time:'2020-03-24 13:07:40',
-        good_count:'1',
-        bad_count:'2',
-        ans_state:'0',
-      },
-      {
-        ans_id:'3',
-        ans_content:'内容w',
-        ans_time:'2020-03-21 13:07:40',
-        good_count:'1',
-        bad_count:'2',
-        ans_state:'0',
-      }*/],
+    baListData: [],
   }
   export default {
     name: "blockedAnswerList",
@@ -187,17 +164,6 @@
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
         )
         this.total = baListData.length
-        /*this.$axios.get(
-          '127.0.0.1/online_answer/user/login'
-        ).then(response => {
-          const res = response.data
-          if (res.data) {
-            const data = res.data
-            this.baListData = data.baListData
-          }
-        }).catch(error => {
-          console.log('错误信息：' + error)
-        })*/
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -213,12 +179,18 @@
         this.page = 1
         this.getbaListData()
       },
-      deleteUser(val){
-        console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+      deleteAns(val){
+        this.$axios.post('http://localhost:8080/online_answer/user/deletePersonalAnswer',
+          qs.stringify({
+            ansId: val,
+          })
+        ).then((response) => {
+          console.log(response.data.resultCode);
+        }).catch((error) => {
+          console.log(error);
+        });
       },
-      modifyUser(val){
+      modifyAns(val){
         let self = this;
       },
       checkDetail(val){
