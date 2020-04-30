@@ -5,21 +5,10 @@
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="upload"
+          action="https://jsonplaceholder.typicode.com/posts/"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
-          style="border: 1px dashed #DCDFE6;
-                 border-radius: 6px;
-                 cursor: pointer;
-                 position: relative;
-                 overflow: hidden;
-                 font-size: 28px;
-                 color: #8c939d;
-                 width: 100px;
-                 height: 100px;
-                 line-height: 100px;
-                 margin-left: 150px;"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
@@ -86,17 +75,6 @@
       this.getqListData()
     },
     methods: {
-      upload: function () {
-        this.$axios.post('http://localhost:8080/online_answer/user/upload',
-          qs.stringify({
-            userId: this.$route.query.user_id,
-            image: this.imageUrl
-          })
-        ).then((response) => {
-          console.log("image的url：" + response.data.data.imageUrl);
-          return response.data.data.imageUrl
-        })
-      },
       getParams:function () {
         this.id = this.$route.query.user_id
         console.log("传来的u参数=="+this.id)
@@ -147,7 +125,18 @@
         this.$refs[formName].resetFields();
       },
       handleAvatarSuccess(res, file) {
+        this.$axios.post('http://localhost:8080/online_answer/user/upload',
+          qs.stringify({
+            userId: this.id,
+            file: file
+          })
+        ).then((response) => {
+          console.log("上传成功",response)
+          //console.log("image的url：" + response.data.data.imageUrl);
+          //return response.data.data.imageUrl
+        })
         this.imageUrl = URL.createObjectURL(file.raw);
+        console.log("上传成功",this.imageUrl)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -168,6 +157,22 @@
   .top{
     text-align:center;
   }
+  .avatar-uploader{
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
   .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>
