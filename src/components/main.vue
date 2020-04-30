@@ -35,7 +35,7 @@
     </div>
 
       <div class="aside" style="float: right;width: 30%;margin-top: 0px">
-      <div class="good_order" style="">
+      <div class="good_order" >
         <h3>
           <span class="line"></span>
           <span class="txt">最热推荐</span>
@@ -52,6 +52,84 @@
             </div>
           </li>
         </ul>
+      </div>
+      <div class="adiseFooter" style="margin-top: 15px;padding-left: 40px">
+        <div class="info_box" style="padding: 16px;background-color:#fbfdf8;font-size: 14px">
+          <div class="contact-info" style="padding-bottom: 3px;line-height: 20px;font-size: 12px;">
+            <p style="margin-bottom:10px;color: #8a8a8a;text-align: left;">
+              <a href="/adminlogin" style="color: #8a8a8a;text-decoration:none">
+              <span>管理员登录</span>
+              </a>
+              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+              <span style="">
+                tywd@tly&ty.net
+              </span>
+            </p>
+            <p style="margin-bottom:10px;color: #8a8a8a;text-align: left;">
+              <span style="">
+                投诉与建议
+              </span>
+              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+              <span>400-666-8888</span>
+            </p>
+            <p style="color: #8a8a8a;text-align: left;">
+              <span>工作时间：9:30-22:00</span>
+            </p>
+          </div>
+          <div class="bg-gray" >
+            <div class="feed_copy" style="color: #8a8a8a;
+                                          text-align: left;
+                                          font-size: 12px;
+                                          border-top: 1px solid #F3F3F3;
+                                          padding-top: 1px;
+                                          border-bottom: 1px solid #F3F3F3;
+                                          padding-bottom: 1px;
+                                          margin-bottom: 1px;">
+              <p>
+                <span>关于我们</span>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <span>招聘</span>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <span>广告服务</span>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <span>网站地图</span>
+              </p>
+            </div>
+          </div>
+          <div class="allow_info_box" style="color: #8a8a8a;
+                                          text-align: left;
+                                          font-size: 12px;">
+            <p>
+              <span>京ICP备19004658号</span>
+              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+              <span>经营性网站备案信息</span>
+            </p>
+            <p>
+              <span>公安备案号 11010502030143</span>
+            </p>
+            <p>
+              <span>京网文〔2020〕1039-165号</span>
+            </p>
+            <p>
+              <span>©2020-3020 中国探源问答网络技术有限公司</span>
+              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+              <span>网络110报警服务</span>
+            </p>
+            <p>
+              <span>中国互联网违法和不良信息举报中心</span>
+            </p>
+            <p>
+              <span>中国互联网举报中心</span>
+              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+              <span>家长监护</span>
+            </p>
+            <p>
+              <span>版权与免责声明</span>
+              <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+              <span>版权申诉</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     </div>

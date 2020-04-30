@@ -5,7 +5,7 @@
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="#"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -135,7 +135,7 @@
           //return response.data.data.imageUrl
         })
         this.imageUrl = URL.createObjectURL(file.raw);
-        console.log("上传成功",file)
+        console.log("文件是：",file)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';

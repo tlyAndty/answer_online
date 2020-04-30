@@ -61,14 +61,14 @@
     <el-main>
       <router-view/>
     </el-main>
-    <el-footer style="height: 40px;">
+    <!--el-footer style="height: 40px;">
       <div style="margin-right: 40px;margin-left: 40px;margin-top: 5px;font-size: 12px">
         <div style="">
         <a id="admin_login" href="/adminlogin" style="color:black;text-decoration:none">管理员登录</a>
         </div>
         <span>Copyright © 2020-3020 tly&ty. All Rights Reserved.</span>
       </div>
-    </el-footer>
+    </el-footer-->
   </el-container>
 </template>
 
