@@ -37,7 +37,7 @@
         </el-dropdown>
         <a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a>
         /
-        <a id="logout_link" href="javascript:void(0)" @click="logout" style="color: white;text-decoration:none">登出</a>
+        <a id="logout_link" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
         <div v-else style="float:right;position:relative; top:10px ">
         <el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
