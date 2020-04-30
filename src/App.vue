@@ -55,8 +55,6 @@
         <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="login_link" href="/userlogin" style="color: white;text-decoration:none">登录</a>
-        /
-        <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
       </div>
       </div>
     </el-header>
