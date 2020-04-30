@@ -2,29 +2,18 @@
   <div class="top">
     <span style="font-size: 30px">个人信息</span>
     <el-form :model="admin" status-icon :rules="rules" ref="infoForm" class="demo-infoForm" style="width: 400px; margin:20px auto;">
-      <el-form-item label="头像" prop="headshot" style="">
+      <!--el-form-item label="头像" prop="headshot" style="">
         <el-upload
           class="avatar-uploader"
           action="https://jsonplaceholder.typicode.com/posts/"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
-          style="border: 1px dashed #DCDFE6;
-                 border-radius: 6px;
-                 cursor: pointer;
-                 position: relative;
-                 overflow: hidden;
-                 font-size: 28px;
-                 color: #8c939d;
-                 width: 100px;
-                 height: 100px;
-                 line-height: 100px;
-                 margin-left: 150px;"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
-      </el-form-item>
+      </el-form-item-->
       <el-form-item label="ID" prop="adminid">
         <el-input class="text" placeholder=data.adminid v-model="admin.adminid" autocomplete="off" :readonly="true"></el-input>
       </el-form-item>
@@ -132,7 +121,17 @@
         resetForm(formName) {
           this.$refs[formName].resetFields();
         },
-        handleAvatarSuccess(res, file) {
+        handleAvatarSuccess(response, file) {
+          this.$axios.post('http://localhost:8080/online_answer/user/upload',
+            qs.stringify({
+              userId: this.id,
+              file: file
+            })
+          ).then((response) => {
+            console.log("上传成功",response)
+            //console.log("image的url：" + response.data.data.imageUrl);
+            //return response.data.data.imageUrl
+          })
           this.imageUrl = URL.createObjectURL(file.raw);
         },
         beforeAvatarUpload(file) {

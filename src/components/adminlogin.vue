@@ -55,6 +55,7 @@ export default {
             const {data} = response
             console.log('adminId:',data.data.adminId)
             this.data = data.data
+            this.$store.dispatch('login',data.data.name)
             this.$router.push({
               path: '/adminGuide', query:{admin_id: this.data.adminId}
             });
