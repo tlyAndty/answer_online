@@ -122,7 +122,5 @@
   .maintext{
     text-align:center;
   }
-  /*.list_con,.summary_oneline,.list_userbar{
-    float: left;
-  }*/
+
 </style>

@@ -1,10 +1,11 @@
 <template>
   <el-container direction="vertical">
     <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
-      <span style="font-size: 30px; position:relative; top:5px ">
+      <div>
+        <div style="float:left;font-size: 30px; position:relative; top:5px ">
         探源问答
-      </span>
-      <span v-if="user" style="position:relative;left: 30px;top:4px">
+      </div>
+        <div v-if="user" style="float:right;position:relative; top:10px ">
         <el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
@@ -13,24 +14,10 @@
                                                border-radius:5px;
                                                text-align: center;
                                                color: white;
-                                               border-color: white;">
+                                               border-color: white;
+                                               margin-right:15px">
           我要提问
         </el-button>
-      </span>
-      <span v-else style="position:relative;left: 30px;top:4px">
-        <el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
-                                               width: 100px;
-                                               height: 36px;
-                                               font-size: 14px;
-                                               background-color: lightcoral;
-                                               border-radius:5px;
-                                               text-align: center;
-                                               color: white;
-                                               border-color: white;">
-          我要提问
-        </el-button>
-      </span>
-      <span v-if="user" style="position:relative; left: 900px; top:4px">
         <span style="margin-right: 5px">{{user}}</span>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px">
           <span class="el-dropdown-link">
@@ -51,15 +38,27 @@
         <a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="logout_link" href="javascript:void(0)" @click="logout" style="color: white;text-decoration:none">登出</a>
-      </span>
-      <span v-else style="position:relative; left: 70%; top:4px" >
+      </div>
+        <div v-else style="float:right;position:relative; top:10px ">
+        <el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
+                                               width: 100px;
+                                               height: 36px;
+                                               font-size: 14px;
+                                               background-color: lightcoral;
+                                               border-radius:5px;
+                                               text-align: center;
+                                               color: white;
+                                               border-color: white;
+                                               margin-right:15px">
+          我要提问
+        </el-button>
         <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="login_link" href="/userlogin" style="color: white;text-decoration:none">登录</a>
         /
         <a id="register_link" href="/register" style="color: white;text-decoration:none">注册</a>
-      </span>
-
+      </div>
+      </div>
     </el-header>
     <el-main>
       <router-view/>

@@ -25,6 +25,7 @@ const store = new Vuex.Store({
     },
     logout (context) {
       context.commit('logout')
+      console.log("退啦")
     }
   }
 })
