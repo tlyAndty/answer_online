@@ -121,7 +121,7 @@
         resetForm(formName) {
           this.$refs[formName].resetFields();
         },
-        handleAvatarSuccess(response, file) {
+        handleAvatarSuccess(res, file) {
           this.$axios.post('http://localhost:8080/online_answer/user/upload',
             qs.stringify({
               userId: this.id,

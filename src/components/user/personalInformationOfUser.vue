@@ -135,7 +135,7 @@
           //return response.data.data.imageUrl
         })
         this.imageUrl = URL.createObjectURL(file.raw);
-        console.log("上传成功",this.imageUrl)
+        console.log("上传成功",file)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
