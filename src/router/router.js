@@ -16,6 +16,7 @@ import commentList from "../components/user/commentList";
 import blockedCommentList from "../components/user/blockedCommentList";
 import personalInformationOfUser from "../components/user/personalInformationOfUser";
 import adminGuide from "../components/admin/adminGuide";
+import registerInfo from "../components/admin/registerInfo";
 import questionListOfAdmin from "../components/admin/questionListOfAdmin";
 import blockedQuestionListOfAdmin from "../components/admin/blockedQuestionListOfAdmin";
 import userList from "../components/admin/userList";
@@ -178,6 +179,14 @@ export default new Router({
         {
           path: ':admin_id',
           component: adminGuide,
+        },
+        {
+          path:'/registerInfo',
+          name:'registerInfo',
+          component:registerInfo,
+          meta:{
+            keepAlive:true
+          },
         },
         {
           path:'/questionListOfAdmin',

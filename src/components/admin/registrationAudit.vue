@@ -64,7 +64,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.userId)">查看详情</el-button>
+            <el-button type="text" @click="checkDetail(scope.row.mail)">查看详情</el-button>
             <el-button type="text" @click="acceptUser(scope.row.userId)">通过</el-button>
             <el-button type="text" @click="rejectUser(scope.row.userId)">拒绝</el-button>
           </template>
@@ -84,27 +84,7 @@
 <script>
   import qs from 'qs';
   var listJson={
-    uListData:[/*{
-      user_id:'1',
-      mail:'1@qq.com',
-      name:'小明',
-      state:'0',
-      add_time:'2020-03-27 13:07:40',
-    },
-      {
-        user_id:'2',
-        mail:'1@qq.com',
-        name:'小红',
-        state:'0',
-        add_time:'2020-03-27 13:07:40',
-      },
-      {
-        user_id:'3',
-        mail:'1@qq.com',
-        name:'小王',
-        state:'0',
-        add_time:'2020-03-27 13:07:40',
-      }*/],
+    uListData:[],
   }
   export default {
     name: "registrationAudit",
@@ -206,8 +186,8 @@
         location.reload()
       },
       checkDetail(val){
-        this.$router.push({path:path,query:{user_id:val}})
-        console.log(val)
+        this.$router.push({path:'/registerInfo',query:{user_mail:val}})
+        console.log("mail:",val)
       },
     },
   }
