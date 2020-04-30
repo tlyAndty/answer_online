@@ -186,7 +186,7 @@
         location.reload()
       },
       checkDetail(val){
-        this.$router.push({path:'/registerInfo',query:{user_mail:val}})
+        this.$router.push({path:'/registerInfo',query:{user_mail:val,user_id:this.id}})
         console.log("mail:",val)
       },
     },
