@@ -5,7 +5,7 @@
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -86,6 +86,17 @@
       this.getqListData()
     },
     methods: {
+      upload: function () {
+        this.$axios.post('http://localhost:8080/online_answer/user/upload',
+          qs.stringify({
+            userId: this.$route.query.user_id,
+            image: this.imageUrl
+          })
+        ).then((response) => {
+          console.log("image的url：" + response.data.data.imageUrl);
+          return response.data.data.imageUrl
+        })
+      },
       getParams:function () {
         this.id = this.$route.query.user_id
         console.log("传来的u参数=="+this.id)
