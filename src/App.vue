@@ -89,7 +89,6 @@
         console.log("存vuex后的数据")
         console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
       })
-
       // 在页面加载时读取sessionStorage里的状态信息
       if (sessionStorage.getItem("store")) {
         console.log("读取sessionstorage前的数据")
