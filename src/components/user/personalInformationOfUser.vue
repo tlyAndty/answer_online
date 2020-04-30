@@ -34,7 +34,6 @@
         <el-button @click="resetForm('infoForm')">重置</el-button>
       </el-form-item>
     </el-form >
-
   </div>
 </template>
 
