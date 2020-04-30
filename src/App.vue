@@ -59,6 +59,7 @@
       </div>
     </el-header>
     <el-main>
+      <!--router-view v-if="isRouterAlive"></router-view-->
       <router-view/>
     </el-main>
     <!--el-footer style="height: 40px;">
@@ -76,6 +77,16 @@
 
   export default {
     name: 'App',
+    /*provide(){
+      return {
+        reload: this.reload
+      }
+    },
+    data(){
+      return {
+        isRouterAlive:true
+      }
+    },*/
     methods:{
       logout(){
         console.log("正在登出")
@@ -84,6 +95,10 @@
         //window.location.reload()
         //sessionStorage.setItem("store", null)
         console.log(this.$store.state)
+      },
+      reload(){
+        this.isRouterAlive=false
+        this.$nextTick(()=>this.isRouterAlive=true)
       },
     },
     created() {

@@ -208,6 +208,7 @@
           }).catch((error) => {
             console.log(error);
           });
+          location.reload()
         },
         checkDetail(val){
           this.$router.push({path:'/questionPage',query:{ques_id:val}})

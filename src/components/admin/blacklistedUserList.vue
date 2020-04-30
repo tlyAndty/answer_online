@@ -175,6 +175,7 @@
           }).catch((error) => {
             console.log(error);
           });
+          location.reload()
         },
         checkDetail(val){
           this.$router.push({path:'/userPage',query:{user_id:val}})

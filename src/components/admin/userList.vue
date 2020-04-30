@@ -98,6 +98,7 @@
     }
     export default {
       name: "userList",
+      //inject:['reload'],
       data() {
         return {
           uListData:[],
@@ -145,17 +146,6 @@
             index < this.page * this.limit && index >= this.limit * (this.page - 1)
           )
           this.total = uListData.length
-          /*this.$axios.get(
-            '127.0.0.1/online_answer/user/login'
-          ).then(response => {
-            const res = response.data
-            if (res.data) {
-              const data = res.data
-              this.qListData = data.qListData
-            }
-          }).catch(error => {
-            console.log('错误信息：' + error)
-          })*/
         },
         handleSizeChange(val) {
           console.log(`每页 ${val} 条`);
@@ -183,6 +173,8 @@
           }).catch((error) => {
             console.log(error);
           });
+          //this.reload()
+          location.reload()
         },
         blacklistUser(val){
           this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
@@ -196,6 +188,8 @@
           }).catch((error) => {
             console.log(error);
           });
+          //this.reload()
+          location.reload()
         },
         checkDetail(val){
           this.$router.push({path:'/userPage',query:{user_id:val}})

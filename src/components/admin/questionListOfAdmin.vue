@@ -172,6 +172,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       blockQues(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
@@ -185,6 +186,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       checkDetail(val){
         this.$router.push({path:'/questionPage',query:{ques_id:val}})

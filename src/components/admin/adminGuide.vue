@@ -36,14 +36,21 @@
 <script>
   export default {
     name: "adminGuide",
+    //inject:['reload'],
     data() {
       return {
         id:'',
+        //isRouterAlive: true
       }
     },
     created(){
       this.getParams();
     },
+    /*provide(){
+      return{
+        reload:this.reload
+      }
+    },*/
     watch:{
       '$route':'getParams'
     },
@@ -55,6 +62,12 @@
       handleSelect(path){
         this.$router.push({path:path,query:{admin_id: this.id}})
       },
+      /*reload(){
+        this.isRouterAlive = false
+        this.$nextTick(function () {
+          this.isRouterAlive = true
+        })
+      }*/
     }
   };
 </script>

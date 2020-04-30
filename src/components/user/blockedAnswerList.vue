@@ -189,6 +189,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       modifyAns(val){
         let self = this;

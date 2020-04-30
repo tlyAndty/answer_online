@@ -179,6 +179,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       modifyQues(val){
         let self = this;

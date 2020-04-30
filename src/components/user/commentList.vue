@@ -162,6 +162,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       modifyCom(val){
         let self = this;

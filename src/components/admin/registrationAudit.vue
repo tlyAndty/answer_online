@@ -189,6 +189,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       acceptUser(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
@@ -202,6 +203,7 @@
         }).catch((error) => {
           console.log(error);
         });
+        location.reload()
       },
       checkDetail(val){
         this.$router.push({path:path,query:{user_id:val}})
