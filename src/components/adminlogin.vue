@@ -76,7 +76,7 @@ export default {
     text-align:center;
     background: url(../assets/login_bg.jpg);
     background-repeat: no-repeat;
-    height:660px;
+    height:800px;
   }
   .panel{
     position: relative;
