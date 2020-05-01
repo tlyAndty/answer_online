@@ -5,7 +5,7 @@
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="#"
+          action="https://jsonplaceholder.typicode.com/posts/"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
