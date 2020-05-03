@@ -8,7 +8,7 @@
           <el-menu-item index="blockedQuestionListOfUser">被屏蔽问题列表</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-menu"></i>回答管理</template>
+          <template slot="title"><i class="el-icon-chat-round"></i>回答管理</template>
             <el-submenu index="2-1">
               <template slot="title">发布的回答</template>
                 <el-menu-item index="answerList">所有回答列表</el-menu-item>
@@ -19,7 +19,7 @@
             </el-submenu>
         </el-submenu>
         <el-submenu index="3">
-          <template slot="title"><i class="el-icon-setting"></i>评论管理</template>
+          <template slot="title"><i class="el-icon-chat-dot-square"></i>评论管理</template>
             <el-submenu index="3-1">
               <template slot="title">发布的评论</template>
                 <el-menu-item index="commentList">所有评论列表</el-menu-item>
@@ -29,6 +29,7 @@
               <template slot="title">收到的评论</template>
             </el-submenu>
         </el-submenu>
+        <el-menu-item index="4"><i class="el-icon-star-on"></i>收藏夹</el-menu-item>
         <el-menu-item index="personalInformationOfUser"><i class="el-icon-setting"></i>个人信息</el-menu-item>
       </el-menu>
     </el-aside>
