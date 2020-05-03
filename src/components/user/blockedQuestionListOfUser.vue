@@ -51,7 +51,6 @@
         </template>
       </el-table-column>
 
-
       <el-table-column
         sortable
         prop="quesAnsState"
