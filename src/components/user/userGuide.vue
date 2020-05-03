@@ -29,7 +29,7 @@
               <template slot="title">收到的评论</template>
             </el-submenu>
         </el-submenu>
-        <el-menu-item index="4"><i class="el-icon-star-on"></i>收藏夹</el-menu-item>
+        <!--el-menu-item index="4"><i class="el-icon-star-on"></i>收藏夹</el-menu-item-->
         <el-menu-item index="personalInformationOfUser"><i class="el-icon-setting"></i>个人信息</el-menu-item>
       </el-menu>
     </el-aside>
