@@ -47,8 +47,8 @@
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
-          <template slot-scope="qListData">
-            {{ qListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          <template slot-scope="colListData">
+            {{ colListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
@@ -136,7 +136,6 @@
         this.$axios.post('http://localhost:8080/online_answer/user/displayPersonalCollections',
           qs.stringify({
             userId: this.id,
-
           })
         ).then((response) => {
           console.log("col:",response.data.data);
@@ -169,10 +168,12 @@
       deleteCol(val){
         this.$axios.post('http://localhost:8080/online_answer/user/deleteCollections',
           qs.stringify({
-            quesId: val,
+            colUserId: this.id,
+            colQuesId: val,
           })
         ).then((response) => {
           console.log(response.data.resultCode);
+          console.log("取消成功")
         }).catch((error) => {
           console.log(error);
         });
