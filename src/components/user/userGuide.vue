@@ -31,8 +31,7 @@
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-star-on"></i>收藏夹</template>
-            <el-menu-item index="commentList">所有评论列表</el-menu-item>
-            <el-menu-item index="blockedCommentList">被屏蔽评论列表</el-menu-item>
+            <el-menu-item index="collectionList">收藏列表</el-menu-item>
         </el-submenu>
         <el-menu-item index="personalInformationOfUser"><i class="el-icon-setting"></i>个人信息</el-menu-item>
       </el-menu>
