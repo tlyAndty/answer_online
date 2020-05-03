@@ -139,7 +139,7 @@
 
           })
         ).then((response) => {
-          console.log(response.data.data);
+          console.log("col:",response.data.data);
           this.colListData = response.data.data;
         }).catch((error) => {
           console.log(error);
