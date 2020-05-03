@@ -70,6 +70,7 @@
         });
         //this.$router.push({path:'commentList',query:{user_id: this.id}})
         //location.reload()
+
       },
       dateFormat(time) {
         var date=new Date(time);
