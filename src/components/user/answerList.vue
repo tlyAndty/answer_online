@@ -86,8 +86,8 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.ansId)">查看详情</el-button>
-            <el-button type="text" @click="modifyAns(scope.row.ansId)">修改</el-button>
+            <!--el-button type="text" @click="checkDetail(scope.row.ansId)">查看详情</el-button-->
+            <el-button type="text" @click="modifyAns(scope.row.ansId,scope.row.ansContent)">修改</el-button>
             <el-button type="text" @click="deleteAns(scope.row.ansId)">删除</el-button>
           </template>
         </el-table-column>
@@ -182,8 +182,9 @@
         });
         location.reload()
       },
-      modifyAns(val){
-        let self = this;
+      modifyAns(val1,val2){
+        this.$router.push({path:'/answerInfo',query:{ans_id:val1,ans_content:val2,user_id:this.id}})
+        console.log(val)
       },
       checkDetail(val){
         this.$router.push({path:'/questionPage',query:{ques_id:val}})

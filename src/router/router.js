@@ -11,8 +11,10 @@ import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
 import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";
 import answerList from "../components/user/answerList";
+import answerInfo from "../components/user/answerInfo";
 import blockedAnswerList from "../components/user/blockedAnswerList";
 import commentList from "../components/user/commentList";
+import commentInfo from "../components/user/commentInfo";
 import blockedCommentList from "../components/user/blockedCommentList";
 import personalInformationOfUser from "../components/user/personalInformationOfUser";
 import collectionList from "../components/user/collectionList";
@@ -136,6 +138,14 @@ export default new Router({
           },
         },
         {
+          path:'/answerInfo',
+          name:'answerInfo',
+          component:answerInfo,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
           path:'/blockedAnswerList',
           name:'blockedAnswerList',
           component:blockedAnswerList,
@@ -146,6 +156,14 @@ export default new Router({
         {
           path:'/commentList',
           name:'commentList',
+          component:commentList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/commentInfo',
+          name:'commentInfo',
           component:commentList,
           meta:{
             keepAlive:true
