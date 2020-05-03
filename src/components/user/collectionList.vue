@@ -172,11 +172,13 @@
             colQuesId: val,
           })
         ).then((response) => {
-          console.log(response.data.resultCode);
+          console.log(response.data);
           console.log("取消成功")
         }).catch((error) => {
           console.log(error);
         });
+        console.log("colUserId:",this.id)
+        console.log("colQuesId:",val)
         //location.reload()
       },
       checkDetail(val){
