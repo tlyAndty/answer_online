@@ -136,6 +136,7 @@
         this.$axios.post('http://localhost:8080/online_answer/user/displayPersonalCollections',
           qs.stringify({
             userId: this.id,
+
           })
         ).then((response) => {
           console.log(response.data.data);
