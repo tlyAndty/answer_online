@@ -164,7 +164,7 @@ export default new Router({
         {
           path:'/commentInfo',
           name:'commentInfo',
-          component:commentList,
+          component:commentInfo,
           meta:{
             keepAlive:true
           },

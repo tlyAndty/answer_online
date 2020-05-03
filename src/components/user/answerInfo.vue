@@ -3,10 +3,10 @@
     <div style="text-align: left">
       <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
     </div>
-    <span style="font-size: 30px;">注册用户详情</span>
+    <span style="font-size: 30px;">回答详情</span>
     <el-form ref="registerForm" :model="answer" :rules="rules"  style="margin:40px auto;width: 500px">
       <el-form-item label="ID" prop="name">
-        <el-input class="text" placeholder=data.name v-model="answer.ans_id" :readonly="true" autocomplete="off""></el-input>
+        <el-input class="text" placeholder=data.name v-model="answer.ans_id" :readonly="true" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="内容" prop="mail">
         <el-input class="text" placeholder=data.mail v-model="answer.ans_content" autocomplete="off"></el-input>

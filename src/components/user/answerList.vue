@@ -184,7 +184,7 @@
       },
       modifyAns(val1,val2){
         this.$router.push({path:'/answerInfo',query:{ans_id:val1,ans_content:val2,user_id:this.id}})
-        console.log(val)
+        console.log(val1)
       },
       checkDetail(val){
         this.$router.push({path:'/questionPage',query:{ques_id:val}})

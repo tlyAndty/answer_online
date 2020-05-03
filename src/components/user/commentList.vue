@@ -68,8 +68,8 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.comId)">查看详情</el-button>
-          <el-button type="text" @click="modifyCom(scope.row.comId)">修改</el-button>
+          <!--el-button type="text" @click="checkDetail(scope.row.comId)">查看详情</el-button-->
+          <el-button type="text" @click="modifyCom(scope.row.comId,scope.row.comContent)">修改</el-button>
           <el-button type="text" @click="deleteCom(scope.row.comId)">删除</el-button>
         </template>
       </el-table-column>
@@ -164,8 +164,9 @@
         });
         location.reload()
       },
-      modifyCom(val){
-        let self = this;
+      modifyCom(val1,val2){
+        this.$router.push({path:'/commentInfo',query:{com_id:val1,com_content:val2,user_id:this.id}})
+        console.log(val1)
       },
       checkDetail(val){
         window.location.href='/questionPage'
