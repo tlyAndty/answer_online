@@ -144,8 +144,10 @@
     data() {
       return {
         list:[],
+        qlist:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
+        list_length:'',
       }
     },
     created(){
@@ -166,8 +168,25 @@
             quesState: '3',
           })
         ).then((response) => {
-          console.log(response.data.data);
-          this.list = response.data.data;
+          console.log("firstlist:",response.data.data);
+          this.qlist = response.data.data;
+          this.list_length = response.data.data.length;
+          for(let i=0;i<this.list_length;i++) {
+            this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
+              qs.stringify({
+                userId: this.qlist[i].userId,
+              })
+            ).then((response) => {
+              //arr.push({'u_name':response.data.data.name})
+              this.list[i].push({'name':response.data.data.name})
+              /*this.qlist.forEach(item => {
+                item.name=response.data.data.name;
+              })*/
+            }).catch((error) => {
+              console.log(error);
+            });
+          }
+          console.log("list:",this.qlist)
         }).catch((error) => {
           console.log(error);
         });
