@@ -14,17 +14,17 @@
           <li style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesTitle}}</router-link>
+                <router-link style="font-size: 30px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesContent}}</router-link>
+                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesContent}}</router-link>
               </div>
               <div class="list_userbar" style="height: 24px;line-height: 24px;font-size: 14px;color: #8a8a8a;">
                 <div class="name" style="float: left">
-                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{user_id:item.userId}}">{{item.name}}</router-link>
+                  <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{user_id:item.question.userId}}">{{item.user_name}}</router-link>
                 </div>
                 <div class="time" style="float: right">
-                  <span>{{item.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
+                  <span>{{item.question.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
                 </div>
               </div>
             </div>
@@ -44,10 +44,10 @@
           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="title">
-                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesTitle}}</router-link>
+                <router-link  style="font-size: 20px;color: #333333;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
-                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.quesId}}">{{item.quesContent}}</router-link>
+                <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesContent}}</router-link>
               </div>
             </div>
           </li>
@@ -155,10 +155,10 @@
     },
     computed:{
       time_order_list:function(){
-        return this.sortByTime(this.list,'quesTime')
+        return this.sortByTime(this.list,'question.quesTime')
       },
       good_order_list:function(){
-        return this.sortByGood(this.list,'quesColNum')
+        return this.sortByGood(this.list,'question.quesColNum')
       },
     },
     methods: {
@@ -169,24 +169,26 @@
           })
         ).then((response) => {
           console.log("firstlist:",response.data.data);
-          this.qlist = response.data.data;
-          this.list_length = response.data.data.length;
-          for(let i=0;i<this.list_length;i++) {
+          this.list = response.data.data;
+          //this.list_length = response.data.data.length;
+          /*for(let i=0;i<this.list_length;i++) {
             this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
               qs.stringify({
                 userId: this.qlist[i].userId,
               })
             ).then((response) => {
               //arr.push({'u_name':response.data.data.name})
-              this.list[i].push({'name':response.data.data.name})
+              /*this.list[i].push({'name':response.data.data.name})*/
               /*this.qlist.forEach(item => {
                 item.name=response.data.data.name;
-              })*/
+              })
             }).catch((error) => {
               console.log(error);
             });
-          }
-          console.log("list:",this.qlist)
+          }*/
+          // 将一位数组或者字符串或者对象分割成每n个一组
+
+          console.log("list:",this.list)
         }).catch((error) => {
           console.log(error);
         });
@@ -204,7 +206,22 @@
           var y = b[key];
           return ((y<x)?-1:(x>y)?1:0)   //从小到大排序
         })
-      }
+      },
+      /*transTwoArry(str,num){
+        var data,result = [];
+        if(str instanceof Array){
+          data = str;
+        }else if(typeof str == "string"){
+          data = str.split(",")
+        }else{
+          data = Object.entries(str);
+        }
+        if(typeof num == "string"){num = Number(num)};
+        for(var i=0,len=data.length;i<len;i+=num){
+          result.push(data.slice(i,i+num));
+        }
+      return result;
+      }*/
 
     },
 

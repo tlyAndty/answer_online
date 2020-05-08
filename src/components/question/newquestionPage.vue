@@ -2,14 +2,16 @@
   <div class="questionInfo" style="background: white;padding: 0px">
     <router-link to="/" class="gobackLink"><< 返回列表</router-link>
     <div class="main clearfix" style="margin: 0px;">
-      <div class="q_info" v-for="q in list" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
+      <div class="q_info" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
         <div id="question_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
           <div class="question_form_con" style="overflow: hidden;margin: 20px;position: relative;">
             <el-form ref="questionForm" :model="questionForm" :rules="rules">
-              <el-form-item style="margin-bottom: 0px">
+              <el-form-item>
                 <div class="edit_title" style="position: relative;width: 100%;">
-                  <el-input placeholder="输入问题标题" style="margin-bottom: 10px;"></el-input>
+                  <el-input  v-model="questionForm.a_title" placeholder="输入问题标题" style="margin-bottom: 10px;"></el-input>
                 </div>
+              </el-form-item>
+              <el-form-item style="margin-bottom: 0px">
                 <div class="edit_container" style="position: relative;width: 100%;height: 340px;background-color: white">
                   <quill-editor v-model="questionForm.a_content" ref="myQuillEditor"  class="editor" style="height: 300px;background-color: white" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
                     <!-- 自定义toolar -->
@@ -64,44 +66,13 @@
                 </div>
               </el-form-item>
               <el-form-item>
-                <el-button style="float: right" @click="dialogVisible=true" >发布</el-button>
-                <el-dialog
-                  title="发布问题"
-                  :visible.sync="dialogVisible"
-                  width="30%"
-                  :before-close="handleClose">
-                  <div>
-                    <span>添加标签：</span>
-                    <el-checkbox-group v-model="checkList">
-                      <el-checkbox label="标签 A"></el-checkbox>
-                      <el-checkbox label="标签 B"></el-checkbox>
-                      <el-checkbox label="标签 C"></el-checkbox>
-                      <el-checkbox label="标签 D"></el-checkbox>
-                    </el-checkbox-group>
-                  </div>
-                  <div>
-                    <span>添加自定义标签</span>
-                    <el-input
-                      class="input-new-tag"
-                      v-if="inputVisible"
-                      v-model="inputValue"
-                      ref="saveTagInput"
-                      size="small"
-                      @keyup.enter.native="handleInputConfirm"
-                      @blur="handleInputConfirm"
-                    >
-                    </el-input>
-                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-                  </div>
-                  <div>
-                    <span>悬赏：</span>
-                    <el-input v-model="input" placeholder="请输入悬赏积分"></el-input>
-                  </div>
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-                  </span>
-                </el-dialog>
+                <div>
+                  <span>悬赏：</span>
+                  <el-input v-model="questionForm.a_reward" placeholder="请输入悬赏积分"></el-input>
+                </div>
+              </el-form-item>
+              <el-form-item>
+                <el-button style="float: right" @click="submit('questionForm')" >发布</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -129,21 +100,10 @@
     },
     data() {
       return {
-        list: [
-          {
-            ques_id: '1',
-            user_id: '1',
-            ques_title: 'hhh',
-            name:'张三',
-            ques_time: '2011',
-            ques_content:'奇葩说杨奇函每日一省',
-            ques_ans_state: '1',
-            ques_state: '2',
-          },
-        ],
         questionForm:{
-          a_title: 'list.ques_title',
+          a_title: '',
           a_content:'',
+          a_reward:'',
         },
         editorOption: {
           placeholder: "请输入",
@@ -160,7 +120,6 @@
             {required: true, message: '请输入详细内容', trigger: 'blur'}
           ]
         },
-        dialogVisible: false,
         inputVisible: false,
         inputValue: '',
         checkList: [],
@@ -184,7 +143,7 @@
         console.log("传来的参数=="+id)
         this.textareText = id
       },
-      getData(id){
+      /*getData(id){
         this.axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo',
           {
             params:{
@@ -199,9 +158,32 @@
           .catch((error)=>{
             console.log(error);
           });
-      },
-      submit:function () {
-
+      },*/
+      submit(formName) {
+        //this.$router.push('/')
+        this.$refs[formName].validate((valid) => {
+          console.log("formName:",this.user.name)
+          if (valid) {
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/modifyUserInfo',
+              qs.stringify({
+                userId: this.user.userid,
+                mail: this.user.mail,
+                name: this.user.name,
+                pwd: this.user.pwd,
+                newPwd: this.user.newPwd,
+              })
+            ).then(response => {
+              console.log(response.data.resultCode)
+              console.log("修改成功")
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
       check_user_status(){
 
@@ -217,13 +199,13 @@
       onEditorReady(editor){
 
       },
-      handleClose(done) {
+      /*handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {
             done();
           })
           .catch(_ => {});
-      },
+      },*/
       showInput() {
         this.inputVisible = true;
         this.$nextTick(_ => {

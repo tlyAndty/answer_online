@@ -6,7 +6,7 @@
         探源问答
       </div>
         <div v-if="user" style="float:right;position:relative; top:10px ">
-        <el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
+          <el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
                                                font-size: 14px;
@@ -16,8 +16,8 @@
                                                color: white;
                                                border-color: white;
                                                margin-right:15px">
-          我要提问
-        </el-button>
+            我要提问
+          </el-button>
         <span style="margin-right: 5px">{{user}}</span>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px">
           <span class="el-dropdown-link">
