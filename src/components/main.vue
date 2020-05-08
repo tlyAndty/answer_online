@@ -144,7 +144,7 @@
     data() {
       return {
         list:[],
-        qlist:[],
+        //qlist:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
         list_length:'',
