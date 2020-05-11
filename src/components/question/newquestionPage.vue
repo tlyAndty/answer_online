@@ -174,8 +174,10 @@
                 quesReward: this.questionForm.a_reward,
               })
             ).then(response => {
-              console.log(response.data.resultCode)
+              console.log(response.data)
               console.log("修改成功")
+              alert(response.data.resultDesc)
+              this.$router.push({path:'/'})
             }).catch(error => {
               console.log(error)
             })
