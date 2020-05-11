@@ -5,7 +5,7 @@
         <div style="float:left;font-size: 30px; position:relative; top:5px ">
         探源问答
       </div>
-        <div v-if="user" style="float:right;position:relative; top:10px ">
+        <div v-if="user" style="float:right;position:relative; top:17px ">
           <!--el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
@@ -18,9 +18,9 @@
                                                margin-right:15px">
             我要提问
           </el-button-->
-          <router-link style="color: white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
+          <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
         <span style="margin-right: 5px">{{user.name}}</span>
-        <el-dropdown trigger="click" style="color: white;margin-right: 10px">
+        <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
             消息
             <i class="el-icon-caret-bottom el-icon--right"></i>
@@ -40,7 +40,7 @@
         /
         <a id="logout_link" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
-        <div v-else style="float:right;position:relative; top:10px ">
+        <div v-else style="float:right;position:relative; top:17px ">
         <!--el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
@@ -53,7 +53,7 @@
                                                margin-right:15px">
           我要提问
         </el-button-->
-          <router-link style="color: white;text-decoration:none;margin-right:15px" :to="{name:'userlogin'}">我要提问</router-link>
+          <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'userlogin'}">我要提问</router-link>
         <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
         /
         <a id="login_link" href="/userlogin" style="color: white;text-decoration:none">登录</a>

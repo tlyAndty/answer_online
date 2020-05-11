@@ -13,10 +13,8 @@
               </el-form-item>
               <el-form-item style="margin-bottom: 0px">
                 <div class="edit_container" style="position: relative;width: 100%;height: 340px;background-color: white">
-                  <quill-editor v-model="questionForm.a_content" ref="myQuillEditor"  class="editor" style="height: 300px;background-color: white" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
-                    <!-- 自定义toolar -->
+                  <quill-editor v-model="questionForm.a_contenttest" ref="myQuillEditor"  class="editor" style="height: 300px;background-color: white" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
                     <div id="toolbar" slot="toolbar">
-                      <!-- Add a bold button -->
                       <button class="ql-bold" title="加粗">Bold</button>
                       <button class="ql-italic" title="斜体">Italic</button>
                       <button class="ql-underline" title="下划线">underline</button>
@@ -25,11 +23,9 @@
                       <button class="ql-code-block" title="代码"></button>
                       <button class="ql-header" value="1" title="标题1"></button>
                       <button class="ql-header" value="2" title="标题2"></button>
-                      <!--Add list -->
                       <button class="ql-list" value="ordered" title="有序列表"></button>
                       <button class="ql-list" value="bullet" title="无序列表"></button>
-                      <!-- Add font size dropdown -->
-                      <select class="ql-header" title="段落格式">
+                      <select class="ql-header" style="line-height: 24px;width: 60px" title="段落格式">
                         <option selected>段落</option>
                         <option value="1">标题1</option>
                         <option value="2">标题2</option>
@@ -38,7 +34,7 @@
                         <option value="5">标题5</option>
                         <option value="6">标题6</option>
                       </select>
-                      <select class="ql-size" title="字体大小">
+                      <select class="ql-size" style="line-height: 24px;width: 60px" title="字体大小">
                         <option value="10px">10px</option>
                         <option value="12px">12px</option>
                         <option value="14px">14px</option>
@@ -46,7 +42,7 @@
                         <option value="18px">18px</option>
                         <option value="20px">20px</option>
                       </select>
-                      <select class="ql-font" title="字体">
+                      <select class="ql-font" style="line-height: 24px;width: 60px" title="字体">
                         <option value="SimSun">宋体</option>
                         <option value="SimHei">黑体</option>
                         <option value="Microsoft-YaHei">微软雅黑</option>
@@ -54,12 +50,10 @@
                         <option value="FangSong">仿宋</option>
                         <option value="Arial">Arial</option>
                       </select>
-                      <!-- Add subscript and superscript buttons -->
-                      <select class="ql-color" value="color" title="字体颜色"></select>
-                      <select class="ql-background" value="background" title="背景颜色"></select>
-                      <select class="ql-align" value="align" title="对齐"></select>
+                      <select class="ql-color" style="line-height: 24px" value="color" title="字体颜色"></select>
+                      <select class="ql-background" style="line-height: 24px" value="background" title="背景颜色"></select>
+                      <select class="ql-align" style="line-height: 24px" value="align" title="对齐"></select>
                       <button class="ql-clean" title="还原"></button>
-                      <!-- You can also add your own -->
                     </div>
                   </quill-editor>
                   <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 10px">{{TiLength}}</span>
@@ -84,6 +78,7 @@
 </template>
 
 <script>
+  import qs from 'qs';
   import {
     quillEditor
   } from 'vue-quill-editor'
@@ -102,6 +97,7 @@
       return {
         questionForm:{
           a_title: '',
+          a_contenttest:'',
           a_content:'',
           a_reward:'',
         },
@@ -123,7 +119,7 @@
         inputVisible: false,
         inputValue: '',
         checkList: [],
-        input:''
+        id:'',
       }
     },
     computed:{
@@ -139,9 +135,8 @@
     },
     methods:{
       getParams:function () {
-        var id = this.$route.query.user_id
-        console.log("传来的user参数=="+id)
-        this.textareText = id
+        this.id = this.$route.query.user_id
+        console.log("传来的user参数=="+this.id)
       },
       /*getData(id){
         this.axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo',
@@ -162,16 +157,21 @@
       submit(formName) {
         //this.$router.push('/')
         this.$refs[formName].validate((valid) => {
-          console.log("formName:",this.user.name)
+          console.log("formName:",formName)
           if (valid) {
+            console.log(this.id)
+            console.log(this.questionForm.a_title,)
+            console.log(this.questionForm.a_contenttest)
+            console.log(this.questionForm.a_reward)
+            this.questionForm.a_content=this.questionForm.a_contenttest.replace(/<[^>]+>/g,"")
+            console.log(this.questionForm.a_content)
             this.$axios.post(
-              'http://localhost:8080/online_answer/user/modifyUserInfo',
+              'http://localhost:8080/online_answer/user/question',
               qs.stringify({
-                userId: this.user.userid,
-                mail: this.user.mail,
-                name: this.user.name,
-                pwd: this.user.pwd,
-                newPwd: this.user.newPwd,
+                userId: this.id,
+                quesTitle: this.questionForm.a_title,
+                quesContent: this.questionForm.a_content,
+                quesReward: this.questionForm.a_reward,
               })
             ).then(response => {
               console.log(response.data.resultCode)
