@@ -14,18 +14,18 @@
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
       </el-form-item-->
-      <el-form-item label="ID" prop="adminid">
+      <!--el-form-item label="ID" prop="adminid">
         <el-input class="text" placeholder=data.adminid v-model="admin.adminid" autocomplete="off" :readonly="true"></el-input>
-      </el-form-item>
+      </el-form-item-->
       <el-form-item label="名字" prop="name">
         <el-input class="text" placeholder=data.name v-model="admin.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail">
         <el-input class="text" placeholder=data.mail v-model="admin.mail" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pwd">
+      <!--el-form-item label="密码" prop="pwd">
         <el-input class="text" placeholder=data.pwd v-model.number="admin.pwd" :readonly="true"></el-input>
-      </el-form-item>
+      </el-form-item-->
       <el-form-item label="新密码" prop="newPwd">
         <el-input class="text" placeholder=请输入新密码 v-model.number="admin.newPwd"></el-input>
       </el-form-item>
