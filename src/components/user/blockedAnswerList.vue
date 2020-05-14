@@ -77,7 +77,9 @@
         label="回答的状态"
         header-align="left"
         align="left"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        :formatter="formatState"
+      >
       </el-table-column>
 
         <el-table-column
@@ -199,6 +201,17 @@
         window.location.href='/questionPage'
         console.log(val)
       },
+      formatState(row, column) {
+        if (row.ansState === 0) {
+          return '未屏蔽'
+        } else if (row.ansState === 1) {
+          return '管理员屏蔽'
+        } else if (row.ansState === 2) {
+          return '因回答者被拉黑而被屏蔽'
+        } else if (row.ansState === 3) {
+          return '因问题被屏蔽而被屏蔽'
+        }
+      }
     }
 
   }

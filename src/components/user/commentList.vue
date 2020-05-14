@@ -61,7 +61,9 @@
         label="评论状态"
         header-align="left"
         align="left"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        :formatter="formatState"
+      >
       </el-table-column>
 
       <el-table-column
@@ -173,6 +175,19 @@
         window.location.href='/questionPage'
         console.log(val)
       },
+      formatState(row, column) {
+        if (row.comState === 0) {
+          return '未屏蔽'
+        } else if (row.comState === 1) {
+          return '管理员屏蔽'
+        } else if (row.comState === 2) {
+          return '因回答者被拉黑而被屏蔽'
+        } else if (row.comState === 3) {
+          return '因问题被屏蔽而被屏蔽'
+        } else if (row.comState === 4) {
+          return '因回答被屏蔽而被屏蔽'
+        }
+      }
     }
 
   }

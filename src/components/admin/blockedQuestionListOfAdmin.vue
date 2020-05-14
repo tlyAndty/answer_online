@@ -59,7 +59,9 @@
           label="问题解决状态"
           header-align="left"
           align="left"
-          :show-overflow-tooltip="true">
+          :show-overflow-tooltip="true"
+          :formatter="formatAnsState"
+        >
         </el-table-column>
 
         <el-table-column
@@ -214,6 +216,19 @@
         checkDetail(val){
           this.$router.push({path:'/questionPage',query:{ques_id:val}})
           console.log(val)
+        },
+        formatAnsState(row, column){
+          if(row.quesAnsState=== 0){
+            return '未解决'
+          }
+          else if(row.quesAnsState === 1){
+            return '已解决'
+          }
+          else if(row.quesAnsState === 2){
+            return '已关闭'
+          }
+          //return row.quesAnsState == 0 ? '未解决' : row.quesAnsState == 1 ? '已解决' : row.quesAnsState == 2 ? '已关闭';
+          //return '已解决'
         },
       }
     }
