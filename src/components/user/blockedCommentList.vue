@@ -21,14 +21,14 @@
       :default-sort = "{prop: 'comTime', order: 'descending'}">
 
       <el-table-column
-        sortable
-        prop="comId"
         label="评论id"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true"
       >
-
+        <template scope="scope">
+          <span>{{(page - 1) * limit + scope.$index + 1}}</span>
+        </template>
       </el-table-column>
       <el-table-column
         sortable

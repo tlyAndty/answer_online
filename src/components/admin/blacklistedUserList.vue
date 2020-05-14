@@ -20,13 +20,14 @@
         :default-sort = "{prop: 'addTime', order: 'descending'}">
 
         <el-table-column
-          sortable
-          prop="userId"
           label="用户id"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
         >
+          <template scope="scope">
+            <span>{{(page - 1) * limit + scope.$index + 1}}</span>
+          </template>
         </el-table-column>
 
         <el-table-column
