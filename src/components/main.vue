@@ -155,10 +155,11 @@
     },
     computed:{
       time_order_list:function(){
-        return this.sortByTime(this.list,'question.quesTime')
+        return this.sortByTime(this.list,'quesTime')
+        console("排序成功")
       },
       good_order_list:function(){
-        return this.sortByGood(this.list,'question.quesColNum')
+        return this.sortByGood(this.list,'quesColNum')
       },
     },
     methods: {
@@ -168,9 +169,13 @@
             quesState: '3',
           })
         ).then((response) => {
-          console.log("firstlist:",response.data.data);
+          //console.log("firstlist:",response.data.data);
           this.list = response.data.data;
           console.log("list:",this.list)
+          /*for(let i=0;i<this.list.length;i++){
+            console.log(this.list[i].question.quesTime)
+          }*/
+          //for(var question in this.list) { console.log(question+" : "+this.list[question]); }
         }).catch((error) => {
           console.log(error);
         });
@@ -178,6 +183,7 @@
       sortByTime(array,key){
         return array.sort(function(a,b){
           var x = a[key];
+          console.log("key:",x)
           var y = b[key];
           return ((y<x)?-1:(x>y)?1:0)   //从小到大排序
         })
@@ -186,7 +192,7 @@
         return array.sort(function(b,a){
           var x = a[key];
           var y = b[key];
-          return ((y<x)?-1:(x>y)?1:0)   //从小到大排序
+          return ((y<x)?-1:(x>y)?1:0)   //从大到小排序
         })
       },
 

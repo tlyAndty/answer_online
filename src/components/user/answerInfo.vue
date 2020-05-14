@@ -12,7 +12,7 @@
         <el-input class="text" placeholder=data.mail v-model="answer.ans_content" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
-    <el-button @click="modifyContent(answer.ans_id,answer.ans_content)" style="margin-right: 100px">确定</el-button>
+    <!--el-button @click="modifyContent(answer.ans_id,answer.ans_content)" style="margin-right: 100px">确定</el-button-->
   </div>
 </template>
 

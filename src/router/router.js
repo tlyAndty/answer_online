@@ -10,6 +10,7 @@ import newquestionPage from "../components/question/newquestionPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
 import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";
+import questionInfo from "../components/user/questionInfo";
 import answerList from "../components/user/answerList";
 import answerInfo from "../components/user/answerInfo";
 import blockedAnswerList from "../components/user/blockedAnswerList";
@@ -125,6 +126,14 @@ export default new Router({
           path:'/blockedQuestionListOfUser',
           name:'blockedQuestionListOfUser',
           component:blockedQuestionListOfUser,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/questionInfo',
+          name:'questionInfo',
+          component:questionInfo,
           meta:{
             keepAlive:true
           },
