@@ -92,6 +92,7 @@
 
 <script>
   import qs from 'qs';
+
   var listJson = {
     bqListData: [],
   }
