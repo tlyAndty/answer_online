@@ -151,6 +151,7 @@
         })*/
         this.imageUrl = URL.createObjectURL(file.raw);
         console.log("我是handleAvatarSuccess文件是：",file)
+
       },
       beforeAvatarUpload(file,id) {
         let fd = new FormData()
@@ -162,6 +163,7 @@
           console.log("我是beforeAvatarUpload，并且userId:"+this.uData.userId)
           console.log("我是beforeAvatarUpload，并且文件:"+file)
           console.log("我是beforeAvatarUpload:"+response)
+          history.go(0)
           //console.log("image的url：" + response.data.data.imageUrl);
           //return response.data.data.imageUrl
         })
