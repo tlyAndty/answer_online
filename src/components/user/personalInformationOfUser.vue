@@ -5,7 +5,7 @@
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://localhost:8080/online_answer/user/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -90,7 +90,17 @@
           this.user.name = this.uData.name
           this.user.mail = this.uData.mail
           this.user.pwd = this.uData.pwd
+          this.imageUrl = "http://localhost:8080"+this.uData.image
+            // this.$axios.post('http://localhost:8080'+this.uData.image,
+            //
+            // ).then((response) => {
+            //   console.log("图片访问成功")
+            // }).catch((error) => {
+            //   console.log(error);
+            // });
           console.log("uname",this.uData.name)
+          console.log("在数据库中的image：",this.uData.image)
+          console.log("该data中的imageUrl：",this.imageUrl)
         }).catch((error) => {
           console.log(error);
         });
@@ -123,19 +133,21 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      handleAvatarSuccess(res, file) {
+      handleAvatarSuccess(res,file) {
         this.$axios.post('http://localhost:8080/online_answer/user/upload',
           qs.stringify({
-            userId: this.id,
-            file: file
+            file: file,
+            userId: this.uData.userId
           })
         ).then((response) => {
-          console.log("上传成功",response)
+          console.log("我是handleAvatarSuccess，并且userId:"+this.uData.userId)
+          console.log("我是handleAvatarSuccess，并且文件:"+file)
+          console.log("我是response.data:"+response)
           //console.log("image的url：" + response.data.data.imageUrl);
           //return response.data.data.imageUrl
         })
         this.imageUrl = URL.createObjectURL(file.raw);
-        console.log("文件是：",file)
+        console.log("我是handleAvatarSuccess文件是：",file)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -146,7 +158,9 @@
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
+        console.log("我是beforeAvatarUpload")
         return isJPG && isLt2M;
+        // return false;
       }
     }
   }
