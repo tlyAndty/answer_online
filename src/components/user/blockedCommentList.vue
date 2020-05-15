@@ -21,14 +21,14 @@
       :default-sort = "{prop: 'comTime', order: 'descending'}">
 
       <el-table-column
-        sortable
-        prop="comId"
         label="评论id"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true"
       >
-
+        <template scope="scope">
+          <span>{{(page - 1) * limit + scope.$index + 1}}</span>
+        </template>
       </el-table-column>
       <el-table-column
         sortable
@@ -57,7 +57,9 @@
         label="评论状态"
         header-align="left"
         align="left"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        :formatter="formatState"
+      >
       </el-table-column>
 
       <el-table-column
@@ -178,6 +180,19 @@
         window.location.href='/questionPage'
         console.log(val)
       },
+      formatState(row, column) {
+        if (row.comState === 0) {
+          return '未屏蔽'
+        } else if (row.comState === 1) {
+          return '管理员屏蔽'
+        } else if (row.comState === 2) {
+          return '因回答者被拉黑而被屏蔽'
+        } else if (row.comState === 3) {
+          return '因问题被屏蔽而被屏蔽'
+        } else if (row.comState === 4) {
+          return '因回答被屏蔽而被屏蔽'
+        }
+      }
     }
   }
 </script>

@@ -20,13 +20,14 @@
       :default-sort = "{prop: 'addTime', order: 'descending'}">
 
       <el-table-column
-        sortable
-        prop="userId"
         label="用户id"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true"
       >
+        <template scope="scope">
+          <span>{{(page - 1) * limit + scope.$index + 1}}</span>
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -54,7 +55,9 @@
         label="用户状态"
         header-align="left"
         align="left"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        :formatter="formatState"
+      >
       </el-table-column>
 
       <el-table-column
@@ -195,6 +198,17 @@
           this.$router.push({path:'/userPage',query:{user_id:val}})
           console.log(val)
         },
+        formatState(row, column) {
+          if (row.state === 0) {
+            return '未审核'
+          } else if (row.state === 1) {
+            return '正常'
+          } else if (row.state === 2) {
+            return '拉黑'
+          } else if (row.state === 3) {
+            return '审核未通过'
+          }
+        }
       },
     }
 </script>

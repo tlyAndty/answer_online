@@ -144,6 +144,8 @@
     data() {
       return {
         list:[],
+        time_order_list:[],
+        good_order_list:[],
         //qlist:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
@@ -154,13 +156,13 @@
       this.getData();
     },
     computed:{
-      time_order_list:function(){
+      /*time_order_list:function(){
         return this.sortByTime(this.list,'quesTime')
         console("排序成功")
-      },
-      good_order_list:function(){
+      },*/
+      /*good_order_list:function(){
         return this.sortByGood(this.list,'quesColNum')
-      },
+      },*/
     },
     methods: {
       getData() {
@@ -170,8 +172,9 @@
           })
         ).then((response) => {
           //console.log("firstlist:",response.data.data);
-          this.list = response.data.data;
-          console.log("list:",this.list)
+          this.time_order_list = response.data.data;
+          this.good_order_list = response.data.data;
+          console.log("time_order_list:",this.time_order_list)
           /*for(let i=0;i<this.list.length;i++){
             console.log(this.list[i].question.quesTime)
           }*/
@@ -179,6 +182,16 @@
         }).catch((error) => {
           console.log(error);
         });
+        /*this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
+          qs.stringify({
+            quesState: '3',
+          })
+        ).then((response) => {
+          this.time_order_list = response.data.data;
+          console.log("time_order_list:",this.time_order_list)
+        }).catch((error) => {
+          console.log(error);
+        });*/
       },
       sortByTime(array,key){
         return array.sort(function(a,b){
