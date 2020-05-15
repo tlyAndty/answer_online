@@ -32,7 +32,7 @@
 
       <el-table-column
         sortable
-        prop="quesTitle"
+        prop="question.quesTitle"
         label="问题标题"
         header-align="left"
         align="left"
@@ -42,19 +42,19 @@
 
       <el-table-column
         sortable
-        prop="quesTime"
+        prop="question.quesTime"
         label="发布的最新时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
         <template slot-scope="bqListData">
-          {{ bqListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          {{ bqListData.row.question.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
         </template>
       </el-table-column>
 
       <el-table-column
         sortable
-        prop="quesAnsState"
+        prop="question.quesAnsState"
         label="问题解决状态"
         header-align="left"
         align="left"
@@ -65,7 +65,7 @@
 
       <el-table-column
         sortable
-        prop="quesState"
+        prop="question.quesState"
         label="问题状态"
         header-align="left"
         align="left"
@@ -140,7 +140,7 @@
           console.log("qlist:",response.data.data);
           this.qListData = response.data.data;
           for(let item of this.qListData) {
-            if(item.quesState!=0){
+            if(item.question.quesState!=0){
               console.log(item.userId)
               this.bqListData.push(item)
               console.log(item)
@@ -155,7 +155,7 @@
     },
       getlist(){
         let bqListData = this.data.filter((item,index) =>
-          item.ques_title.includes(this.search_input)
+          item.question.quesTitle.includes(this.search_input)
         )
         this.bqListData=bqListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
@@ -196,24 +196,24 @@
         console.log(val)
       },
       formatAnsState(row, column){
-        if(row.quesAnsState=== 0){
+        if(row.question.quesAnsState=== 0){
           return '未解决'
         }
-        else if(row.quesAnsState === 1){
+        else if(row.question.quesAnsState === 1){
           return '已解决'
         }
-        else if(row.quesAnsState === 2){
+        else if(row.question.quesAnsState === 2){
           return '已关闭'
         }
         //return row.quesAnsState == 0 ? '未解决' : row.quesAnsState == 1 ? '已解决' : row.quesAnsState == 2 ? '已关闭';
         //return '已解决'
       },
       formatState(row, column) {
-        if (row.quesState === 0) {
+        if (row.question.quesState === 0) {
           return '未屏蔽'
-        } else if (row.quesState === 1) {
+        } else if (row.question.quesState === 1) {
           return '管理员屏蔽'
-        } else if (row.quesState === 2) {
+        } else if (row.question.quesState === 2) {
           return '因用户被拉黑而被屏蔽'
         }
       }

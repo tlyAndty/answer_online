@@ -48,7 +48,7 @@
         align="left"
         :show-overflow-tooltip="true">
         <template slot-scope="qListData">
-          {{ qListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          {{ qListData.row.question.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
         </template>
       </el-table-column>
 

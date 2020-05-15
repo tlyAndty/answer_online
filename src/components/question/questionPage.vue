@@ -244,11 +244,11 @@
           ).then((response) => {
               console.log("quesId:" + this.id)
               console.log("qdata:",response.data.data);
-              this.quesTitle=response.data.data.quesTitle;
-              this.quesContent=response.data.data.quesContent;
-              this.quesTime=response.data.data.quesTime
-              this.quesUserId=response.data.data.userId
-              this.quesColNum=response.data.data.quesColNum
+              this.quesTitle=response.data.data.question.quesTitle;
+              this.quesContent=response.data.data.question.quesContent;
+              this.quesTime=response.data.data.question.quesTime
+              this.quesUserId=response.data.data.question.userId
+              this.quesColNum=response.data.data.question.quesColNum
               this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
                 qs.stringify({
                   userId: this.quesUserId

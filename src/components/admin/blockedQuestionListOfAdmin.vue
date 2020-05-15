@@ -48,7 +48,7 @@
           align="left"
           :show-overflow-tooltip="true">
           <template slot-scope="bqListData">
-            {{ bqListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+            {{ bqListData.row.question.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
