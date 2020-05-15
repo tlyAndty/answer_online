@@ -23,6 +23,14 @@
                 <div class="name" style="float: left">
                   <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{user_id:item.question.userId}}">{{item.user_name}}</router-link>
                 </div>
+                <div class="reward" style="float: left;margin-left: 20px">
+                  <span>悬赏积分：{{item.question.quesReward}}</span>
+                </div>
+                <div class="state" v-if="item.question.quesState!=0" style="float: left;margin-left: 20px;color: lightcoral">
+                  <div v-if="item.question.userId==id">
+                    <span>[已被屏蔽]</span>
+                  </div>
+                </div>
                 <div class="time" style="float: right">
                   <span>{{item.question.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
                 </div>
@@ -150,9 +158,14 @@
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
         list_length:'',
+        id:'',
       }
     },
+    watch:{
+      '$route':'getParams'
+    },
     created(){
+      this.getParams();
       this.getData();
     },
     computed:{
@@ -165,6 +178,13 @@
       },*/
     },
     methods: {
+      getParams:function () {
+        console.log(this.$store.state.user.userId)
+        this.id = this.$store.state.user.userId
+        console.log("传来的参数=="+this.id)
+
+        //this.textareText = this.id
+      },
       getData() {
         this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
           qs.stringify({

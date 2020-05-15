@@ -36,7 +36,8 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a>
+        <!--a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a-->
+          <router-link style="color: #ffffff;text-decoration:none" :to="{name:'main'}">首页</router-link>
         /
         <a id="logout_link" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
