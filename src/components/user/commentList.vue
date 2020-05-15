@@ -91,9 +91,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson = {
-    cListData: [],
-  }
+
   export default {
     name: "commentList",
     data() {
@@ -118,7 +116,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.cListData
+        //this.data = listJson.cListData
         this.getParams()
         this.getcListData()
       },
@@ -130,11 +128,16 @@
         ).then((response) => {
           console.log(response.data.data);
           this.cListData = response.data.data;
+          this.data = this.cListData;
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let cListData = this.data.filter((item,index) =>
-          item.com_content.includes(this.search_input)
+          item.comContent.includes(this.search_input)
         )
         this.cListData=cListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)

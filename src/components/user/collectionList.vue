@@ -96,9 +96,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson = {
-    colListData: [],
-  }
+
   export default {
     name: "collectionList",
     data() {
@@ -129,7 +127,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.colListData
+        //this.data = listJson.colListData
         this.getParams()
         this.getcolListData()
       },
@@ -141,9 +139,14 @@
         ).then((response) => {
           console.log("col:",response.data.data);
           this.colListData = response.data.data;
+          this.data = this.colListData;
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let colListData = this.data.filter((item,index) =>
           item.quesTitle.includes(this.search_input)
         )

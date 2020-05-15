@@ -98,9 +98,6 @@
 <script>
   import qs from 'qs';
 
-  var listJson = {
-    bqListData: [],
-  }
   export default {
     name: "blockedQuestionListOfUser",
     data() {
@@ -129,7 +126,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.bqListData
+        //this.data = listJson.bqListData
         this.getParams()
         this.getbqListData()
       },
@@ -149,9 +146,14 @@
               console.log(item)
             }
           }
+          this.data = this.bqListData
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+    },
+      getlist(){
         let bqListData = this.data.filter((item,index) =>
           item.ques_title.includes(this.search_input)
         )
@@ -159,7 +161,7 @@
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
         )
         this.total = bqListData.length
-    },
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.limit = val

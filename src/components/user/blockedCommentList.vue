@@ -89,9 +89,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson = {
-    bcListData: [],
-  }
+
   export default {
     name: "blockedCommentList",
     data() {
@@ -117,7 +115,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.bcListData
+        //this.data = listJson.bcListData
         this.getParams()
         this.getbcListData()
       },
@@ -136,11 +134,16 @@
               console.log(item)
             }
           }
+          this.data = this.bcListData;
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let bcListData = this.data.filter((item,index) =>
-          item.com_content.includes(this.search_input)
+          item.comContent.includes(this.search_input)
         )
         this.bcListData=bcListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)

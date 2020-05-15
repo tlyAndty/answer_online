@@ -96,9 +96,7 @@
 
 <script>
   import qs from 'qs';
-    var listJson={
-      uListData:[],
-    }
+
     export default {
       name: "userList",
       //inject:['reload'],
@@ -127,7 +125,6 @@
         },
         pageList() {
           // 发请求拿到数据并暂存全部数据,方便之后操作
-          this.data = listJson.uListData
           this.getParams()
           this.getuListData()
         },
@@ -139,9 +136,13 @@
           ).then((response) => {
             console.log(response.data.data);
             this.uListData = response.data.data;
+            this.data = this.uListData
+            this.getlist();
           }).catch((error) => {
             console.log(error);
           });
+        },
+        getlist(){
           let uListData = this.data.filter((item,index) =>
             item.name.includes(this.search_input)
           )

@@ -102,9 +102,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson = {
-    qListData: [],
-  }
+
   export default {
     name: "questionListOfUser",
     data() {
@@ -135,7 +133,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.qListData
+        //this.data = listJson.qListData
         this.getParams()
         this.getqListData()
       },
@@ -148,9 +146,14 @@
         ).then((response) => {
           console.log(response.data.data);
           this.qListData = response.data.data;
+          this.data = this.qListData
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let qListData = this.data.filter((item,index) =>
           item.quesTitle.includes(this.search_input)
         )

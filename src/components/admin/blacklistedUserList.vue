@@ -94,9 +94,7 @@
 
 <script>
   import qs from 'qs';
-    var listJson={
-    buListData:[],
-  }
+
     export default {
       name: "blacklistedUserList",
       data() {
@@ -121,7 +119,7 @@
         },
         pageList() {
           // 发请求拿到数据并暂存全部数据,方便之后操作
-          this.data = listJson.buListData
+          //this.data = listJson.buListData
           this.getParams()
           this.getbuListData()
         },
@@ -140,9 +138,14 @@
                 console.log(item)
               }
             }
+            this.data = this.buListData;
+            this.getlist();
           }).catch((error) => {
             console.log(error);
           });
+
+        },
+        getlist(){
           let buListData = this.data.filter((item,index) =>
             item.name.includes(this.search_input)
           )

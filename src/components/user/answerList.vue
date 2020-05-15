@@ -109,9 +109,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson = {
-    aListData: [],
-  }
+
   export default {
     name: "answerList",
     data() {
@@ -136,7 +134,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.aListData
+        //this.data = listJson.aListData
         this.getParams()
         this.getaListData()
       },
@@ -148,11 +146,16 @@
         ).then((response) => {
           console.log(response.data.data);
           this.aListData = response.data.data;
+          this.data = this.aListData;
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let aListData = this.data.filter((item,index) =>
-          item.ans_content.includes(this.search_input)
+          item.ansContent.includes(this.search_input)
         )
         this.aListData=aListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)

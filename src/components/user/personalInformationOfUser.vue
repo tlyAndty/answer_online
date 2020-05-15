@@ -7,6 +7,7 @@
           class="avatar-uploader"
           action="http://localhost:8080/online_answer/user/upload"
           :show-file-list="false"
+          :data="paramsdata"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
@@ -67,6 +68,9 @@
         imageUrl:'',
         uData:{},
         id:'',
+        paramsdata:{
+          userId: this.id,
+        }
       };
     },
     created() {
@@ -121,6 +125,8 @@
             ).then(response => {
               console.log(response.data.resultCode)
               console.log("修改成功")
+              alert(response.data.resultDesc)
+              history.go(0)
             }).catch(error => {
               console.log(error)
             })
@@ -134,7 +140,7 @@
         this.$refs[formName].resetFields();
       },
       handleAvatarSuccess(res,file) {
-        this.$axios.post('http://localhost:8080/online_answer/user/upload',
+        /*this.$axios.post('http://localhost:8080/online_answer/user/upload',
           qs.stringify({
             file: file,
             userId: this.uData.userId
@@ -145,7 +151,7 @@
           console.log("我是response.data:"+response)
           //console.log("image的url：" + response.data.data.imageUrl);
           //return response.data.data.imageUrl
-        })
+        })*/
         this.imageUrl = URL.createObjectURL(file.raw);
         console.log("我是handleAvatarSuccess文件是：",file)
       },

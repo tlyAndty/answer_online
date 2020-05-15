@@ -107,9 +107,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson = {
-    baListData: [],
-  }
+
   export default {
     name: "blockedAnswerList",
     data() {
@@ -138,7 +136,7 @@
       },
       pageList() {
         // 发请求拿到数据并暂存全部数据,方便之后操作
-        this.data = listJson.baListData
+        //this.data = listJson.baListData
         this.getParams()
         this.getbaListData()
       },
@@ -157,11 +155,16 @@
               console.log(item)
             }
           }
+          this.data = this.baListData;
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let baListData = this.data.filter((item,index) =>
-          item.ans_content.includes(this.search_input)
+          item.ansContent.includes(this.search_input)
         )
         this.baListData=baListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)

@@ -83,9 +83,7 @@
 
 <script>
   import qs from 'qs';
-  var listJson={
-    uListData:[],
-  }
+
   export default {
     name: "registrationAudit",
     data() {
@@ -113,7 +111,7 @@
         console.log("传来的id参数=="+this.id)
       },
       pageList() {
-        this.data = listJson.uListData
+        //this.data = listJson.uListData
         this.getParams()
         this.getrListData()
       },
@@ -132,9 +130,14 @@
               //console.log(item)
             }
           }
+          this.data = this.rListData
+          this.getlist();
         }).catch((error) => {
           console.log(error);
         });
+
+      },
+      getlist(){
         let rListData = this.data.filter((item,index) =>
           item.name.includes(this.search_input)
         )
