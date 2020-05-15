@@ -5,9 +5,8 @@
       <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="http://localhost:8080/online_answer/user/upload"
+          :action="doUpload"
           :show-file-list="false"
-          :data="paramsdata"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
@@ -68,9 +67,7 @@
         imageUrl:'',
         uData:{},
         id:'',
-        paramsdata:{
-          userId: this.id,
-        }
+        doUpload:'',
       };
     },
     created() {
@@ -155,7 +152,19 @@
         this.imageUrl = URL.createObjectURL(file.raw);
         console.log("我是handleAvatarSuccess文件是：",file)
       },
-      beforeAvatarUpload(file) {
+      beforeAvatarUpload(file,id) {
+        let fd = new FormData()
+        fd.append('file',file)
+        fd.append('userId',this.uData.userId)
+        this.$axios.post('http://localhost:8080/online_answer/user/upload',
+          fd
+        ).then((response) => {
+          console.log("我是beforeAvatarUpload，并且userId:"+this.uData.userId)
+          console.log("我是beforeAvatarUpload，并且文件:"+file)
+          console.log("我是beforeAvatarUpload:"+response)
+          //console.log("image的url：" + response.data.data.imageUrl);
+          //return response.data.data.imageUrl
+        })
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isJPG) {
