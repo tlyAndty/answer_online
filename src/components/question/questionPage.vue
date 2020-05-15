@@ -8,9 +8,22 @@
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{this.quesTitle}}</div>
               <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{this.quesContent}}</div>
-              <div class="q_userName q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
-                {{this.quesUserName}}
-                <p style="margin: 0;">编辑于：{{this.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</p>
+              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
+                <div class="q_userName" style="float: left">
+                  {{this.quesUserName}}
+                </div>
+                <div class="reward" style="float: left;margin-left: 20px">
+                  <span>悬赏积分：{{this.quesReward}}</span>
+                </div>
+                <div class="state" v-if="this.quesState!=0" style="float: left;margin-left: 20px;color: lightcoral">
+                  <div v-if="this.quesUserId==userId">
+                    <span>[已被屏蔽]</span>
+                  </div>
+                </div>
+                <p style="margin: 0;"></p>
+              </div>
+              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
+                编辑于：{{this.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}
               </div>
               <!--div class="tags" style="width:850px">
                 <a href="">vue.js</a>
@@ -212,6 +225,9 @@
           quesUserId:'',
           quesUserName:'',
           quesColNum:'',
+          quesState:'',
+          quesReward:'',
+          userId:'',
         }
       },
       computed:{
@@ -234,6 +250,7 @@
         getParams:function () {
           this.id = this.$route.query.ques_id
           console.log("传来的参数=="+this.id)
+          this.userId=this.$store.state.user.userId
           //this.textareText = this.id
         },
         getqData(){
@@ -249,6 +266,8 @@
               this.quesTime=response.data.data.question.quesTime
               this.quesUserId=response.data.data.question.userId
               this.quesColNum=response.data.data.question.quesColNum
+              this.quesState=response.data.data.question.quesState
+              this.quesReward=response.data.data.question.quesReward
               this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
                 qs.stringify({
                   userId: this.quesUserId
