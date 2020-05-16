@@ -73,7 +73,7 @@
                           <p style="margin: 0">发布于：{{item.answer.ansTime}}</p>
                         </div>
                         <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
-                          <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论{{item.answer.ansComNum}}</a>
+                          <a class="comment" style="color: #999;text-decoration:none" @click="getcData(item.answer.ansId)" href="javascript:;">评论{{item.answer.ansComNum}}</a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                           <i class="el-icon-thumb"></i>
                           <!--em>0</em-->
@@ -82,33 +82,17 @@
                           <span style="color: #999;text-decoration:none"> state:{{item.answer.ansState}}</span>
                         </div>
                       </div>
-                      <div v-if="item.answer.ansComNum!=0" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
-                        <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
-                          <p>评论内容</p>
-                        </div>
-                        <div class="ask_date" style="margin: 0 20px;padding: 16px 0 10px;">
-                          <div class="ask_edit_wrap" style="position: relative;font-weight: normal;margin-bottom: 0;cursor: pointer;">
-                            <span style="display: inline-block;vertical-align: middle;font-size: 12px;color: #999;margin-right: 45px;">时间</span>
-                          </div>
-                        </div>
-                        <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;padding-left: 20px;margin: 10px 20px 10px 0;height: 30px">
-                          <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
-                          <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <i class="el-icon-thumb"></i>
-                          <em>0</em>
-                          <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <span style="color: #999;text-decoration:none"> 已采纳会显示，未采纳不显示</span>
-
-                        </div>
+                      <div v-if="" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;border: 1px solid #f4f4f4;">
+                        <ul class="commentlist" v-for="item1 in item.comment" style="margin:0px;list-style: none;padding:0;">
+                          <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
+                            {{item1.comment.comContent}}
+                            {{item1.user_name}}
+                          </li>
+                        </ul>
                       </div>
                     </li>
                   </ul>
                 </div>
-                <!--div class="ask_date" style="margin: 0 20px;padding: 16px 0 10px;">
-                  <div class="ask_edit_wrap" style="position: relative;font-weight: normal;margin-bottom: 0;cursor: pointer;">
-                    <span style="display: inline-block;vertical-align: middle;font-size: 12px;color: #999;margin-right: 45px;">时间</span>
-                  </div>
-                </div-->
               </div>
 
             </div>
@@ -199,6 +183,7 @@
       data() {
         return {
           answerlist: [],
+          commentlist:[],
           answerForm:{
             a_contenttest:'',
             a_content:'',
@@ -296,15 +281,44 @@
             console.log("quesId:" + this.id)
             console.log("adata:",response.data.data);
             this.answerlist=response.data.data
-            //this.quesTitle=response.data.data.quesTitle;
-            //this.quesContent=response.data.data.quesContent;
-            //this.quesTime=response.data.data.quesTime
           })
             .catch((error)=>{
               console.log(error);
             });
         },
-        getUserName(userid){
+        getcData(ansid){
+          console.log("ansId:" + ansid)
+          this.$axios.post('http://localhost:8080/online_answer/common/searchCommentsByAnsId',
+            qs.stringify({
+              ansId: ansid
+            })
+          ).then((response) => {
+            console.log("ansId:" + ansid)
+            console.log("cdata:",response.data.data);
+            this.commentlist=response.data.data
+            console.log(this.commentlist)
+            for(var i=0;i<this.answerlist.length;i++)
+            {
+              if(this.answerlist[i].answer.ansId==ansid){
+                console.log("找到了")
+                this.answerlist[i].comment=new Object();
+                Object.assign(this.answerlist[i].comment,this.commentlist)
+                /*for(var j=0;j<this.commentlist.length;j++){
+                  Object.assign(this.answerlist[i].answer,this.commentlist[j])
+                  console.log("添加第",j,"次:",this.answerlist[i].answer)
+                }*/
+                console.log(this.answerlist[i])
+                //this.answerlist[i].answer.comment=this.commentlist
+              }
+            }
+            //console.log("comment后：",this.answerlist)
+          })
+            .catch((error)=>{
+              console.log(error);
+            });
+
+        },
+        /*getUserName(userid){
           var uname;
           this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
             qs.stringify({
@@ -320,7 +334,7 @@
             .catch((error)=>{
               console.log(error);
             });
-        },
+        },*/
         check_user_status(){
 
         },
