@@ -82,7 +82,7 @@
                           <span style="color: #999;text-decoration:none"> state:{{item.answer.ansState}}</span>
                         </div>
                       </div>
-                      <div v-if="" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;border: 1px solid #f4f4f4;">
+                      <div v-if="item.comment!=null" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;border: 1px solid #f4f4f4;">
                         <ul class="commentlist" v-for="item1 in item.comment" style="margin:0px;list-style: none;padding:0;">
                           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
                             {{item1.comment.comContent}}
