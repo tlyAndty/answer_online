@@ -33,7 +33,7 @@
               <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-top:10px;margin-bottom:10px;background: none;height: 30px;">
                 <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" onclick="window.csdn.loginBox.show()" href="javascript:;" rel="nofollow" title="收藏">
+                <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
                   收藏{{this.quesColNum}}
                 </a>
                 <!--span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
@@ -44,7 +44,7 @@
           </div>
           <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;">
             <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #f0f0f0;">
-              <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">1个回答</p>
+              <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">{{this.quesAnsNum}}个回答</p>
               <div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
                 <el-dropdown style="height: 50px;line-height: 50px;font-size: 14px;color: #666;cursor: pointer;">
                   <span class="el-dropdown-link">
@@ -66,21 +66,39 @@
                     <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
                       <div class="list_con" style="text-align: left">
                         <div class="ans_content">
-                          {{item.ansContent}}
+                          {{item.answer.ansContent}}
                         </div>
                         <div class="ans_time ans_userName" style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 24px;padding: 10px 0 2px">
-                          {{item.userId}}
-                          {{getUserName(item.userId)}}
-                          <p style="margin: 0">发布于：{{item.ansTime}}</p>
+                          {{item.user_name}}
+                          <p style="margin: 0">发布于：{{item.answer.ansTime}}</p>
                         </div>
                         <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
-                          <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
+                          <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论{{item.answer.ansComNum}}</a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                           <i class="el-icon-thumb"></i>
                           <!--em>0</em-->
-                          {{item.goodCount}}
+                          {{item.answer.goodCount}}
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <span style="color: #999;text-decoration:none"> state:{{item.ansState}}</span>
+                          <span style="color: #999;text-decoration:none"> state:{{item.answer.ansState}}</span>
+                        </div>
+                      </div>
+                      <div v-if="item.answer.ansComNum!=0" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
+                        <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
+                          <p>评论内容</p>
+                        </div>
+                        <div class="ask_date" style="margin: 0 20px;padding: 16px 0 10px;">
+                          <div class="ask_edit_wrap" style="position: relative;font-weight: normal;margin-bottom: 0;cursor: pointer;">
+                            <span style="display: inline-block;vertical-align: middle;font-size: 12px;color: #999;margin-right: 45px;">时间</span>
+                          </div>
+                        </div>
+                        <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;padding-left: 20px;margin: 10px 20px 10px 0;height: 30px">
+                          <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
+                          <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                          <i class="el-icon-thumb"></i>
+                          <em>0</em>
+                          <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                          <span style="color: #999;text-decoration:none"> 已采纳会显示，未采纳不显示</span>
+
                         </div>
                       </div>
                     </li>
@@ -92,25 +110,7 @@
                   </div>
                 </div-->
               </div>
-              <!--div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;">
-                <div style="margin: 0 20px 10px;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
-                  <p>评论内容</p>
-                </div>
-                <div class="ask_date" style="margin: 0 20px;padding: 16px 0 10px;">
-                  <div class="ask_edit_wrap" style="position: relative;font-weight: normal;margin-bottom: 0;cursor: pointer;">
-                    <span style="display: inline-block;vertical-align: middle;font-size: 12px;color: #999;margin-right: 45px;">{{q.ques_time}}</span>
-                  </div>
-                </div>
-                <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;padding-left: 20px;margin: 10px 20px 10px 0;height: 30px">
-                  <a class="collection" style="color: #999;text-decoration:none" onclick="window.csdn.loginBox.show()" href="javascript:;">评论0</a>
-                  <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                  <i class="el-icon-thumb"></i>
-                  <em>0</em>
-                  <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                  <span style="color: #999;text-decoration:none"> 已采纳会显示，未采纳不显示</span>
 
-                </div>
-              </div-->
             </div>
             <div id="author_answer_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
               <div class="answer_form_con" style="overflow: hidden;margin: 20px;position: relative;">
@@ -227,6 +227,7 @@
           quesColNum:'',
           quesState:'',
           quesReward:'',
+          quesAnsNum:'',
           userId:'',
         }
       },
@@ -268,6 +269,7 @@
               this.quesColNum=response.data.data.question.quesColNum
               this.quesState=response.data.data.question.quesState
               this.quesReward=response.data.data.question.quesReward
+              this.quesAnsNum=response.data.data.question.quesAnsNum
               this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
                 qs.stringify({
                   userId: this.quesUserId
@@ -286,7 +288,7 @@
             });
         },
         getaData(){
-          this.$axios.post('http://localhost:8080/online_answer/common/selectAnssByGoodCount',
+          this.$axios.post('http://localhost:8080/online_answer/common/selectAnssByQuesId',
             qs.stringify({
               quesId: this.id
             })
@@ -363,6 +365,30 @@
               } else {
                 return false
               }
+            })
+          }
+          else{
+            this.$router.push('/userlogin')
+          }
+        },
+        Colquestion(){
+          if(this.$store.state.user){
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/collect',
+              qs.stringify({
+                colUserId:this.$store.state.user.userId,
+                colQuesId:this.id,
+              })
+            ).then(response => {
+              console.log(response)
+              console.log("收藏成功")
+              alert(response.data.resultDesc)
+              history.go(0)
+              /*this.$router.push({
+                path: '/userGuide', query:{user_id: this.data.userId}
+              });*/
+            }).catch(error => {
+              console.log(error)
             })
           }
           else{

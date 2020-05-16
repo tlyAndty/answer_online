@@ -177,9 +177,11 @@
     },
     methods: {
       getParams:function () {
-        console.log(this.$store.state.user.userId)
-        this.id = this.$store.state.user.userId
-        console.log("传来的参数=="+this.id)
+        console.log("user:",this.$store.state.user)
+        if(this.$store.state.user!=null){
+          this.id = this.$store.state.user.userId
+          console.log("传来的参数=="+this.id)
+        }
 
         //this.textareText = this.id
       },

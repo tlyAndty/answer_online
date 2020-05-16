@@ -20,6 +20,7 @@
           </el-button-->
           <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
         <span style="margin-right: 5px">{{user.name}}</span>
+          <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'main'}">{{user.name}}</router-link>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
             消息
