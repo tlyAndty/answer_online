@@ -63,26 +63,31 @@
               <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <ul class="answerlist" v-for="item in answerlist" style="margin:0px;list-style: none;padding:0;">
-                    <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
-                      <div class="list_con" style="text-align: left">
+                    <li v-if="item.answer.userId ==userId || item.answer.ansState==0" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
+                      <div class="list_con" style="text-align: left" >
                         <div class="ans_content">
+                          <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
                           {{item.answer.ansContent}}
                         </div>
-                        <div class="ans_time ans_userName" style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 24px;padding: 10px 0 2px">
-                          {{item.user_name}}
-                          <p style="margin: 0">发布于：{{item.answer.ansTime}}</p>
+                        <div class="ans_time ans_userName" style="height:20px;font-size: 12px;color: #999;line-height: 20px;padding: 10px 0 0">
+                          <div style="float: left">{{item.user_name}}</div>
+                          <div v-if="item.answer.ansState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
+                            [已被屏蔽]
+                          </div>
+                        </div>
+                        <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 20px;padding: 0 0 2px">
+                          发布于：{{item.answer.ansTime}}
                         </div>
                         <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
-                          <a class="comment" style="color: #999;text-decoration:none" @click="getcData(item.answer.ansId)" href="javascript:;">评论{{item.answer.ansComNum}}</a>
+                          <a class="comment" style="color: #999;text-decoration:none" href="javascript:;">评论{{item.answer.ansComNum}}</a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                           <i class="el-icon-thumb"></i>
                           <!--em>0</em-->
                           {{item.answer.goodCount}}
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <span style="color: #999;text-decoration:none"> state:{{item.answer.ansState}}</span>
                         </div>
                       </div>
-                      <div v-if="item.comment!=null" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;border: 1px solid #f4f4f4;">
+                      <div v-if="item.answer.ansComNum != 0" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;border: 1px solid #f4f4f4;">
                         <ul class="commentlist" v-for="item1 in item.comment" style="margin:0px;list-style: none;padding:0;">
                           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
                             {{item1.comment.comContent}}
@@ -219,13 +224,10 @@
       computed:{
         editor(){
           return this.$refs.myQuillEditor.quill
-        }
-      },
-      created(){
-        this.getParams();
+        },
       },
       mounted() {
-        //console.log("mounted中getdata的id" + this.$route.query.ques_id)
+        this.getParams();
         this.getqData();
         this.getaData();
       },
@@ -236,7 +238,11 @@
         getParams:function () {
           this.id = this.$route.query.ques_id
           console.log("传来的参数=="+this.id)
-          this.userId=this.$store.state.user.userId
+          if(this.$store.state.user){
+            this.userId=this.$store.state.user.userId
+            console.log("USERID=="+this.userId)
+          }
+
           //this.textareText = this.id
         },
         getqData(){
@@ -263,6 +269,7 @@
                 console.log("quesUserId:" + this.quesUserId)
                 console.log("qUdata:",response.data.data);
                 this.quesUserName=response.data.data.name;
+
               })
                 .catch((error)=>{
                   console.log(error);
@@ -281,42 +288,50 @@
             console.log("quesId:" + this.id)
             console.log("adata:",response.data.data);
             this.answerlist=response.data.data
+            for(var i=0;i<this.answerlist.length;i++){
+              //console.log("this.answerlist[i]",this.answerlist[i])
+              this.answerlist[i].comment=new Object();
+              //console.log("加上comment对象")
+              //console.log("this.answerlist[",i,"]",this.answerlist[i])
+              if(this.answerlist[i].answer.ansComNum){
+                console.log("有评论")
+                var ansid=this.answerlist[i].answer.ansId
+                this.$axios.post('http://localhost:8080/online_answer/common/searchCommentsByAnsId',
+                  qs.stringify({
+                    ansId: ansid
+                  })
+                ).then((response) => {
+                  console.log("ansId:" + ansid)
+                  console.log("cdata:",response.data.data);
+                  this.commentlist=response.data.data
+                  this.getcData(ansid,this.commentlist)
+                })
+                  .catch((error)=>{
+                    console.log(error);
+                  });
+              }
+              else {
+                console.log("无评论")
+              }
+            }
           })
             .catch((error)=>{
               console.log(error);
             });
         },
-        getcData(ansid){
-          console.log("ansId:" + ansid)
-          this.$axios.post('http://localhost:8080/online_answer/common/searchCommentsByAnsId',
-            qs.stringify({
-              ansId: ansid
-            })
-          ).then((response) => {
-            console.log("ansId:" + ansid)
-            console.log("cdata:",response.data.data);
-            this.commentlist=response.data.data
-            console.log(this.commentlist)
-            for(var i=0;i<this.answerlist.length;i++)
-            {
-              if(this.answerlist[i].answer.ansId==ansid){
-                console.log("找到了")
-                this.answerlist[i].comment=new Object();
+        getcData(ansid,list){
+          console.log("Cdata中的answerlist",this.answerlist)
+          for(var i=0;i<this.answerlist.length;i++){
+            //console.log("ansid",this.answerlist[i].answer.ansId)
+            //console.log("查找中的answerlist",this.answerlist[i])
+            if(this.answerlist[i].answer.ansId == ansid){
+                console.log("添加评论前",this.answerlist[i])
+                console.log("被添加的commentlist:",list)
                 Object.assign(this.answerlist[i].comment,this.commentlist)
-                /*for(var j=0;j<this.commentlist.length;j++){
-                  Object.assign(this.answerlist[i].answer,this.commentlist[j])
-                  console.log("添加第",j,"次:",this.answerlist[i].answer)
-                }*/
-                console.log(this.answerlist[i])
-                //this.answerlist[i].answer.comment=this.commentlist
-              }
+                console.log("添加评论后",this.answerlist[i])
             }
-            //console.log("comment后：",this.answerlist)
-          })
-            .catch((error)=>{
-              console.log(error);
-            });
-
+          }
+          console.log("CCC",this.answerlist)
         },
         /*getUserName(userid){
           var uname;
