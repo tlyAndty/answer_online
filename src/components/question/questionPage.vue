@@ -4,7 +4,7 @@
     <!--router-link to="/" class="gobackLink"><< 返回列表</router--->
     <div class="main clearfix" style="margin: 0px;">
       <div class="q_info" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
-          <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;border: 1px solid #f0f0f0;">
+          <div class="question_con clearfix" style="height:207px;background: #fcfcff;border-top: 1px solid #f0f0f0;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;">
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{this.quesTitle}}</div>
               <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{this.quesContent}}</div>
@@ -42,7 +42,7 @@
               </div>
             </div>
           </div>
-          <div class="common_con clearfix" style="margin-top: 1px;background: #fcfcff;">
+          <div class="answer_con clearfix" style="background: #fcfcff;">
             <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #f0f0f0;">
               <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">{{this.quesAnsNum}}个回答</p>
               <div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
@@ -60,17 +60,17 @@
               </div>
             </div>
             <div class="answer_list" style="background: #fcfcff;">
-              <div class="answer_detail_con" style="position: relative;min-height: 190px;border: 1px solid #f0f0f0;padding-top: 16px;">
+              <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <ul class="answerlist" v-for="item in answerlist" style="margin:0px;list-style: none;padding:0;">
-                    <li v-if="item.answer.userId ==userId || item.answer.ansState==0" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
+                    <li v-if="item.answer.userId ==userId || item.answer.ansState==0" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
                       <div class="list_con" style="text-align: left" >
                         <div class="ans_content">
                           <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
                           {{item.answer.ansContent}}
                         </div>
                         <div class="ans_time ans_userName" style="height:20px;font-size: 12px;color: #999;line-height: 20px;padding: 10px 0 0">
-                          <div style="float: left">{{item.user_name}}</div>
+                          <div style="float: left">{{item.ans_user_name}}</div>
                           <div v-if="item.answer.ansState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
                             [已被屏蔽]
                           </div>
@@ -87,11 +87,12 @@
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                         </div>
                       </div>
-                      <div v-if="item.answer.ansComNum != 0" class="comment_detail_con" style="position: relative;min-height: 190px;border: 1px solid #fbfdf8;padding-top: 16px;border: 1px solid #f4f4f4;">
-                        <ul class="commentlist" v-for="item1 in item.comment" style="margin:0px;list-style: none;padding:0;">
+                      <div v-if="item.answer.ansComNum != 0" class="comment_detail_con" style="position: relative;height: auto;border-top: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                        <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
                           <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
-                            {{item1.comment.comContent}}
-                            {{item1.user_name}}
+                            <div>{{item1.comment.comContent}}</div>
+                            <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
+                            <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
                           </li>
                         </ul>
                       </div>
@@ -101,7 +102,7 @@
               </div>
 
             </div>
-            <div id="author_answer_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
+            <div id="author_answer_form" style="background: #fcfcff;border: 1px solid #f0f0f0;border-top: 0.1px solid #f0f0f0;">
               <div class="answer_form_con" style="overflow: hidden;margin: 20px;position: relative;">
                 <el-form ref="answerForm" :model="answerForm" :rules="rules">
                   <el-form-item style="margin-bottom: 0px">
@@ -288,7 +289,7 @@
             console.log("quesId:" + this.id)
             console.log("adata:",response.data.data);
             this.answerlist=response.data.data
-            for(var i=0;i<this.answerlist.length;i++){
+            /*for(var i=0;i<this.answerlist.length;i++){
               //console.log("this.answerlist[i]",this.answerlist[i])
               this.answerlist[i].comment=new Object();
               //console.log("加上comment对象")
@@ -313,13 +314,14 @@
               else {
                 console.log("无评论")
               }
-            }
+            }*/
+            console.log("answerlist:",this.answerlist)
           })
             .catch((error)=>{
               console.log(error);
             });
         },
-        getcData(ansid,list){
+        /*getcData(ansid,list){
           console.log("Cdata中的answerlist",this.answerlist)
           for(var i=0;i<this.answerlist.length;i++){
             //console.log("ansid",this.answerlist[i].answer.ansId)
@@ -332,7 +334,7 @@
             }
           }
           console.log("CCC",this.answerlist)
-        },
+        },*/
         /*getUserName(userid){
           var uname;
           this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
