@@ -34,7 +34,7 @@
                 <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
-                  收藏{{this.quesColNum}}
+                  收藏 {{this.quesColNum}}
                 </a>
                 <!--span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <i class="el-icon-thumb"></i>
@@ -62,8 +62,8 @@
             <div class="answer_list" style="background: #fcfcff;">
               <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
-                  <ul class="answerlist" v-for="item in answerlist" style="margin:0px;list-style: none;padding:0;">
-                    <li v-if="item.answer.userId ==userId || item.answer.ansState==0" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
+                  <ul class="answerlist"  style="margin:0px;list-style: none;padding:0;">
+                    <li v-for="item in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
                       <div class="list_con" style="text-align: left" >
                         <div class="ans_content">
                           <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
@@ -79,22 +79,38 @@
                           发布于：{{item.answer.ansTime}}
                         </div>
                         <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
-                          <a class="comment" style="color: #999;text-decoration:none" href="javascript:;">评论{{item.answer.ansComNum}}</a>
+                          <a class="comment" style="color: #999;" @click="showcomment(item.answer.ansId)">
+                            评论 {{item.answer.ansComNum}}
+                          </a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <i class="el-icon-thumb"></i>
+                          <a class="goodcount" @click="addGood(item.answer.ansId)"><i class="el-icon-thirdgood"></i></a>
                           <!--em>0</em-->
                           {{item.answer.goodCount}}
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                          <a class="badcount" @click="addBad(item.answer.ansId)"><i class="el-icon-thirdbad"></i></a>
+                          <!--em>0</em-->
+                          {{item.answer.badCount}}
+                          <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
                         </div>
                       </div>
-                      <div v-if="item.answer.ansComNum != 0" class="comment_detail_con" style="position: relative;height: auto;border-top: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
-                        <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
-                          <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
-                            <div>{{item1.comment.comContent}}</div>
-                            <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
-                            <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
-                          </li>
-                        </ul>
+                      <div v-if="flag==true" class="comment_detail_con" style="position: relative;height: auto;">
+                        <div class="make_comment" style="height: 50px;border: 1px solid #f4f4f4;background-color:#fbfdf8;padding: 8px 24px 0 10px;">
+                          <div class="make_comment_text" style="float: left;padding: 1px">
+                            <el-input type="text" style="width: 550px" placeholder="评论"></el-input>
+                          </div>
+                          <div class="make_comment_bt" style="float: left;margin-left: 20px">
+                            <el-button class="commentBtn"  style="color: white;" @click="">评论</el-button>
+                          </div>
+                        </div>
+                        <div class="show_comments">
+                          <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
+                            <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                              <div>{{item1.comment.comContent}}</div>
+                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
+                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </li>
                   </ul>
@@ -160,7 +176,7 @@
                   </div>
                   </el-form-item>
                   <el-form-item>
-                    <el-button style="float: right" @click.native="onSubmit" >确认提交</el-button>
+                    <el-button style="float: right;color: white" @click.native="onSubmit" >确认提交</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -220,6 +236,10 @@
           quesReward:'',
           quesAnsNum:'',
           userId:'',
+          com_flag:[],
+          flag:false,
+          indexes:[],
+          activenum:'',
         }
       },
       computed:{
@@ -289,6 +309,16 @@
             console.log("quesId:" + this.id)
             console.log("adata:",response.data.data);
             this.answerlist=response.data.data
+            var maxid=0
+            for(var i=0;i<this.answerlist.length;i++){
+              if(maxid<this.answerlist[i].answer.ansId){
+                maxid=this.answerlist[i].answer.ansId
+              }
+            }
+            for(var i=0;i<maxid+1;i++){
+              this.com_flag[i]=false
+              console.log("第",i,"个:",this.com_flag[i])
+            }
             /*for(var i=0;i<this.answerlist.length;i++){
               //console.log("this.answerlist[i]",this.answerlist[i])
               this.answerlist[i].comment=new Object();
@@ -352,6 +382,23 @@
               console.log(error);
             });
         },*/
+        showcomment(ansid){
+          console.log("show!!!!")
+          if(this.flag==false){
+            this.flag=true
+          }
+          else {
+            this.flag = false
+          }
+          /*if(this.com_flag[ansid]==false){
+            this.com_flag[ansid]=true
+            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
+          }
+          else {
+            this.com_flag[ansid]=false
+            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
+          }*/
+        },
         check_user_status(){
 
         },
@@ -404,17 +451,89 @@
         },
         Colquestion(){
           if(this.$store.state.user){
+              this.$axios.post(
+                'http://localhost:8080/online_answer/user/collect',
+                qs.stringify({
+                  colUserId:this.$store.state.user.userId,
+                  colQuesId:this.id,
+                })
+              ).then(response => {
+                console.log(response.data)
+                if(response.data.resultCode==2044)
+                {
+                  console.log("已收藏，收藏失败")
+                  this.$axios.post(
+                    'http://localhost:8080/online_answer/user/deleteCollections',
+                    qs.stringify({
+                      colUserId:this.$store.state.user.userId,
+                      colQuesId:this.id,
+                    })
+                  ).then(response => {
+                    console.log(response)
+                    console.log("取消收藏成功")
+                    alert(response.data.resultDesc)
+                    history.go(0)
+                    /*this.$router.push({
+                      path: '/userGuide', query:{user_id: this.data.userId}
+                    });*/
+                  }).catch(error => {
+                    console.log(error)
+                  })
+                }
+                else {
+                  console.log("收藏成功")
+                  alert(response.data.resultDesc)
+                  history.go(0)
+                }
+                //alert(response.data.resultDesc)
+
+                /*this.$router.push({
+                  path: '/userGuide', query:{user_id: this.data.userId}
+                });*/
+              }).catch(error => {
+                console.log(error)
+              })
+          }
+          else{
+            this.$router.push('/userlogin')
+          }
+        },
+        addBad(ansid){
+          if(this.$store.state.user){
             this.$axios.post(
-              'http://localhost:8080/online_answer/user/collect',
+              'http://localhost:8080/online_answer/user/bad',
               qs.stringify({
-                colUserId:this.$store.state.user.userId,
-                colQuesId:this.id,
+                ansId:ansid,
               })
             ).then(response => {
-              console.log(response)
-              console.log("收藏成功")
-              alert(response.data.resultDesc)
-              history.go(0)
+              console.log(response.data)
+              if(response.data.resultCode==2044)
+              {
+                console.log("已点过踩")
+                this.$axios.post(
+                  'http://localhost:8080/online_answer/user/cancelBad',
+                  qs.stringify({
+                    ansId:ansid
+                  })
+                ).then(response => {
+                  console.log(response)
+                  console.log("取消点踩成功")
+                  alert(response.data.resultDesc)
+                  //history.go(0)
+                  /*this.$router.push({
+                    path: '/userGuide', query:{user_id: this.data.userId}
+                  });*/
+                }).catch(error => {
+                  console.log(error)
+                })
+              }
+              else {
+                console.log("点踩成功")
+                alert(response.data.resultDesc)
+                //history.go(0)
+              }
+              //alert(response.data.resultDesc)
+
               /*this.$router.push({
                 path: '/userGuide', query:{user_id: this.data.userId}
               });*/
@@ -425,7 +544,54 @@
           else{
             this.$router.push('/userlogin')
           }
-        }
+        },
+        addGood(ansid){
+          if(this.$store.state.user){
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/good',
+              qs.stringify({
+                ansId:ansid,
+              })
+            ).then(response => {
+              console.log(response.data)
+              if(response.data.resultCode==2044)
+              {
+                console.log("已点过赞")
+                this.$axios.post(
+                  'http://localhost:8080/online_answer/user/cancelGood',
+                  qs.stringify({
+                    ansId:ansid
+                  })
+                ).then(response => {
+                  console.log(response)
+                  console.log("取消点赞成功")
+                  alert(response.data.resultDesc)
+                  //history.go(0)
+                  /*this.$router.push({
+                    path: '/userGuide', query:{user_id: this.data.userId}
+                  });*/
+                }).catch(error => {
+                  console.log(error)
+                })
+              }
+              else {
+                console.log("点赞成功")
+                alert(response.data.resultDesc)
+                //history.go(0)
+              }
+              //alert(response.data.resultDesc)
+
+              /*this.$router.push({
+                path: '/userGuide', query:{user_id: this.data.userId}
+              });*/
+            }).catch(error => {
+              console.log(error)
+            })
+          }
+          else{
+            this.$router.push('/userlogin')
+          }
+        },
       },
 
     }
@@ -450,5 +616,8 @@
     color: #4d4d4d;
     font-size: 12px;
     border: 1px solid #CCCCCC;
+  }
+  .el-button{
+    background-color: #ffc9a4;
   }
 </style>

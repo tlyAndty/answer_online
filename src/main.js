@@ -14,6 +14,7 @@ import axios from 'axios'
 import qs from 'qs'
 import VueResource from 'vue-resource'
 import moment from 'moment'
+import './assets/icon/iconfont.css'
 
 
 Vue.use(VueQuillEditor)
