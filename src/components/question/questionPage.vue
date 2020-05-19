@@ -261,6 +261,7 @@
           quesAnsNum:'',
           userId:'',
           com_flag:[],
+          com_flag_str:'',
           flag:false,
           indexes:[],
           activenum:'',
@@ -271,7 +272,12 @@
           return this.$refs.myQuillEditor.quill
         },
       },
-      mounted() {
+      created() {
+        this.com_flag_str=sessionStorage.obj
+        console.log("得到的this.com_flag_str:",this.com_flag_str)
+        this.com_flag=JSON.parse(this.com_flag_str)
+        //this.com_flag=sessionStorage.getItem('com_flag')
+        console.log("得到的this.com_flag:",this.com_flag)
         this.getParams();
         this.getqData();
         this.getaData();
@@ -334,11 +340,18 @@
             console.log("quesId:" + this.id)
             console.log("adata:",response.data.data);
             this.answerlist=response.data.data
-            var maxid=0
-            for(var i=0;i<this.answerlist.length;i++){
-              this.com_flag[i]=false
-              console.log("第",i,"个:",this.com_flag[i])
+            //var maxid=0
+            if(this.com_flag==null){
+              console.log("com_flag为空")
+              for(var i=0;i<this.answerlist.length;i++){
+                this.com_flag[i]=false
+                console.log("第",i,"个:",this.com_flag[i])
+              }
+              console.log("新建this.com_flag:",this.com_flag)
+            }else {
+              console.log("com_flag有数据")
             }
+
             /*for(var i=0;i<this.answerlist.length;i++){
               //console.log("this.answerlist[i]",this.answerlist[i])
               this.answerlist[i].comment=new Object();
@@ -370,58 +383,6 @@
             .catch((error)=>{
               console.log(error);
             });
-        },
-        /*getcData(ansid,list){
-          console.log("Cdata中的answerlist",this.answerlist)
-          for(var i=0;i<this.answerlist.length;i++){
-            //console.log("ansid",this.answerlist[i].answer.ansId)
-            //console.log("查找中的answerlist",this.answerlist[i])
-            if(this.answerlist[i].answer.ansId == ansid){
-                console.log("添加评论前",this.answerlist[i])
-                console.log("被添加的commentlist:",list)
-                Object.assign(this.answerlist[i].comment,this.commentlist)
-                console.log("添加评论后",this.answerlist[i])
-            }
-          }
-          console.log("CCC",this.answerlist)
-        },*/
-        /*getUserName(userid){
-          var uname;
-          this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
-            qs.stringify({
-              userId: userid
-            })
-          ).then((response) => {
-            console.log("userId:" + userid)
-            console.log("namedata:",response.data.data.name);
-            uname=response.data.data.name;
-            console.log("uname:",uname);
-            return uname;
-          })
-            .catch((error)=>{
-              console.log(error);
-            });
-        },*/
-        showcomment(index){
-          console.log("show!!!!")
-          if(this.com_flag[index]==false){
-            this.com_flag[index]=true
-            console.log("com_flag[",index,"]",this.com_flag[index])
-            history.go(0)
-          }
-          else {
-            this.com_flag[index] = false
-            console.log("com_flag[",index,"]",this.com_flag[index])
-            history.go(0)
-          }
-          /*if(this.com_flag[ansid]==false){
-            this.com_flag[ansid]=true
-            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
-          }
-          else {
-            this.com_flag[ansid]=false
-            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
-          }*/
         },
         check_user_status(){
 
@@ -473,9 +434,37 @@
             this.$router.push('/userlogin')
           }
         },
-        /*getcomflag(){
-          this.com_flag== JSON.parse(localStorage.getItem('this.com_flag'));
-        },*/
+        showcomment(index){
+          console.log("show!!!!")
+          if(this.com_flag[index]==false){
+            this.com_flag[index]=true
+            console.log("this.com_flag:",this.com_flag)
+            this.com_flag_str=JSON.stringify(this.com_flag)
+            console.log("this.com_flag_str:",this.com_flag_str)
+            sessionStorage.obj=this.com_flag_str
+            //sessionStorage.setItem('com_flag', this.com_flag)
+            console.log("com_flag[",index,"]",this.com_flag[index])
+            history.go(0)
+          }
+          else {
+            this.com_flag[index] = false
+            console.log("this.com_flag:",this.com_flag)
+            this.com_flag_str=JSON.stringify(this.com_flag)
+            console.log("this.com_flag_str:",this.com_flag_str)
+            sessionStorage.obj=this.com_flag_str
+            //sessionStorage.setItem('com_flag', this.com_flag)
+            console.log("com_flag[",index,"]",this.com_flag[index])
+            history.go(0)
+          }
+          /*if(this.com_flag[ansid]==false){
+            this.com_flag[ansid]=true
+            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
+          }
+          else {
+            this.com_flag[ansid]=false
+            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
+          }*/
+        },
         Colquestion(){
           if(this.$store.state.user){
               this.$axios.post(
