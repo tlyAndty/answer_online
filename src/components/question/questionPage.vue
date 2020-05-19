@@ -31,8 +31,8 @@
                 <a href="">mysql</a>
               </div-->
               <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-top:10px;margin-bottom:10px;background: none;height: 30px;">
-                <a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
-                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
+                <!--a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
+                <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span-->
                 <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
                   收藏 {{this.quesColNum}}
                 </a>
