@@ -351,7 +351,6 @@
             }else {
               console.log("com_flag有数据")
             }
-
             /*for(var i=0;i<this.answerlist.length;i++){
               //console.log("this.answerlist[i]",this.answerlist[i])
               this.answerlist[i].comment=new Object();
