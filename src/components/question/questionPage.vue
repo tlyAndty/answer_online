@@ -63,7 +63,7 @@
               <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <ul class="answerlist"  style="margin:0px;list-style: none;padding:0;">
-                    <li v-for="item in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
+                    <li v-for="(item,index) in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
                       <div class="list_con" style="text-align: left" >
                         <div class="ans_content">
                           <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
@@ -79,7 +79,31 @@
                           发布于：{{item.answer.ansTime}}
                         </div>
                         <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
-                          <a class="comment" style="color: #999;" @click="showcomment(item.answer.ansId)">
+                          <!--el-popover
+                            placement="bottom"
+                            width="800"
+                            trigger="click"
+                            >
+                            <div class="make_comment" style="height: 50px;border: 1px solid #f4f4f4;background-color:#fbfdf8;padding: 8px 24px 0 10px;">
+                              <div class="make_comment_text" style="float: left;padding: 1px">
+                                <el-input type="text" style="width: 550px" placeholder="评论"></el-input>
+                              </div>
+                              <div class="make_comment_bt" style="float: left;margin-left: 20px">
+                                <el-button class="commentBtn"  style="color: white;" @click="">评论</el-button>
+                              </div>
+                            </div>
+                            <div class="show_comments">
+                              <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
+                                <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                                  <div>{{item1.comment.comContent}}</div>
+                                  <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
+                                  <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
+                                </li>
+                              </ul>
+                            </div>
+                            <el-button style="color: #999;font-size: 12px;background: none;" size="mini" type="text" slot="reference">评论 {{item.answer.ansComNum}}</el-button>
+                          </el-popover-->
+                          <a class="comment" style="color: #999;" @click="showcomment(index)">
                             评论 {{item.answer.ansComNum}}
                           </a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
@@ -93,7 +117,7 @@
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
                         </div>
                       </div>
-                      <div v-if="flag==true" class="comment_detail_con" style="position: relative;height: auto;">
+                      <div v-if="com_flag[index]==true" class="comment_detail_con" style="position: relative;height: auto;">
                         <div class="make_comment" style="height: 50px;border: 1px solid #f4f4f4;background-color:#fbfdf8;padding: 8px 24px 0 10px;">
                           <div class="make_comment_text" style="float: left;padding: 1px">
                             <el-input type="text" style="width: 550px" placeholder="评论"></el-input>
@@ -251,6 +275,7 @@
         this.getParams();
         this.getqData();
         this.getaData();
+        //this.getcomflag();
       },
       watch:{
         '$route':'getParams'
@@ -311,11 +336,6 @@
             this.answerlist=response.data.data
             var maxid=0
             for(var i=0;i<this.answerlist.length;i++){
-              if(maxid<this.answerlist[i].answer.ansId){
-                maxid=this.answerlist[i].answer.ansId
-              }
-            }
-            for(var i=0;i<maxid+1;i++){
               this.com_flag[i]=false
               console.log("第",i,"个:",this.com_flag[i])
             }
@@ -382,13 +402,17 @@
               console.log(error);
             });
         },*/
-        showcomment(ansid){
+        showcomment(index){
           console.log("show!!!!")
-          if(this.flag==false){
-            this.flag=true
+          if(this.com_flag[index]==false){
+            this.com_flag[index]=true
+            console.log("com_flag[",index,"]",this.com_flag[index])
+            history.go(0)
           }
           else {
-            this.flag = false
+            this.com_flag[index] = false
+            console.log("com_flag[",index,"]",this.com_flag[index])
+            history.go(0)
           }
           /*if(this.com_flag[ansid]==false){
             this.com_flag[ansid]=true
@@ -449,6 +473,9 @@
             this.$router.push('/userlogin')
           }
         },
+        /*getcomflag(){
+          this.com_flag== JSON.parse(localStorage.getItem('this.com_flag'));
+        },*/
         Colquestion(){
           if(this.$store.state.user){
               this.$axios.post(
