@@ -384,7 +384,6 @@
             });
         },
         check_user_status(){
-
         },
         onEditorChange(event){
           event.quill.deleteText(800,4)
