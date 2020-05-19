@@ -452,14 +452,6 @@
             console.log("com_flag.flag",this.com_flag.flag)
             history.go(0)
           }
-          /*if(this.com_flag[ansid]==false){
-            this.com_flag[ansid]=true
-            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
-          }
-          else {
-            this.com_flag[ansid]=false
-            console.log("com_flag[",ansid,"]",this.com_flag[ansid])
-          }*/
         },
         Colquestion(){
           if(this.$store.state.user){
