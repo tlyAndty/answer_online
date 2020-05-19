@@ -119,12 +119,19 @@
                       </div>
                       <div v-if="com_flag.flag[index]==true" class="comment_detail_con" style="position: relative;height: auto;">
                         <div class="make_comment" style="height: 50px;border: 1px solid #f4f4f4;background-color:#fbfdf8;padding: 8px 24px 0 10px;">
-                          <div class="make_comment_text" style="float: left;padding: 1px">
-                            <el-input type="text" style="width: 550px" placeholder="评论"></el-input>
-                          </div>
-                          <div class="make_comment_bt" style="float: left;margin-left: 20px">
-                            <el-button class="commentBtn"  style="color: white;" @click="">评论</el-button>
-                          </div>
+                          <el-form ref="commentForm" :model="commentForm">
+                            <el-form-item style="float: left;padding: 1px">
+                              <!--div class="make_comment_text" style="float: left;padding: 1px"-->
+                                <el-input type="text" v-model="commentForm.c_content" style="width: 550px" placeholder="进行评论"></el-input>
+                              <!--/div-->
+                            </el-form-item>
+                            <el-form-item style="float: left;margin-left: 20px">
+                              <!--div class="make_comment_bt" style="float: left;margin-left: 20px"-->
+                                <el-button class="commentBtn"  style="color: white;" @click="commentSubmit(item.answer.ansId)">评论</el-button>
+                              <!--/div-->
+                            </el-form-item>
+
+                          </el-form>
                         </div>
                         <div class="show_comments">
                           <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
@@ -233,6 +240,9 @@
           answerForm:{
             a_contenttest:'',
             a_content:'',
+          },
+          commentForm:{
+            c_content:'',
           },
           editorOption: {
             placeholder: "请输入",
@@ -427,6 +437,35 @@
                 return false
               }
             })
+          }
+          else{
+            this.$router.push('/userlogin')
+          }
+        },
+        commentSubmit(ansid){
+          if(this.$store.state.user){
+            console.log("已登录")
+            console.log(this.$store.state.user.userId)
+            console.log("要评论的回答的id",ansid)
+            console.log(this.commentForm.c_content)
+                this.$axios.post(
+                  'http://localhost:8080/online_answer/user/comment',
+                  qs.stringify({
+                    userId:this.$store.state.user.userId,
+                    ansId:ansid,
+                    comContent:this.commentForm.c_content,
+                  })
+                ).then(response => {
+                  console.log(response)
+                  console.log("评论成功")
+                  alert(response.data.resultDesc)
+                  history.go(0)
+                  /*this.$router.push({
+                    path: '/userGuide', query:{user_id: this.data.userId}
+                  });*/
+                }).catch(error => {
+                  console.log(error)
+                })
           }
           else{
             this.$router.push('/userlogin')
