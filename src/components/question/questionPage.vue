@@ -117,7 +117,7 @@
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
                         </div>
                       </div>
-                      <div v-if="com_flag[index]==true" class="comment_detail_con" style="position: relative;height: auto;">
+                      <div v-if="com_flag.flag[index]==true" class="comment_detail_con" style="position: relative;height: auto;">
                         <div class="make_comment" style="height: 50px;border: 1px solid #f4f4f4;background-color:#fbfdf8;padding: 8px 24px 0 10px;">
                           <div class="make_comment_text" style="float: left;padding: 1px">
                             <el-input type="text" style="width: 550px" placeholder="评论"></el-input>
@@ -260,7 +260,10 @@
           quesReward:'',
           quesAnsNum:'',
           userId:'',
-          com_flag:[],
+          com_flag: {
+            flag:[],
+            quesid:null,
+          },
           com_flag_str:'',
           flag:false,
           indexes:[],
@@ -273,12 +276,34 @@
         },
       },
       created() {
-        this.com_flag_str=sessionStorage.obj
-        console.log("得到的this.com_flag_str:",this.com_flag_str)
-        this.com_flag=JSON.parse(this.com_flag_str)
-        //this.com_flag=sessionStorage.getItem('com_flag')
-        console.log("得到的this.com_flag:",this.com_flag)
         this.getParams();
+        var test_flag_str = sessionStorage.obj
+        //this.com_flag_str = sessionStorage.obj
+        console.log("得到的this.com_flag_str:", test_flag_str)
+        var test_flag = JSON.parse(test_flag_str)
+        console.log("得到的this.com_flag:", test_flag)
+        console.log("得到的this.com_flag.quesid:", test_flag.quesid)
+        if(test_flag.quesid==null){
+          console.log("之前没有存数据")
+          console.log("com_flag.quesid:",test_flag.quesid)
+        }
+        else {
+          console.log("存过数据")
+          console.log("本页面的quesid:",this.id)
+          if(test_flag.quesid==this.id)
+          {
+            console.log("是这个问题页面的com_flag")
+            this.com_flag = test_flag
+
+          }
+          else{
+            console.log("清除数据")
+            this.com_flag.quesid=null
+            console.log("清除后", this.com_flag)
+          }
+          //this.com_flag=sessionStorage.getItem('com_flag')
+          //console.log("得到的this.com_flag:", this.com_flag)
+        }
         this.getqData();
         this.getaData();
         //this.getcomflag();
@@ -341,42 +366,17 @@
             console.log("adata:",response.data.data);
             this.answerlist=response.data.data
             //var maxid=0
-            if(this.com_flag==null){
+            if(this.com_flag.quesid==null){
               console.log("com_flag为空")
+              this.com_flag.quesid=this.id
               for(var i=0;i<this.answerlist.length;i++){
-                this.com_flag[i]=false
-                console.log("第",i,"个:",this.com_flag[i])
+                this.com_flag.flag[i]=false
+                console.log("第",i,"个:",this.com_flag.flag[i])
               }
               console.log("新建this.com_flag:",this.com_flag)
             }else {
               console.log("com_flag有数据")
             }
-            /*for(var i=0;i<this.answerlist.length;i++){
-              //console.log("this.answerlist[i]",this.answerlist[i])
-              this.answerlist[i].comment=new Object();
-              //console.log("加上comment对象")
-              //console.log("this.answerlist[",i,"]",this.answerlist[i])
-              if(this.answerlist[i].answer.ansComNum){
-                console.log("有评论")
-                var ansid=this.answerlist[i].answer.ansId
-                this.$axios.post('http://localhost:8080/online_answer/common/searchCommentsByAnsId',
-                  qs.stringify({
-                    ansId: ansid
-                  })
-                ).then((response) => {
-                  console.log("ansId:" + ansid)
-                  console.log("cdata:",response.data.data);
-                  this.commentlist=response.data.data
-                  this.getcData(ansid,this.commentlist)
-                })
-                  .catch((error)=>{
-                    console.log(error);
-                  });
-              }
-              else {
-                console.log("无评论")
-              }
-            }*/
             console.log("answerlist:",this.answerlist)
           })
             .catch((error)=>{
@@ -434,24 +434,22 @@
         },
         showcomment(index){
           console.log("show!!!!")
-          if(this.com_flag[index]==false){
-            this.com_flag[index]=true
-            console.log("this.com_flag:",this.com_flag)
+          if(this.com_flag.flag[index]==false){
+            this.com_flag.flag[index]=true
+            //console.log("this.com_flag:",this.com_flag)
             this.com_flag_str=JSON.stringify(this.com_flag)
-            console.log("this.com_flag_str:",this.com_flag_str)
+            //console.log("this.com_flag_str:",this.com_flag_str)
             sessionStorage.obj=this.com_flag_str
-            //sessionStorage.setItem('com_flag', this.com_flag)
-            console.log("com_flag[",index,"]",this.com_flag[index])
+            console.log("com_flag.flag",this.com_flag.flag)
             history.go(0)
           }
           else {
-            this.com_flag[index] = false
-            console.log("this.com_flag:",this.com_flag)
+            this.com_flag.flag[index] = false
+            //console.log("this.com_flag:",this.com_flag)
             this.com_flag_str=JSON.stringify(this.com_flag)
-            console.log("this.com_flag_str:",this.com_flag_str)
+            //console.log("this.com_flag_str:",this.com_flag_str)
             sessionStorage.obj=this.com_flag_str
-            //sessionStorage.setItem('com_flag', this.com_flag)
-            console.log("com_flag[",index,"]",this.com_flag[index])
+            console.log("com_flag.flag",this.com_flag.flag)
             history.go(0)
           }
           /*if(this.com_flag[ansid]==false){
