@@ -290,30 +290,36 @@
         var test_flag_str = sessionStorage.obj
         //this.com_flag_str = sessionStorage.obj
         console.log("得到的this.com_flag_str:", test_flag_str)
-        var test_flag = JSON.parse(test_flag_str)
-        console.log("得到的this.com_flag:", test_flag)
-        console.log("得到的this.com_flag.quesid:", test_flag.quesid)
-        if(test_flag.quesid==null){
+        if(test_flag_str==null){
           console.log("之前没有存数据")
-          console.log("com_flag.quesid:",test_flag.quesid)
         }
-        else {
-          console.log("存过数据")
-          console.log("本页面的quesid:",this.id)
-          if(test_flag.quesid==this.id)
-          {
-            console.log("是这个问题页面的com_flag")
-            this.com_flag = test_flag
+        else{
+          var test_flag = JSON.parse(test_flag_str)
+          console.log("得到的this.com_flag:", test_flag)
+          console.log("得到的this.com_flag.quesid:", test_flag.quesid)
+          if(test_flag.quesid==null){
+            console.log("quesid为空")
+            console.log("com_flag.quesid:",test_flag.quesid)
+          }
+          else {
+            console.log("存过数据")
+            console.log("本页面的quesid:",this.id)
+            if(test_flag.quesid==this.id)
+            {
+              console.log("是这个问题页面的com_flag")
+              this.com_flag = test_flag
 
+            }
+            else{
+              console.log("清除数据")
+              this.com_flag.quesid=null
+              console.log("清除后", this.com_flag)
+            }
+            //this.com_flag=sessionStorage.getItem('com_flag')
+            //console.log("得到的this.com_flag:", this.com_flag)
           }
-          else{
-            console.log("清除数据")
-            this.com_flag.quesid=null
-            console.log("清除后", this.com_flag)
-          }
-          //this.com_flag=sessionStorage.getItem('com_flag')
-          //console.log("得到的this.com_flag:", this.com_flag)
         }
+
         this.getqData();
         this.getaData();
         //this.getcomflag();
