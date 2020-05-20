@@ -19,7 +19,7 @@
             我要提问
           </el-button-->
           <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
-        <span style="margin-right: 5px">{{user.name}}</span>
+        <!--span style="margin-right: 5px">{{user.name}}</span-->
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'main'}">{{user.name}}</router-link>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
@@ -40,8 +40,45 @@
         <!--a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a-->
           <router-link style="color: #ffffff;text-decoration:none" :to="{name:'main'}">首页</router-link>
         /
-        <a id="logout_link" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
+        <a id="logout_link1" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
+        <div v-if="admin" style="float:right;position:relative; top:17px ">
+          <!--el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
+                                               width: 100px;
+                                               height: 36px;
+                                               font-size: 14px;
+                                               background-color: lightcoral;
+                                               border-radius:5px;
+                                               text-align: center;
+                                               color: white;
+                                               border-color: white;
+                                               margin-right:15px">
+            我要提问
+          </el-button-->
+          <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:admin.adminId}}">我要提问</router-link>
+          <!--span style="margin-right: 5px">{{admin.name}}</span-->
+          <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'main'}">{{admin.name}}</router-link>
+          <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
+          <span class="el-dropdown-link">
+            消息
+            <i class="el-icon-caret-bottom el-icon--right"></i>
+          </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item class="clearfix">
+                <a href="" style="text-decoration:none">回答</a>
+                <el-badge class="mark" :value="12" />
+              </el-dropdown-item>
+              <el-dropdown-item class="clearfix">
+                <a href="" style="text-decoration:none">评论</a>
+                <el-badge class="mark" :value="3" />
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <!--a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a-->
+          <router-link style="color: #ffffff;text-decoration:none" :to="{name:'main'}">首页</router-link>
+          /
+          <a id="logout_link2" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
+        </div>
         <div v-else style="float:right;position:relative; top:17px ">
         <!--el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
                                                width: 100px;
@@ -130,6 +167,9 @@
     computed: {
       user () {
         return this.$store.state.user
+      },
+      admin() {
+        return this.$store.state.admin
       }
     },
   }

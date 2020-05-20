@@ -5,23 +5,31 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   // 全局变量
   state: {
-    user: undefined
+    user: undefined,
+    admin: undefined,
   },
   // 修改全局变量必须通过mutations中的方法
   // mutations只能采用同步方法
   mutations: {
-    login (state, payload) {
+    userlogin (state, payload) {
       state.user = payload
+    },
+    adminlogin(state, payload) {
+      state.admin = payload
     },
     logout (state) {
       state.user = undefined
+      state.admin = undefined
     }
   },
   // 异步方法用actions
   // actions不能直接修改全局变量，需要调用commit方法来触发mutation中的方法
   actions: {
-    login (context, payload) {
-      context.commit('login', payload)
+    userlogin (context, payload) {
+      context.commit('userlogin', payload)
+    },
+    adminlogin (context, payload) {
+      context.commit('adminlogin', payload)
     },
     logout (context) {
       context.commit('logout')

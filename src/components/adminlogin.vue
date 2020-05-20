@@ -12,7 +12,7 @@
             <el-input v-model="user.Pwd" type="password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button class="loginBtn"  style="width:100px;" @click="login">登录</el-button><br>
+            <el-button class="loginBtn"  style="width:100px;" @click="adminlogin">登录</el-button><br>
           </el-form-item>
         </el-form>
       </el-row>
@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    login() {
+    adminlogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.$axios.post(
@@ -55,7 +55,8 @@ export default {
             const {data} = response
             console.log('adminId:',data.data.adminId)
             this.data = data.data
-            this.$store.dispatch('login',data.data.name)
+            data.data.role='admin';
+            this.$store.dispatch('adminlogin',data.data)
             this.$router.push({
               path: '/adminGuide', query:{admin_id: this.data.adminId}
             });
