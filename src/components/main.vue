@@ -39,7 +39,6 @@
         </ul>
       </div>
     </div>
-
       <div class="aside" style="float: right;width: 30%;margin-top: 0px">
       <div class="good_order" >
         <h3>
