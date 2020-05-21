@@ -649,7 +649,6 @@
           }
         },
       },
-
     }
 
   // Vue.filter('dateFormat',function(quesTime){
