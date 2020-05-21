@@ -207,7 +207,7 @@
                   </div>
                   </el-form-item>
                   <el-form-item>
-                    <el-button style="float: right;color: white" @click.native="onSubmit" >确认提交</el-button>
+                    <el-button style="float: right;color: white" @click.native="onSubmit" >提交回答</el-button>
                   </el-form-item>
                 </el-form>
               </div>

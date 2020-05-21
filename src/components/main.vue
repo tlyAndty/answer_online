@@ -185,6 +185,7 @@
         //this.textareText = this.id
       },
       getData() {
+        //时间排序
         this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
           qs.stringify({
             quesState: '3',
@@ -192,8 +193,20 @@
         ).then((response) => {
           //console.log("firstlist:",response.data.data);
           this.time_order_list = response.data.data;
-          this.good_order_list = response.data.data;
           console.log("time_order_list:",this.time_order_list)
+          /*for(let i=0;i<this.list.length;i++){
+            console.log(this.list[i].question.quesTime)
+          }*/
+          //for(var question in this.list) { console.log(question+" : "+this.list[question]); }
+        }).catch((error) => {
+          console.log(error);
+        });
+        //收藏排序
+        this.$axios.post('http://localhost:8080/online_answer/common/selectAllByColNum'
+        ).then((response) => {
+          //console.log("firstlist:",response.data.data);
+          this.good_order_list = response.data.data;
+          console.log("good_order_list:",this.good_order_list)
           /*for(let i=0;i<this.list.length;i++){
             console.log(this.list[i].question.quesTime)
           }*/
