@@ -107,11 +107,11 @@
                             评论 {{item.answer.ansComNum}}
                           </a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <a class="goodcount" @click="addGood(item.answer.ansId)"><i class="el-icon-thirdgood"></i></a>
+                          <a class="goodcount" @click="addGood(item)"><i class="el-icon-thirdgood"></i></a>
                           <!--em>0</em-->
                           {{item.answer.goodCount}}
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <a class="badcount" @click="addBad(item.answer.ansId)"><i class="el-icon-thirdbad"></i></a>
+                          <a class="badcount" @click="addBad(item)"><i class="el-icon-thirdbad"></i></a>
                           <!--em>0</em-->
                           {{item.answer.badCount}}
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
@@ -207,7 +207,7 @@
                   </div>
                   </el-form-item>
                   <el-form-item>
-                    <el-button style="float: right;color: white" @click.native="onSubmit" >提交回答</el-button>
+                    <el-button style="float: right;color: white" @click.native="onSubmit" >提交回答 </el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -547,95 +547,99 @@
             this.$router.push('/userlogin')
           }
         },
-        addBad(ansid){
+        addBad(item){
           if(this.$store.state.user){
-            this.$axios.post(
-              'http://localhost:8080/online_answer/user/bad',
-              qs.stringify({
-                ansId:ansid,
+            console.log("item:",item)
+            if(item.likeOrNot==null){
+              console.log("没有点过踩")
+              this.$axios.post(
+                'http://localhost:8080/online_answer/user/insertGoodOrBad',
+                qs.stringify({
+                  userId:this.$store.state.user.userId,
+                  ansId:item.answer.ansId,
+                  likeState:'2',
+                })
+              ).then(response => {
+                console.log(response.data)
+                alert(response.data.resultDesc)
+                console.log("点踩成功")
+                history.go(0)
+                console.log("aData:",this.answerlist)
+              }).catch(error => {
+                console.log(error)
               })
-            ).then(response => {
-              console.log(response.data)
-              if(response.data.resultCode==2044)
-              {
-                console.log("已点过踩")
+            }else{
+              console.log("曾经有过操作")
+              if(item.likeOrNot.likeState==2){
                 this.$axios.post(
-                  'http://localhost:8080/online_answer/user/cancelBad',
+                  'http://localhost:8080/online_answer/user/cancelGoodOrBad',
                   qs.stringify({
-                    ansId:ansid
+                    id:item.likeOrNot.id,
                   })
                 ).then(response => {
-                  console.log(response)
-                  console.log("取消点踩成功")
+                  console.log(response.data)
                   alert(response.data.resultDesc)
-                  //history.go(0)
-                  /*this.$router.push({
-                    path: '/userGuide', query:{user_id: this.data.userId}
-                  });*/
+                  console.log("取消点踩成功")
+                  history.go(0)
+                  console.log("aData:",this.answerlist)
                 }).catch(error => {
                   console.log(error)
                 })
               }
               else {
-                console.log("点踩成功")
-                alert(response.data.resultDesc)
-                //history.go(0)
+                console.log("点过赞")
+                alert("您已经点过赞，请取消赞后再进行点踩")
               }
-              //alert(response.data.resultDesc)
-
-              /*this.$router.push({
-                path: '/userGuide', query:{user_id: this.data.userId}
-              });*/
-            }).catch(error => {
-              console.log(error)
-            })
+            }
           }
           else{
             this.$router.push('/userlogin')
           }
         },
-        addGood(ansid){
+        addGood(item){
           if(this.$store.state.user){
-            this.$axios.post(
-              'http://localhost:8080/online_answer/user/good',
-              qs.stringify({
-                ansId:ansid,
+            console.log("item:",item)
+            if(item.likeOrNot==null){
+              console.log("没有点过赞")
+              this.$axios.post(
+                'http://localhost:8080/online_answer/user/insertGoodOrBad',
+                qs.stringify({
+                  userId:this.$store.state.user.userId,
+                  ansId:item.answer.ansId,
+                  likeState:'1',
+                })
+              ).then(response => {
+                console.log(response.data)
+                alert(response.data.resultDesc)
+                console.log("点赞成功")
+                history.go(0)
+                console.log("aData:",this.answerlist)
+              }).catch(error => {
+                console.log(error)
               })
-            ).then(response => {
-              console.log(response.data)
-              if(response.data.resultCode==2044)
-              {
-                console.log("已点过赞")
+            }else{
+              console.log("曾经有过操作")
+              if(item.likeOrNot.likeState==1){
                 this.$axios.post(
-                  'http://localhost:8080/online_answer/user/cancelGood',
+                  'http://localhost:8080/online_answer/user/cancelGoodOrBad',
                   qs.stringify({
-                    ansId:ansid
+                    id:item.likeOrNot.id,
                   })
                 ).then(response => {
-                  console.log(response)
-                  console.log("取消点赞成功")
+                  console.log(response.data)
                   alert(response.data.resultDesc)
-                  //history.go(0)
-                  /*this.$router.push({
-                    path: '/userGuide', query:{user_id: this.data.userId}
-                  });*/
+                  console.log("取消点赞成功")
+                  history.go(0)
+                  console.log("aData:",this.answerlist)
                 }).catch(error => {
                   console.log(error)
                 })
               }
               else {
-                console.log("点赞成功")
-                alert(response.data.resultDesc)
-                //history.go(0)
+                console.log("点过踩")
+                alert("您已经点过踩，请取消踩后再进行点赞")
               }
-              //alert(response.data.resultDesc)
-
-              /*this.$router.push({
-                path: '/userGuide', query:{user_id: this.data.userId}
-              });*/
-            }).catch(error => {
-              console.log(error)
-            })
+            }
           }
           else{
             this.$router.push('/userlogin')
