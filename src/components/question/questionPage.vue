@@ -233,19 +233,19 @@
 
     export default {
       name: "questionPage",
-      components:{
+      components: {
         quillEditor
       },
       data() {
         return {
           answerlist: [],
-          commentlist:[],
-          answerForm:{
-            a_contenttest:'',
-            a_content:'',
+          commentlist: [],
+          answerForm: {
+            a_contenttest: '',
+            a_content: '',
           },
-          commentForm:{
-            c_content:'',
+          commentForm: {
+            c_content: '',
           },
           editorOption: {
             placeholder: "请输入",
@@ -256,35 +256,35 @@
               }
             },
           },
-          TiLength:0,
-          rules:{
+          TiLength: 0,
+          rules: {
             a_content: [
               {required: true, message: '请输入详细内容', trigger: 'blur'}
             ]
           },
-          id:'',
-          quesTitle:'',
-          quesContent:'',
-          quesTime:'',
-          quesUserId:'',
-          quesUserName:'',
-          quesColNum:'',
-          quesState:'',
-          quesReward:'',
-          quesAnsNum:'',
-          userId:'',
+          id: '',
+          quesTitle: '',
+          quesContent: '',
+          quesTime: '',
+          quesUserId: '',
+          quesUserName: '',
+          quesColNum: '',
+          quesState: '',
+          quesReward: '',
+          quesAnsNum: '',
+          userId: '',
           com_flag: {
-            flag:[],
-            quesid:null,
+            flag: [],
+            quesid: null,
           },
-          com_flag_str:'',
-          flag:false,
-          indexes:[],
-          activenum:'',
+          com_flag_str: '',
+          flag: false,
+          indexes: [],
+          activenum: '',
         }
       },
-      computed:{
-        editor(){
+      computed: {
+        editor() {
           return this.$refs.myQuillEditor.quill
         },
       },
@@ -293,29 +293,25 @@
         var test_flag_str = sessionStorage.obj
         //this.com_flag_str = sessionStorage.obj
         console.log("得到的this.com_flag_str:", test_flag_str)
-        if(test_flag_str==null){
+        if (test_flag_str == null) {
           console.log("之前没有存数据")
-        }
-        else{
+        } else {
           var test_flag = JSON.parse(test_flag_str)
           console.log("得到的this.com_flag:", test_flag)
           console.log("得到的this.com_flag.quesid:", test_flag.quesid)
-          if(test_flag.quesid==null){
+          if (test_flag.quesid == null) {
             console.log("quesid为空")
-            console.log("com_flag.quesid:",test_flag.quesid)
-          }
-          else {
+            console.log("com_flag.quesid:", test_flag.quesid)
+          } else {
             console.log("存过数据")
-            console.log("本页面的quesid:",this.id)
-            if(test_flag.quesid==this.id)
-            {
+            console.log("本页面的quesid:", this.id)
+            if (test_flag.quesid == this.id) {
               console.log("是这个问题页面的com_flag")
               this.com_flag = test_flag
 
-            }
-            else{
+            } else {
               console.log("清除数据")
-              this.com_flag.quesid=null
+              this.com_flag.quesid = null
               console.log("清除后", this.com_flag)
             }
             //this.com_flag=sessionStorage.getItem('com_flag')
@@ -327,109 +323,109 @@
         this.getaData();
         //this.getcomflag();
       },
-      watch:{
-        '$route':'getParams'
+      watch: {
+        '$route': 'getParams'
       },
-      methods:{
-        getParams:function () {
+      methods: {
+        getParams: function () {
           this.id = this.$route.query.ques_id
-          console.log("传来的参数=="+this.id)
-          if(this.$store.state.user){
-            this.userId=this.$store.state.user.userId
-            console.log("USERID=="+this.userId)
+          console.log("传来的参数==" + this.id)
+          if (this.$store.state.user) {
+            this.userId = this.$store.state.user.userId
+            console.log("USERID==" + this.userId)
           }
 
           //this.textareText = this.id
         },
-        getqData(){
+        getqData() {
           this.$axios.post('http://localhost:8080/online_answer/common/viewQuestionInfo',
             qs.stringify({
               quesId: this.id
             })
           ).then((response) => {
-              console.log("quesId:" + this.id)
-              console.log("qdata:",response.data.data);
-              this.quesTitle=response.data.data.question.quesTitle;
-              this.quesContent=response.data.data.question.quesContent;
-              this.quesTime=response.data.data.question.quesTime
-              this.quesUserId=response.data.data.question.userId
-              this.quesColNum=response.data.data.question.quesColNum
-              this.quesState=response.data.data.question.quesState
-              this.quesReward=response.data.data.question.quesReward
-              this.quesAnsNum=response.data.data.question.quesAnsNum
-              this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
-                qs.stringify({
-                  userId: this.quesUserId
-                })
-              ).then((response) => {
-                console.log("quesUserId:" + this.quesUserId)
-                console.log("qUdata:",response.data.data);
-                this.quesUserName=response.data.data.name;
-
+            console.log("quesId:" + this.id)
+            console.log("qdata:", response.data.data);
+            this.quesTitle = response.data.data.question.quesTitle;
+            this.quesContent = response.data.data.question.quesContent;
+            this.quesTime = response.data.data.question.quesTime
+            this.quesUserId = response.data.data.question.userId
+            this.quesColNum = response.data.data.question.quesColNum
+            this.quesState = response.data.data.question.quesState
+            this.quesReward = response.data.data.question.quesReward
+            this.quesAnsNum = response.data.data.question.quesAnsNum
+            this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
+              qs.stringify({
+                userId: this.quesUserId
               })
-                .catch((error)=>{
-                  console.log(error);
-                });
+            ).then((response) => {
+              console.log("quesUserId:" + this.quesUserId)
+              console.log("qUdata:", response.data.data);
+              this.quesUserName = response.data.data.name;
+
             })
-            .catch((error)=>{
+              .catch((error) => {
+                console.log(error);
+              });
+          })
+            .catch((error) => {
               console.log(error);
             });
         },
-        getaData(){
+        getaData() {
           this.$axios.post('http://localhost:8080/online_answer/common/selectAnssByQuesId',
             qs.stringify({
               quesId: this.id
             })
           ).then((response) => {
             console.log("quesId:" + this.id)
-            console.log("adata:",response.data.data);
-            this.answerlist=response.data.data
+            console.log("adata:", response.data.data);
+            this.answerlist = response.data.data
             //var maxid=0
-            if(this.com_flag.quesid==null){
+            if (this.com_flag.quesid == null) {
               console.log("com_flag为空")
-              this.com_flag.quesid=this.id
-              for(var i=0;i<this.answerlist.length;i++){
-                this.com_flag.flag[i]=false
-                console.log("第",i,"个:",this.com_flag.flag[i])
+              this.com_flag.quesid = this.id
+              for (var i = 0; i < this.answerlist.length; i++) {
+                this.com_flag.flag[i] = false
+                console.log("第", i, "个:", this.com_flag.flag[i])
               }
-              console.log("新建this.com_flag:",this.com_flag)
-            }else {
+              console.log("新建this.com_flag:", this.com_flag)
+            } else {
               console.log("com_flag有数据")
             }
-            console.log("answerlist:",this.answerlist)
+            console.log("answerlist:", this.answerlist)
           })
-            .catch((error)=>{
+            .catch((error) => {
               console.log(error);
             });
         },
-        check_user_status(){
+        check_user_status() {
         },
-        onEditorChange(event){
-          event.quill.deleteText(800,4)
-          if(this.content === ''){
+        onEditorChange(event) {
+          event.quill.deleteText(800, 4)
+          if (this.content === '') {
             this.TiLength = 0
-          }else{
+          } else {
             this.TiLength = event.quill.getLength() - 1
           }
         },
-        onEditorReady(editor){
+        onEditorReady(editor) {
 
         },
-        onSubmit(){
-          if(this.$store.state.user){
+        onSubmit() {
+          if (this.$store.state.user) {
             console.log("已登录")
             console.log(this.$store.state.user.userId)
             console.log(this.quesId)
-            this.answerForm.a_content=this.answerForm.a_contenttest.replace(/<[^>]+>/g,"")
+            this.answerForm.a_content = this.answerForm.a_contenttest.replace(/<[^>]+>/g, "")
             console.log(this.answerForm.a_content)
             this.$refs.answerForm.validate((valid) => {
               if (valid) {
                 this.$axios.post(
                   'http://localhost:8080/online_answer/user/answer',
                   qs.stringify({
-                    userId:this.$store.state.user.userId,
-                    quesId:this.id,
-                    ansContent:this.answerForm.a_content,
+                    userId: this.$store.state.user.userId,
+                    quesId: this.id,
+                    ansContent: this.answerForm.a_content,
                   })
                 ).then(response => {
                   console.log(response)
@@ -446,210 +442,199 @@
                 return false
               }
             })
-          }
-          else{
+          } else {
             this.$router.push('/userlogin')
           }
         },
-        commentSubmit(ansid){
-          if(this.$store.state.user){
+        commentSubmit(ansid) {
+          if (this.$store.state.user) {
             console.log("已登录")
             console.log(this.$store.state.user.userId)
-            console.log("要评论的回答的id",ansid)
+            console.log("要评论的回答的id", ansid)
             console.log(this.commentForm.c_content)
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/comment',
+              qs.stringify({
+                userId: this.$store.state.user.userId,
+                ansId: ansid,
+                comContent: this.commentForm.c_content,
+              })
+            ).then(response => {
+              console.log(response)
+              console.log("评论成功")
+              alert(response.data.resultDesc)
+              history.go(0)
+              /*this.$router.push({
+                    path: '/userGuide', query:{user_id: this.data.userId}
+                  });*/
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
+            this.$router.push('/userlogin')
+          }
+        },
+        showcomment(index) {
+          console.log("show!!!!")
+          if (this.com_flag.flag[index] == false) {
+            this.com_flag.flag[index] = true
+            //console.log("this.com_flag:",this.com_flag)
+            this.com_flag_str = JSON.stringify(this.com_flag)
+            //console.log("this.com_flag_str:",this.com_flag_str)
+            sessionStorage.obj = this.com_flag_str
+            console.log("com_flag.flag", this.com_flag.flag)
+            history.go(0)
+          } else {
+            this.com_flag.flag[index] = false
+            //console.log("this.com_flag:",this.com_flag)
+            this.com_flag_str = JSON.stringify(this.com_flag)
+            //console.log("this.com_flag_str:",this.com_flag_str)
+            sessionStorage.obj = this.com_flag_str
+            console.log("com_flag.flag", this.com_flag.flag)
+            history.go(0)
+          }
+        },
+        Colquestion() {
+          if (this.$store.state.user) {
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/collect',
+              qs.stringify({
+                colUserId: this.$store.state.user.userId,
+                colQuesId: this.id,
+              })
+            ).then(response => {
+              console.log(response.data)
+              if (response.data.resultCode == 2044) {
+                console.log("已收藏，收藏失败")
                 this.$axios.post(
-                  'http://localhost:8080/online_answer/user/comment',
+                  'http://localhost:8080/online_answer/user/deleteCollections',
                   qs.stringify({
-                    userId:this.$store.state.user.userId,
-                    ansId:ansid,
-                    comContent:this.commentForm.c_content,
+                    colUserId: this.$store.state.user.userId,
+                    colQuesId: this.id,
                   })
                 ).then(response => {
                   console.log(response)
-                  console.log("评论成功")
+                  console.log("取消收藏成功")
                   alert(response.data.resultDesc)
                   history.go(0)
                   /*this.$router.push({
-                    path: '/userGuide', query:{user_id: this.data.userId}
-                  });*/
+                      path: '/userGuide', query:{user_id: this.data.userId}
+                    });*/
                 }).catch(error => {
                   console.log(error)
                 })
-          }
-          else{
-            this.$router.push('/userlogin')
-          }
-        },
-        showcomment(index){
-          console.log("show!!!!")
-          if(this.com_flag.flag[index]==false){
-            this.com_flag.flag[index]=true
-            //console.log("this.com_flag:",this.com_flag)
-            this.com_flag_str=JSON.stringify(this.com_flag)
-            //console.log("this.com_flag_str:",this.com_flag_str)
-            sessionStorage.obj=this.com_flag_str
-            console.log("com_flag.flag",this.com_flag.flag)
-            history.go(0)
-          }
-          else {
-            this.com_flag.flag[index] = false
-            //console.log("this.com_flag:",this.com_flag)
-            this.com_flag_str=JSON.stringify(this.com_flag)
-            //console.log("this.com_flag_str:",this.com_flag_str)
-            sessionStorage.obj=this.com_flag_str
-            console.log("com_flag.flag",this.com_flag.flag)
-            history.go(0)
-          }
-        },
-        Colquestion(){
-          if(this.$store.state.user){
-              this.$axios.post(
-                'http://localhost:8080/online_answer/user/collect',
-                qs.stringify({
-                  colUserId:this.$store.state.user.userId,
-                  colQuesId:this.id,
-                })
-              ).then(response => {
-                console.log(response.data)
-                if(response.data.resultCode==2044)
-                {
-                  console.log("已收藏，收藏失败")
-                  this.$axios.post(
-                    'http://localhost:8080/online_answer/user/deleteCollections',
-                    qs.stringify({
-                      colUserId:this.$store.state.user.userId,
-                      colQuesId:this.id,
-                    })
-                  ).then(response => {
-                    console.log(response)
-                    console.log("取消收藏成功")
-                    alert(response.data.resultDesc)
-                    history.go(0)
-                    /*this.$router.push({
-                      path: '/userGuide', query:{user_id: this.data.userId}
-                    });*/
-                  }).catch(error => {
-                    console.log(error)
-                  })
-                }
-                else {
-                  console.log("收藏成功")
-                  alert(response.data.resultDesc)
-                  history.go(0)
-                }
-                //alert(response.data.resultDesc)
+              } else {
+                console.log("收藏成功")
+                alert(response.data.resultDesc)
+                history.go(0)
+              }
+              //alert(response.data.resultDesc)
 
-                /*this.$router.push({
+              /*this.$router.push({
                   path: '/userGuide', query:{user_id: this.data.userId}
                 });*/
-              }).catch(error => {
-                console.log(error)
-              })
-          }
-          else{
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
             this.$router.push('/userlogin')
           }
         },
-        addBad(item){
-          if(this.$store.state.user){
-            console.log("item:",item)
-            if(item.likeOrNots==null){
+        addBad(item) {
+          if (this.$store.state.user) {
+            console.log("item:", item)
+            if (item.likeOrNots == null) {
               console.log("没有点过踩")
               this.$axios.post(
                 'http://localhost:8080/online_answer/user/insertGoodOrBad',
                 qs.stringify({
-                  userId:this.$store.state.user.userId,
-                  ansId:item.answer.ansId,
-                  likeState:'2',
+                  userId: this.$store.state.user.userId,
+                  ansId: item.answer.ansId,
+                  likeState: '2',
                 })
               ).then(response => {
                 console.log(response.data)
                 alert(response.data.resultDesc)
                 console.log("点踩成功")
                 history.go(0)
-                console.log("aData:",this.answerlist)
+                console.log("aData:", this.answerlist)
               }).catch(error => {
                 console.log(error)
               })
-            }else{
+            } else {
               console.log("曾经有过操作")
-              if(item.likeOrNots[0].likeState==2){
+              if (item.likeOrNots[0].likeState == 2) {
                 this.$axios.post(
                   'http://localhost:8080/online_answer/user/cancelGoodOrBad',
                   qs.stringify({
-                    id:item.likeOrNots[0].id,
+                    id: item.likeOrNots[0].id,
                   })
                 ).then(response => {
                   console.log(response.data)
                   alert(response.data.resultDesc)
                   console.log("取消点踩成功")
                   history.go(0)
-                  console.log("aData:",this.answerlist)
+                  console.log("aData:", this.answerlist)
                 }).catch(error => {
                   console.log(error)
                 })
-              }
-              else {
+              } else {
                 console.log("点过赞")
                 alert("您已经点过赞，请取消赞后再进行点踩")
               }
             }
-          }
-          else{
+          } else {
             this.$router.push('/userlogin')
           }
         },
-        addGood(item){
-          if(this.$store.state.user){
-            console.log("item:",item)
-            if(item.likeOrNots==null){
+        addGood(item) {
+          if (this.$store.state.user) {
+            console.log("item:", item)
+            if (item.likeOrNots == null) {
               console.log("没有点过赞")
               this.$axios.post(
                 'http://localhost:8080/online_answer/user/insertGoodOrBad',
                 qs.stringify({
-                  userId:this.$store.state.user.userId,
-                  ansId:item.answer.ansId,
-                  likeState:'1',
+                  userId: this.$store.state.user.userId,
+                  ansId: item.answer.ansId,
+                  likeState: '1',
                 })
               ).then(response => {
                 console.log(response.data)
                 alert(response.data.resultDesc)
                 console.log("点赞成功")
                 history.go(0)
-                console.log("aData:",this.answerlist)
+                console.log("aData:", this.answerlist)
               }).catch(error => {
                 console.log(error)
               })
-            }else{
+            } else {
               console.log("曾经有过操作")
-              if(item.likeOrNots[0].likeState==1){
+              if (item.likeOrNots[0].likeState == 1) {
                 this.$axios.post(
                   'http://localhost:8080/online_answer/user/cancelGoodOrBad',
                   qs.stringify({
-                    id:item.likeOrNots[0].id,
+                    id: item.likeOrNots[0].id,
                   })
                 ).then(response => {
                   console.log(response.data)
                   alert(response.data.resultDesc)
                   console.log("取消点赞成功")
                   history.go(0)
-                  console.log("aData:",this.answerlist)
+                  console.log("aData:", this.answerlist)
                 }).catch(error => {
                   console.log(error)
                 })
-              }
-              else {
+              } else {
                 console.log("点过踩")
                 alert("您已经点过踩，请取消踩后再进行点赞")
               }
             }
-          }
-          else{
+          } else {
             this.$router.push('/userlogin')
           }
         },
       },
-
     }
 
   // Vue.filter('dateFormat',function(quesTime){
