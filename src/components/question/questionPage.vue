@@ -134,7 +134,6 @@
                                 <el-button class="commentBtn"  style="color: white;" @click="commentSubmit(item.answer.ansId)">评论</el-button>
                               <!--/div-->
                             </el-form-item>
-
                           </el-form>
                         </div>
                         <div class="show_comments">
