@@ -107,12 +107,16 @@
                             评论 {{item.answer.ansComNum}}
                           </a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <a class="goodcount" @click="addGood(item)"><i class="el-icon-thirdgood"></i></a>
-                          <!--em>0</em-->
+                          <a class="goodcount" @click="addGood(item)">
+                            <i v-if="item.likeOrNot==null||item.likeOrNot.likeState==2" class="el-icon-thirdgood"></i>
+                            <i v-else-if="item.likeOrNot.likeState==1" class="el-icon-thirdgood1"></i>
+                          </a>
                           {{item.answer.goodCount}}
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
-                          <a class="badcount" @click="addBad(item)"><i class="el-icon-thirdbad"></i></a>
-                          <!--em>0</em-->
+                          <a class="badcount" @click="addBad(item)">
+                            <i v-if="item.likeOrNot==null||item.likeOrNot.likeState==1" class="el-icon-thirdbad"></i>
+                            <i v-else-if="item.likeOrNot.likeState==2" class="el-icon-thirdcai"></i>
+                          </a>
                           {{item.answer.badCount}}
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
                         </div>

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10259657",
+      "name": "踩",
+      "font_class": "cai",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "12735321",
+      "name": "good",
+      "font_class": "good1",
+      "unicode": "eadb",
+      "unicode_decimal": 60123
+    },
+    {
       "icon_id": "11487986",
       "name": "bad",
       "font_class": "bad",
