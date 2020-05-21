@@ -553,7 +553,7 @@
         addBad(item){
           if(this.$store.state.user){
             console.log("item:",item)
-            if(item.likeOrNot==null){
+            if(item.likeOrNots==null){
               console.log("没有点过踩")
               this.$axios.post(
                 'http://localhost:8080/online_answer/user/insertGoodOrBad',
@@ -573,11 +573,11 @@
               })
             }else{
               console.log("曾经有过操作")
-              if(item.likeOrNot.likeState==2){
+              if(item.likeOrNots[0].likeState==2){
                 this.$axios.post(
                   'http://localhost:8080/online_answer/user/cancelGoodOrBad',
                   qs.stringify({
-                    id:item.likeOrNot.id,
+                    id:item.likeOrNots[0].id,
                   })
                 ).then(response => {
                   console.log(response.data)
@@ -602,7 +602,7 @@
         addGood(item){
           if(this.$store.state.user){
             console.log("item:",item)
-            if(item.likeOrNot==null){
+            if(item.likeOrNots==null){
               console.log("没有点过赞")
               this.$axios.post(
                 'http://localhost:8080/online_answer/user/insertGoodOrBad',
@@ -622,11 +622,11 @@
               })
             }else{
               console.log("曾经有过操作")
-              if(item.likeOrNot.likeState==1){
+              if(item.likeOrNots[0].likeState==1){
                 this.$axios.post(
                   'http://localhost:8080/online_answer/user/cancelGoodOrBad',
                   qs.stringify({
-                    id:item.likeOrNot.id,
+                    id:item.likeOrNots[0].id,
                   })
                 ).then(response => {
                   console.log(response.data)
