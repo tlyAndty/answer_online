@@ -95,6 +95,9 @@
                           </a>
                           {{item.answer.badCount}}
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
+                          <a v-if="item.answer.userId ==userId" class="del_comment" style="color: #999;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
+                            删除
+                          </a>
                         </div>
                       </div>
                       <div v-if="com_flag.flag[index]==true" class="comment_detail_con" style="position: relative;height: auto;">
@@ -616,6 +619,21 @@
           } else {
             this.$router.push('/userlogin')
           }
+        },
+        deleteAnswer(ansid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/user/deletePersonalAnswer',
+            qs.stringify({
+              ansId: ansid,
+            })
+          ).then(response => {
+            console.log(response.data)
+            alert(response.data.resultDesc)
+            console.log("删除回答成功")
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
         },
       },
     }
