@@ -16,11 +16,10 @@
                   <span>悬赏积分：{{this.quesReward}}</span>
                 </div>
                 <div class="state" v-if="this.quesState!=0" style="float: left;margin-left: 20px;color: lightcoral">
-                  <div v-if="this.quesUserId==userId">
+                  <div v-if="this.quesUserId==userId || admin">
                     <span>[已被屏蔽]</span>
                   </div>
                 </div>
-                <p style="margin: 0;"></p>
               </div>
               <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
                 编辑于：{{this.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}
@@ -33,9 +32,17 @@
               <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-top:10px;margin-bottom:10px;background: none;height: 30px;">
                 <!--a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span-->
-                <a class="collection" style="color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
+                <a class="collection" style="float:left;color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
                   收藏 {{this.quesColNum}}
                 </a>
+                <div class="function_bar" style="float: left;font-size: 12px;">
+                  <a v-if="admin && this.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(this.quesId)">
+                    屏蔽
+                  </a>
+                  <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(this.quesId)">
+                    删除
+                  </a>
+                </div>
                 <!--span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <i class="el-icon-thumb"></i>
                 <em>0</em-->
@@ -63,7 +70,7 @@
               <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <ul class="answerlist"  style="margin:0px;list-style: none;padding:0;">
-                    <li v-for="(item,index) in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
+                    <li v-for="(item,index) in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0 || admin" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
                       <div class="list_con" style="text-align: left" >
                         <div class="ans_content">
                           <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
@@ -95,7 +102,10 @@
                           </a>
                           {{item.answer.badCount}}
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
-                          <a v-if="item.answer.userId ==userId" class="del_answer" style="color: lightcoral;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
+                          <a v-if="item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
+                            屏蔽
+                          </a>
+                          <a v-if="item.answer.userId ==userId || admin" class="del_answer" style="color: lightcoral;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
                             删除
                           </a>
                         </div>
@@ -117,7 +127,7 @@
                         </div>
                         <div class="show_comments">
                           <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
-                            <li v-if="item1.comment.userId ==userId || item1.comment.comState==0" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                            <li v-if="item1.comment.userId ==userId || item1.comment.comState==0 || admin" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
                               <div>{{item1.comment.comContent}}</div>
                               <div style="height:12px;font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">
                                 <div style="float: left">
@@ -126,11 +136,16 @@
                                 <div v-if="item1.comment.comState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
                                   [已被屏蔽]
                                 </div>
-                                <div v-if="item1.comment.userId ==userId" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
+                              </div>
+                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">
+                                <div style="float: left">发布于：{{item1.comment.comTime}}</div>
+                                <div v-if="item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
+                                  屏蔽
+                                </div>
+                                <div v-if="item1.comment.userId ==userId || admin" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
                                   删除
                                 </div>
                               </div>
-                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
                             </li>
                           </ul>
                         </div>
@@ -276,6 +291,12 @@
         editor() {
           return this.$refs.myQuillEditor.quill
         },
+        user () {
+          return this.$store.state.user
+        },
+        admin() {
+          return this.$store.state.admin
+        }
       },
       created() {
         this.getParams();
@@ -623,6 +644,37 @@
             this.$router.push('/userlogin')
           }
         },
+        deleteQuestion(quesid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/user/deletePersonalQuestion',
+            qs.stringify({
+              quesId: quesid,
+            })
+          ).then(response => {
+            console.log(response.data)
+            alert(response.data.resultDesc)
+            console.log("删除问题成功")
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        blockQuestion(quesid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/admin/modifyQuestionState',
+            qs.stringify({
+              quesId: quesid,
+              quesState: '1'
+            })
+          ).then(response => {
+            console.log(response.data)
+            alert(response.data.resultDesc)
+            console.log("屏蔽问题成功")
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
+        },
         deleteAnswer(ansid){
           this.$axios.post(
             'http://localhost:8080/online_answer/user/deletePersonalAnswer',
@@ -638,6 +690,22 @@
             console.log(error)
           })
         },
+        blockAnswer(ansid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/admin/modifyAnswerState',
+            qs.stringify({
+              ansId: ansid,
+              ansState: '1'
+            })
+          ).then(response => {
+            console.log(response.data)
+            alert("屏蔽回答成功")
+            console.log("屏蔽回答成功")
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
+        },
         deleteComment(comid){
           this.$axios.post(
             'http://localhost:8080/online_answer/user/deletePersonalComment',
@@ -648,6 +716,22 @@
             console.log(response.data)
             alert(response.data.resultDesc)
             console.log("删除评论成功")
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        blockComment(comid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/admin/modifyCommentState',
+            qs.stringify({
+              comId: comid,
+              comState: '1'
+            })
+          ).then(response => {
+            console.log(response.data)
+            alert(response.data.resultDesc)
+            console.log("屏蔽评论成功")
             history.go(0)
           }).catch(error => {
             console.log(error)

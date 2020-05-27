@@ -11,7 +11,7 @@
       </div>
       <div class="time_order">
         <ul class="list"  style="margin:0px;list-style: none;">
-          <li  v-for="item in time_order_list.slice(0,5)" v-if="item.question.quesState==0||item.question.userId==id" style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
+          <li  v-for="item in time_order_list.slice(0,5)" v-if="item.question.quesState==0 || item.question.userId==id || admin" style="background-color: #fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left;">
               <div class="list_title" style="margin-bottom: 10px;">
                 <router-link style="font-size: 30px;color: #333333;text-decoration:none;text-shadow: none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesTitle}}</router-link>
@@ -54,7 +54,7 @@
           <span class="txt">最热推荐</span>
         </h3>
         <ul class="list"  style="margin:0px;list-style: none;">
-          <li v-for="item in good_order_list.slice(0,5)" v-if="item.question.quesState==0||item.question.userId==id" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
+          <li v-for="item in good_order_list.slice(0,5)" v-if="item.question.quesState==0||item.question.userId==id || admin" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;">
             <div class="list_con" style="text-align: left">
               <div class="list_title" >
                 <router-link  style="font-size: 20px;color: #333333;text-decoration:none;text-shadow: none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesTitle}}</router-link>
