@@ -79,43 +79,19 @@
                           发布于：{{item.answer.ansTime}}
                         </div>
                         <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
-                          <!--el-popover
-                            placement="bottom"
-                            width="800"
-                            trigger="click"
-                            >
-                            <div class="make_comment" style="height: 50px;border: 1px solid #f4f4f4;background-color:#fbfdf8;padding: 8px 24px 0 10px;">
-                              <div class="make_comment_text" style="float: left;padding: 1px">
-                                <el-input type="text" style="width: 550px" placeholder="评论"></el-input>
-                              </div>
-                              <div class="make_comment_bt" style="float: left;margin-left: 20px">
-                                <el-button class="commentBtn"  style="color: white;" @click="">评论</el-button>
-                              </div>
-                            </div>
-                            <div class="show_comments">
-                              <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
-                                <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
-                                  <div>{{item1.comment.comContent}}</div>
-                                  <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
-                                  <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
-                                </li>
-                              </ul>
-                            </div>
-                            <el-button style="color: #999;font-size: 12px;background: none;" size="mini" type="text" slot="reference">评论 {{item.answer.ansComNum}}</el-button>
-                          </el-popover-->
                           <a class="comment" style="color: #999;" @click="showcomment(index)">
                             评论 {{item.answer.ansComNum}}
                           </a>
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                           <a class="goodcount" @click="addGood(item)">
-                            <i v-if="item.likeOrNot==null||item.likeOrNot.likeState==2" class="el-icon-thirdgood"></i>
-                            <i v-else-if="item.likeOrNot.likeState==1" class="el-icon-thirdgood1"></i>
+                            <i v-if="item.likeOrNots==null||item.likeOrNots[0].likeState==2" class="el-icon-thirdgood"></i>
+                            <i v-else-if="item.likeOrNots[0].likeState==1" class="el-icon-thirdgood1"></i>
                           </a>
                           {{item.answer.goodCount}}
                           <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                           <a class="badcount" @click="addBad(item)">
-                            <i v-if="item.likeOrNot==null||item.likeOrNot.likeState==1" class="el-icon-thirdbad"></i>
-                            <i v-else-if="item.likeOrNot.likeState==2" class="el-icon-thirdcai"></i>
+                            <i v-if="item.likeOrNots==null||item.likeOrNots[0].likeState==1" class="el-icon-thirdbad"></i>
+                            <i v-else-if="item.likeOrNots[0].likeState==2" class="el-icon-thirdcai"></i>
                           </a>
                           {{item.answer.badCount}}
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
@@ -138,7 +114,7 @@
                         </div>
                         <div class="show_comments">
                           <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
-                            <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                            <li v-if="item1.comment.userId ==userId || item.comment.comState==0" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
                               <div>{{item1.comment.comContent}}</div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>

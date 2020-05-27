@@ -54,6 +54,9 @@
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
                 <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesContent}}</router-link>
               </div>
+              <div class="colNum" style="font-size: 12px;">
+                <span>收藏数：{{item.question.quesColNum}}</span>
+              </div>
               <div class="state" v-if="item.question.quesState!=0" style="font-size: 12px;color: lightcoral">
                 <span>[已被屏蔽]</span>
               </div>

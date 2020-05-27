@@ -137,18 +137,6 @@
         this.$refs[formName].resetFields();
       },
       handleAvatarSuccess(res,file) {
-        /*this.$axios.post('http://localhost:8080/online_answer/user/upload',
-          qs.stringify({
-            file: file,
-            userId: this.uData.userId
-          })
-        ).then((response) => {
-          console.log("我是handleAvatarSuccess，并且userId:"+this.uData.userId)
-          console.log("我是handleAvatarSuccess，并且文件:"+file)
-          console.log("我是response.data:"+response)
-          //console.log("image的url：" + response.data.data.imageUrl);
-          //return response.data.data.imageUrl
-        })*/
         this.imageUrl = URL.createObjectURL(file.raw);
         console.log("我是handleAvatarSuccess文件是：",file)
 
@@ -164,8 +152,6 @@
           console.log("我是beforeAvatarUpload，并且文件:"+file)
           console.log("我是beforeAvatarUpload:"+response)
           history.go(0)
-          //console.log("image的url：" + response.data.data.imageUrl);
-          //return response.data.data.imageUrl
         })
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
