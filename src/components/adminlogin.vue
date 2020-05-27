@@ -17,7 +17,13 @@
         </el-form>
       </el-row>
     </div>
-
+    <div style="background-color: rgba(255, 255, 255, 0.3);;text-align: center;font-size: 12px;height: 40px;margin-top: 101px">
+      <div >
+        <a id="main" href="/" style="margin-right:10px;color:black;text-decoration:none">首页</a>
+        <a id="user_login" href="/userlogin" style="margin-left:10px;color:black;text-decoration:none">用户登录</a>
+      </div>
+      <span>Copyright © 2020-3020 tly&ty. All Rights Reserved.</span>
+    </div>
   </div>
 </template>
 
@@ -77,17 +83,15 @@ export default {
     text-align:center;
     background: url(../assets/login_bg.jpg);
     background-repeat: no-repeat;
-    height:660px;
+    height: 625px;
   }
   .panel{
     position: relative;
-    float:right;
-    right:10%;
-    /*top:30%;*/
+    left:55%;
     width:350px;
     background-color: #333333;
     background: rgba(242,217,217,0.7);
-    margin-top: 40px;
+    margin-top: 25px;
     padding-right: 100px;
     padding-top: 10px;
   }
@@ -97,9 +101,9 @@ export default {
   }
 
   .title {
-    padding-top: 5%;
+    padding-top: 60px;
     position: relative;
-    left: 52%;
+    left: 46%;
     color: rgba(255, 255, 255, 0.8);
     font-size: 8em;
     letter-spacing: 0.1em;

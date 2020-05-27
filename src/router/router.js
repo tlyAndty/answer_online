@@ -46,7 +46,8 @@ export default new Router({
       name: 'userlogin',
       component: userlogin,
       meta:{
-        keepAlive:false
+        keepAlive:false,
+        //keepAlive1:true
       }
     },
     {

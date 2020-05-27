@@ -103,10 +103,10 @@
       <!--router-view v-if="isRouterAlive"></router-view-->
       <router-view/>
     </el-main>
-    <!--el-footer style="height: 40px;">
-      <div style="margin-right: 40px;margin-left: 40px;margin-top: 5px;font-size: 12px">
+    <!--el-footer v-if="$route.meta.keepAlive1" style="padding: 0px;height: 40px">
+      <div style="background-color: #fbfdf8;text-align: center;font-size: 12px;height: 100%">
         <div style="">
-        <a id="admin_login" href="/adminlogin" style="color:black;text-decoration:none">管理员登录</a>
+          <a id="admin_login" href="/adminlogin" style="color:black;text-decoration:none">管理员登录</a>
         </div>
         <span>Copyright © 2020-3020 tly&ty. All Rights Reserved.</span>
       </div>
