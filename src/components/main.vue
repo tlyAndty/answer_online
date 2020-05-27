@@ -33,7 +33,7 @@
                   <span>{{item.question.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
                 </div>
                 <div class="function_bar" style="float: right;margin-right: 20px">
-                  <a v-if="admin" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
+                  <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
                   </a>
                   <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
@@ -65,7 +65,7 @@
               <div class="colNum" style="font-size: 12px;">
                 <span>收藏数：{{item.question.quesColNum}}</span>
                 <div class="function_bar" style="float: right;margin-right: 20px;font-size: 12px;">
-                  <a v-if="admin" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
+                  <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
                   </a>
                   <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
