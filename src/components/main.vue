@@ -32,6 +32,14 @@
                 <div class="time" style="float: right">
                   <span>{{item.question.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}</span>
                 </div>
+                <div class="function_bar" style="float: right;margin-right: 20px">
+                  <a v-if="admin" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
+                    屏蔽
+                  </a>
+                  <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
+                    删除
+                  </a>
+                </div>
               </div>
             </div>
             <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
@@ -56,6 +64,14 @@
               </div>
               <div class="colNum" style="font-size: 12px;">
                 <span>收藏数：{{item.question.quesColNum}}</span>
+                <div class="function_bar" style="float: right;margin-right: 20px;font-size: 12px;">
+                  <a v-if="admin" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
+                    屏蔽
+                  </a>
+                  <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
+                    删除
+                  </a>
+                </div>
               </div>
               <div class="state" v-if="item.question.quesState!=0" style="font-size: 12px;color: lightcoral">
                 <span>[已被屏蔽]</span>
@@ -157,7 +173,6 @@
         list:[],
         time_order_list:[],
         good_order_list:[],
-        //qlist:[],
         sortType: null,                 // 数组对象中的哪一个属性进行排序
         order: false,                   // 升序还是降序
         list_length:'',
@@ -172,23 +187,22 @@
       this.getData();
     },
     computed:{
-      /*time_order_list:function(){
-        return this.sortByTime(this.list,'quesTime')
-        console("排序成功")
-      },*/
-      /*good_order_list:function(){
-        return this.sortByGood(this.list,'quesColNum')
-      },*/
+      user () {
+        return this.$store.state.user
+      },
+      admin() {
+        return this.$store.state.admin
+      }
     },
     methods: {
       getParams:function () {
         console.log("user:",this.$store.state.user)
+        console.log("admin:",this.$store.state.admin)
         if(this.$store.state.user!=null){
           this.id = this.$store.state.user.userId
           console.log("传来的参数=="+this.id)
         }
 
-        //this.textareText = this.id
       },
       getData() {
         //时间排序
@@ -200,10 +214,6 @@
           //console.log("firstlist:",response.data.data);
           this.time_order_list = response.data.data;
           console.log("time_order_list:",this.time_order_list)
-          /*for(let i=0;i<this.list.length;i++){
-            console.log(this.list[i].question.quesTime)
-          }*/
-          //for(var question in this.list) { console.log(question+" : "+this.list[question]); }
         }).catch((error) => {
           console.log(error);
         });
@@ -213,23 +223,9 @@
           //console.log("firstlist:",response.data.data);
           this.good_order_list = response.data.data;
           console.log("good_order_list:",this.good_order_list)
-          /*for(let i=0;i<this.list.length;i++){
-            console.log(this.list[i].question.quesTime)
-          }*/
-          //for(var question in this.list) { console.log(question+" : "+this.list[question]); }
         }).catch((error) => {
           console.log(error);
         });
-        /*this.$axios.post('http://localhost:8080/online_answer/admin/searchQuestionsByState',
-          qs.stringify({
-            quesState: '3',
-          })
-        ).then((response) => {
-          this.time_order_list = response.data.data;
-          console.log("time_order_list:",this.time_order_list)
-        }).catch((error) => {
-          console.log(error);
-        });*/
       },
       sortByTime(array,key){
         return array.sort(function(a,b){
@@ -246,7 +242,37 @@
           return ((y<x)?-1:(x>y)?1:0)   //从大到小排序
         })
       },
-
+      deleteQuestion(quesid){
+        this.$axios.post(
+          'http://localhost:8080/online_answer/user/deletePersonalQuestion',
+          qs.stringify({
+            quesId: quesid,
+          })
+        ).then(response => {
+          console.log(response.data)
+          alert(response.data.resultDesc)
+          console.log("删除问题成功")
+          history.go(0)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+      blockQuestion(quesid){
+        this.$axios.post(
+          'http://localhost:8080/online_answer/admin/modifyQuestionState',
+          qs.stringify({
+            quesId: quesid,
+            quesState: '1'
+          })
+        ).then(response => {
+          console.log(response.data)
+          alert(response.data.resultDesc)
+          console.log("屏蔽问题成功")
+          history.go(0)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
     },
 
   }
