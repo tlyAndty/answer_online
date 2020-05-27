@@ -114,9 +114,16 @@
                         </div>
                         <div class="show_comments">
                           <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
-                            <li v-if="item1.comment.userId ==userId || item.comment.comState==0" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                            <li v-if="item1.comment.userId ==userId || item1.comment.comState==0" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
                               <div>{{item1.comment.comContent}}</div>
-                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">{{item1.com_user_name}}</div>
+                              <div style="height:12px;font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">
+                                <div style="float: left">
+                                  {{item1.com_user_name}}
+                                </div>
+                                <div v-if="item1.comment.comState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
+                                  [已被屏蔽]
+                                </div>
+                              </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
                             </li>
                           </ul>
