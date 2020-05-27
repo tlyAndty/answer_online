@@ -128,6 +128,7 @@
         //window.location.reload()
         //sessionStorage.setItem("store", null)
         console.log(this.$store.state)
+        alert("登出成功")
       },
       reload(){
         this.isRouterAlive=false

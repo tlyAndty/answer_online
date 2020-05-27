@@ -63,6 +63,7 @@ export default {
             this.data = data.data
             data.data.role='admin';
             this.$store.dispatch('adminlogin',data.data)
+            alert(response.data.resultDesc)
             this.$router.push({
               path: '/adminGuide', query:{admin_id: this.data.adminId}
             });
