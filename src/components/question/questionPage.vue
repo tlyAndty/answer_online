@@ -95,7 +95,7 @@
                           </a>
                           {{item.answer.badCount}}
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
-                          <a v-if="item.answer.userId ==userId" class="del_comment" style="color: #999;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
+                          <a v-if="item.answer.userId ==userId" class="del_answer" style="color: lightcoral;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
                             删除
                           </a>
                         </div>
@@ -125,6 +125,9 @@
                                 </div>
                                 <div v-if="item1.comment.comState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
                                   [已被屏蔽]
+                                </div>
+                                <div v-if="item1.comment.userId ==userId" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
+                                  删除
                                 </div>
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">发布于：{{item1.comment.comTime}}</div>
@@ -630,6 +633,21 @@
             console.log(response.data)
             alert(response.data.resultDesc)
             console.log("删除回答成功")
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        deleteComment(comid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/user/deletePersonalComment',
+            qs.stringify({
+              comId: comid,
+            })
+          ).then(response => {
+            console.log(response.data)
+            alert(response.data.resultDesc)
+            console.log("删除评论成功")
             history.go(0)
           }).catch(error => {
             console.log(error)
