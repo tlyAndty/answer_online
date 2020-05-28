@@ -2,10 +2,10 @@
   <el-container direction="vertical">
     <el-header v-if="$route.meta.keepAlive" class="header" height="60px" width="100%">
       <div>
-        <div style="float:left;font-size: 30px; position:relative; top:5px ">
+        <div style="float:left;font-size: 30px; position:relative; top:7px ">
         探源问答
       </div>
-        <div v-if="user" style="float:right;position:relative; top:17px ">
+        <div v-if="user" style="float:right;position: relative;bottom: 12px">
           <!--el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
@@ -18,9 +18,11 @@
                                                margin-right:15px">
             我要提问
           </el-button-->
-          <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
-        <!--span style="margin-right: 5px">{{user.name}}</span-->
+          <router-link style="color:white;text-decoration:none;margin-right:20px;" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'userGuide',query:{user_id:user.userId}}">{{user.name}}</router-link>
+          <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position:relative;top: 18px" :to="{name:'userGuide',query:{user_id:user.userId}}">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" height="50px">
+          </router-link>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
             消息
@@ -110,16 +112,11 @@
 
   export default {
     name: 'App',
-    /*provide(){
-      return {
-        reload: this.reload
+    data(){
+      return{
+        imageUrl:'',
       }
     },
-    data(){
-      return {
-        isRouterAlive:true
-      }
-    },*/
     methods:{
       logout(){
         console.log("正在登出")
@@ -156,6 +153,8 @@
         console.log("读取sessionstorage后的数据")
         console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
       }
+      this.imageUrl="http://localhost:8080"+this.$store.state.user.image
+      console.log("imageUrl",this.imageUrl)
     },
     computed: {
       user () {
