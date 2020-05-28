@@ -82,18 +82,6 @@
           <a id="logout_link2" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
         </div>
         <div v-else style="float:right;position:relative; top:17px ">
-        <!--el-button class="new_question" onclick="window.location.href = '/userlogin'" style="display:inline-block;
-                                               width: 100px;
-                                               height: 36px;
-                                               font-size: 14px;
-                                               background-color: lightcoral;
-                                               border-radius:5px;
-                                               text-align: center;
-                                               color: white;
-                                               border-color: white;
-                                               margin-right:15px">
-          我要提问
-        </el-button-->
           <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'userlogin'}">我要提问</router-link>
         <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
         /
