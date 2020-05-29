@@ -98,7 +98,6 @@
           this.user.image=this.uData.image
           this.$store.state.user.image=this.user.image
           this.imageUrl = "http://localhost:8080"+this.uData.image
-          //this.$store.state.user.image=this.imageUrl
           console.log("uname",this.uData.name)
           console.log("在数据库中的image：",this.uData.image)
           console.log("该data中的imageUrl：",this.imageUrl)
