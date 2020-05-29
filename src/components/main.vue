@@ -36,9 +36,9 @@
                   <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
                   </a>
-                  <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
+                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
                     删除
-                  </a>
+                  </a-->
                 </div>
               </div>
             </div>
@@ -68,9 +68,9 @@
                   <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
                   </a>
-                  <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
+                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
                     删除
-                  </a>
+                  </a-->
                 </div>
               </div>
               <div class="state" v-if="item.question.quesState!=0" style="font-size: 12px;color: lightcoral">
@@ -138,7 +138,7 @@
               <span>京网文〔2020〕1039-165号</span>
             </p>
             <p>
-              <span>©2020-3020 中国tly&ty网络技术有限公司</span>
+              <span>©2020-3020 中国谈腊云和田园网络技术有限公司</span>
               <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
               <span>网络110报警服务</span>
             </p>

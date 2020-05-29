@@ -39,9 +39,9 @@
                   <a v-if="admin && this.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(this.quesId)">
                     屏蔽
                   </a>
-                  <a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(this.quesId)">
+                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(this.quesId)">
                     删除
-                  </a>
+                  </a-->
                 </div>
                 <!--span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <i class="el-icon-thumb"></i>
@@ -105,7 +105,7 @@
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
-                          <a v-if="item.answer.userId ==userId || admin" class="del_answer" style="color: lightcoral;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
+                          <a v-if="item.answer.userId ==userId" class="del_answer" style="color: lightcoral;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
                             删除
                           </a>
                         </div>
@@ -142,7 +142,7 @@
                                 <div v-if="admin && item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
                                   屏蔽
                                 </div>
-                                <div v-if="item1.comment.userId ==userId || admin" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
+                                <div v-if="item1.comment.userId ==userId" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
                                   删除
                                 </div>
                               </div>
