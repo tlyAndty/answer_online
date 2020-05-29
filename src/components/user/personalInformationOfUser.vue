@@ -42,10 +42,10 @@
   export default {
     name: "personalInformationOfUser",
     data() {
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
+      var validatePass = (rule, newPwd, callback) => {
+        if (newPwd === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value == this.user.pwd) {
+        } else if (newPwd == this.user.pwd) {
           callback(new Error('新密码不能与旧密码相同!'));
         } else {
           callback();
@@ -58,6 +58,7 @@
           mail: '',
           pwd: '',
           newPwd:'',
+          image:'',
         },
         rules: {
           newPwd: [
@@ -69,6 +70,9 @@
         id:'',
         doUpload:'',
       };
+    },
+    watch:{
+      '$route':'getParams'
     },
     created() {
       this.getParams()
@@ -91,14 +95,10 @@
           this.user.name = this.uData.name
           this.user.mail = this.uData.mail
           this.user.pwd = this.uData.pwd
+          this.user.image=this.uData.image
+          this.$store.state.user.image=this.user.image
           this.imageUrl = "http://localhost:8080"+this.uData.image
-            // this.$axios.post('http://localhost:8080'+this.uData.image,
-            //
-            // ).then((response) => {
-            //   console.log("图片访问成功")
-            // }).catch((error) => {
-            //   console.log(error);
-            // });
+          //this.$store.state.user.image=this.imageUrl
           console.log("uname",this.uData.name)
           console.log("在数据库中的image：",this.uData.image)
           console.log("该data中的imageUrl：",this.imageUrl)
@@ -139,7 +139,6 @@
       handleAvatarSuccess(res,file) {
         this.imageUrl = URL.createObjectURL(file.raw);
         console.log("我是handleAvatarSuccess文件是：",file)
-
       },
       beforeAvatarUpload(file,id) {
         let fd = new FormData()
@@ -151,6 +150,8 @@
           console.log("我是beforeAvatarUpload，并且userId:"+this.uData.userId)
           console.log("我是beforeAvatarUpload，并且文件:"+file)
           console.log("我是beforeAvatarUpload:"+response)
+          this.$store.state.user.image=this.user.image
+          console.log("state.user",this.$store.state.user)
           history.go(0)
         })
         const isJPG = file.type === 'image/jpeg';

@@ -5,23 +5,11 @@
         <div style="float:left;font-size: 30px; position:relative; top:7px ">
         探源问答
       </div>
-        <div v-if="user" style="float:right;position: relative;bottom: 12px">
-          <!--el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
-                                               width: 100px;
-                                               height: 36px;
-                                               font-size: 14px;
-                                               background-color: lightcoral;
-                                               border-radius:5px;
-                                               text-align: center;
-                                               color: white;
-                                               border-color: white;
-                                               margin-right:15px">
-            我要提问
-          </el-button-->
+        <div v-if="user" style="position: absolute;right: 15px;top: -15px">
           <router-link style="color:white;text-decoration:none;margin-right:20px;" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'userGuide',query:{user_id:user.userId}}">{{user.name}}</router-link>
-          <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position:relative;top: 18px" :to="{name:'userGuide',query:{user_id:user.userId}}">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" height="50px">
+          <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position: relative;top: 20px" :to="{name:'userGuide',query:{user_id:user.userId}}">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" height="50px" width="50px">
           </router-link>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
@@ -39,12 +27,11 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <!--a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a-->
           <router-link style="color: #ffffff;text-decoration:none" :to="{name:'main'}">首页</router-link>
         /
         <a id="logout_link1" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
-        <div v-else-if="admin" style="float:right;position:relative; top:17px ">
+        <div v-else-if="admin" style="position: absolute;right: 15px;top: 17px ">
           <!--el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
                                                width: 100px;
                                                height: 36px;
@@ -81,7 +68,7 @@
           /
           <a id="logout_link2" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
         </div>
-        <div v-else style="float:right;position:relative; top:17px ">
+        <div v-else style="position: absolute;right: 15px;top: 17px ">
           <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'userlogin'}">我要提问</router-link>
         <a id="main_link2" href="/" style="color: white;text-decoration:none">首页</a>
         /
@@ -90,7 +77,6 @@
       </div>
     </el-header>
     <el-main>
-      <!--router-view v-if="isRouterAlive"></router-view-->
       <router-view/>
     </el-main>
   </el-container>
@@ -102,7 +88,7 @@
     name: 'App',
     data(){
       return{
-        imageUrl:'',
+        //imageUrl:'',
       }
     },
     methods:{
@@ -141,8 +127,6 @@
         console.log("读取sessionstorage后的数据")
         console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
       }
-      this.imageUrl="http://localhost:8080"+this.$store.state.user.image
-      console.log("imageUrl",this.imageUrl)
     },
     computed: {
       user () {
@@ -150,6 +134,9 @@
       },
       admin() {
         return this.$store.state.admin
+      },
+      imageUrl(){
+        return "http://localhost:8080"+this.$store.state.user.image
       }
     },
   }

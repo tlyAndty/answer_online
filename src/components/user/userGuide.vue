@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 565px; border: 1px solid #eee;">
     <el-aside width="200px" >
-      <el-menu :unique-opened="true" :default-active="$route.path"            @select="handleSelect">
+      <el-menu :unique-opened="true" :default-active="$route.path" @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>问题管理</template>
           <el-menu-item index="questionListOfUser">所有问题列表</el-menu-item>
@@ -59,6 +59,7 @@
     data() {
       return {
         id:'',
+        //imageUrl:'',
       }
     },
     created(){
@@ -71,6 +72,8 @@
       getParams:function () {
         this.id = this.$route.query.user_id
         console.log("传来的参数=="+this.id)
+        this.imageUrl="http://localhost:8080"+this.$store.state.user.image
+        console.log("imageUrl",this.imageUrl)
       },
       handleSelect(path){
         this.$router.push({path:path,query:{user_id: this.id}})
