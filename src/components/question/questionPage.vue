@@ -137,7 +137,7 @@
                                   [已被屏蔽]
                                 </div>
                               </div>
-                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;">
+                              <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
                                 <div style="float: left">发布于：{{item1.comment.comTime}}</div>
                                 <div v-if="admin && item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
                                   屏蔽
