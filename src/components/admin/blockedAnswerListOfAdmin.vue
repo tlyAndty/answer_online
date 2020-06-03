@@ -116,7 +116,6 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="blockAns(scope.row.answer.ansId)">屏蔽</el-button>
             <el-button type="text" @click="unblockAns(scope.row.answer.ansId)">取消屏蔽</el-button>
           </template>
         </el-table-column>
