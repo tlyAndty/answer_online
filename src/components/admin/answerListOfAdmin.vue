@@ -51,7 +51,7 @@
         <el-table-column
           sortable
           prop="answer.ansTime"
-          label="发布的最新时间"
+          label="发布的时间"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
