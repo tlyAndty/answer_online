@@ -262,7 +262,6 @@
         } else if (row.answer.ansState === 3) {
           return '因问题被屏蔽而被屏蔽'
         }
-
       }
 
     },
