@@ -2,10 +2,10 @@
   <div class="top">
     <span style="font-size: 30px">个人信息</span>
     <el-form :model="admin" status-icon :rules="rules" ref="infoForm" class="demo-infoForm" style="width: 400px; margin:20px auto;">
-      <!--el-form-item label="头像" prop="headshot" style="">
+      <el-form-item label="头像" prop="headshot">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :action="doUpload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -13,7 +13,7 @@
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
-      </el-form-item-->
+      </el-form-item>
       <!--el-form-item label="ID" prop="adminid">
         <el-input class="text" placeholder=data.adminid v-model="admin.adminid" autocomplete="off" :readonly="true"></el-input>
       </el-form-item-->
@@ -59,6 +59,7 @@
             mail: '',
             pwd: '',
             newPwd:'',
+            image:'',
           },
           rules: {
             newPwd: [
@@ -66,6 +67,9 @@
             ],
           },
           imageUrl:'',
+          aData:{},
+          id:'',
+          doUpload:'',
         };
       },
       created() {
@@ -89,7 +93,7 @@
             this.admin.name = this.aData.name
             this.admin.mail = this.aData.mail
             this.admin.pwd = this.aData.pwd
-            console.log("aname",this.aData.name)
+            console.log("aname:",this.aData.name)
           }).catch((error) => {
             console.log(error);
           });
@@ -122,30 +126,35 @@
         resetForm(formName) {
           this.$refs[formName].resetFields();
         },
-        handleAvatarSuccess(res, file) {
-          this.$axios.post('http://localhost:8080/online_answer/user/upload',
-            qs.stringify({
-              userId: this.id,
-              file: file
-            })
-          ).then((response) => {
-            console.log("上传成功",response)
-            //console.log("image的url：" + response.data.data.imageUrl);
-            //return response.data.data.imageUrl
-          })
+        handleAvatarSuccess(res,file) {
           this.imageUrl = URL.createObjectURL(file.raw);
+          console.log("我是handleAvatarSuccess文件是：",file)
         },
-        beforeAvatarUpload(file) {
+        beforeAvatarUpload(file,id) {
+          let fd = new FormData()
+          fd.append('file',file)
+          fd.append('userId',this.aData.userId)
+          this.$axios.post('http://localhost:8080/online_answer/admin/upload',
+            fd
+          ).then((response) => {
+            console.log("我是beforeAvatarUpload，并且userId:"+this.aData.userId)
+            console.log("我是beforeAvatarUpload，并且文件:"+file)
+            console.log("我是beforeAvatarUpload:"+response)
+            this.$store.state.admin.image=this.admin.image
+            console.log("state.admin",this.$store.state.admin)
+            history.go(0)
+          })
           const isJPG = file.type === 'image/jpeg';
           const isLt2M = file.size / 1024 / 1024 < 2;
-
           if (!isJPG) {
             this.$message.error('上传头像图片只能是 JPG 格式!');
           }
           if (!isLt2M) {
             this.$message.error('上传头像图片大小不能超过 2MB!');
           }
+          console.log("我是beforeAvatarUpload")
           return isJPG && isLt2M;
+          // return false;
         }
       }
     }
