@@ -93,6 +93,7 @@
             this.admin.name = this.aData.name
             this.admin.mail = this.aData.mail
             this.admin.pwd = this.aData.pwd
+            this.admin.image=this.aData.image
             this.$store.state.admin.image=this.admin.image
             this.imageUrl = "http://localhost:8080"+this.aData.image
             console.log("aname",this.aData.name)
@@ -119,6 +120,8 @@
               ).then(response => {
                 console.log(response.data.resultCode)
                 console.log("修改成功")
+                alert(response.data.resultDesc)
+                history.go(0)
               }).catch(error => {
                 console.log(error)
               })
@@ -145,8 +148,8 @@
             console.log("我是beforeAvatarUpload，并且userId:"+this.aData.adminId)
             console.log("我是beforeAvatarUpload，并且文件:"+file)
             console.log("我是beforeAvatarUpload:"+response)
-            this.$store.state.admin.image=this.admin.image
             console.log("this.admin.image:",this.admin.image)
+            this.$store.state.admin.image=this.admin.image
             console.log("state.admin",this.$store.state.admin)
             history.go(0)
           })

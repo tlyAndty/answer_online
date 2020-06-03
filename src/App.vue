@@ -31,22 +31,13 @@
         /
         <a id="logout_link1" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
-        <div v-else-if="admin" style="position: absolute;right: 15px;top: 17px ">
-          <!--el-button class="new_question" onclick="window.location.href = '/newquestionPage'" style="display:inline-block;
-                                               width: 100px;
-                                               height: 36px;
-                                               font-size: 14px;
-                                               background-color: lightcoral;
-                                               border-radius:5px;
-                                               text-align: center;
-                                               color: white;
-                                               border-color: white;
-                                               margin-right:15px">
-            我要提问
-          </el-button-->
-          <router-link style="color:white;text-decoration:none;margin-right:15px" :to="{name:'newquestionPage',query:{user_id:admin.adminId}}">我要提问</router-link>
+        <div v-else-if="admin" style="position: absolute;right: 15px;top: -15px ">
+          <router-link style="color:white;text-decoration:none;margin-right:20px" :to="{name:'newquestionPage',query:{user_id:admin.adminId}}">我要提问</router-link>
           <!--span style="margin-right: 5px">{{admin.name}}</span-->
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">{{admin.name}}</router-link>
+          <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position: relative;top: 20px" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" height="50px" width="50px">
+          </router-link>
           <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
             消息
@@ -136,7 +127,15 @@
         return this.$store.state.admin
       },
       imageUrl(){
-        return "http://localhost:8080"+this.$store.state.user.image
+        if(this.user){
+          console.log("现在是用户登录状态")
+          return "http://localhost:8080"+this.$store.state.user.image
+        }
+        else if(this.admin){
+          console.log("现在是管理员登录状态")
+          console.log("管理员头像:",this.$store.state.admin)
+          return "http://localhost:8080"+this.$store.state.admin.image
+        }
       }
     },
   }
