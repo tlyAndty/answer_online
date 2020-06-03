@@ -444,32 +444,36 @@
             console.log("已登录")
             console.log(this.$store.state.user.userId)
             console.log(this.quesId)
-            this.answerForm.a_content = this.answerForm.a_contenttest.replace(/<[^>]+>/g, "")
-            console.log(this.answerForm.a_content)
-            this.$refs.answerForm.validate((valid) => {
-              if (valid) {
-                this.$axios.post(
-                  'http://localhost:8080/online_answer/user/answer',
-                  qs.stringify({
-                    userId: this.$store.state.user.userId,
-                    quesId: this.id,
-                    ansContent: this.answerForm.a_content,
+            if(this.quesAnsState==0){
+              this.answerForm.a_content = this.answerForm.a_contenttest.replace(/<[^>]+>/g, "")
+              console.log(this.answerForm.a_content)
+              this.$refs.answerForm.validate((valid) => {
+                if (valid) {
+                  this.$axios.post(
+                    'http://localhost:8080/online_answer/user/answer',
+                    qs.stringify({
+                      userId: this.$store.state.user.userId,
+                      quesId: this.id,
+                      ansContent: this.answerForm.a_content,
+                    })
+                  ).then(response => {
+                    console.log(response)
+                    console.log("回答成功")
+                    alert(response.data.resultDesc)
+                    history.go(0)
+                    /*this.$router.push({
+                      path: '/userGuide', query:{user_id: this.data.userId}
+                    });*/
+                  }).catch(error => {
+                    console.log(error)
                   })
-                ).then(response => {
-                  console.log(response)
-                  console.log("回答成功")
-                  alert(response.data.resultDesc)
-                  history.go(0)
-                  /*this.$router.push({
-                    path: '/userGuide', query:{user_id: this.data.userId}
-                  });*/
-                }).catch(error => {
-                  console.log(error)
-                })
-              } else {
-                return false
-              }
-            })
+                } else {
+                  return false
+                }
+              })
+            }else {
+              alert("此问题已不能回答")
+            }
           } else {
             this.$router.push('/userlogin')
           }
