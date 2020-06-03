@@ -79,9 +79,9 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
-          <el-button type="text" @click="blockQues(scope.row.quesId)">屏蔽</el-button>
-          <el-button type="text" @click="unblockQues(scope.row.quesId)">取消屏蔽</el-button>
+          <el-button type="text" @click="checkDetail(scope.row.question.quesId)">查看详情</el-button>
+          <el-button type="text" @click="blockQues(scope.row.question.quesId)">屏蔽</el-button>
+          <el-button type="text" @click="unblockQues(scope.row.question.quesId)">取消屏蔽</el-button>
         </template>
       </el-table-column>
 
