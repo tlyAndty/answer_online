@@ -115,7 +115,11 @@
                             <i v-else-if="item.likeOrNots[0].likeState==2" class="el-icon-thirdcai"></i>
                           </a>
                           {{item.answer.badCount}}
+
                           <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
+                          <a v-if="quesUserId==userId && quesAnsState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="chooseBestAnswer(item.answer.ansId,id)">
+                            设为最佳答案
+                          </a>
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
@@ -153,6 +157,7 @@
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
                                 <div style="float: left">发布于：{{item1.comment.comTime}}</div>
+                                <div v-if="item.answer.bestAnswer==1" style="float: left">本问题的最佳答案</div>
                                 <div v-if="admin && item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
                                   屏蔽
                                 </div>
@@ -582,7 +587,7 @@
           ).then(response => {
             console.log(response)
             console.log("修改问题回答状态成功")
-            alert(response.data.resultDesc)
+            alert("修改问题回答状态成功")
             history.go(0)
           }).catch(error => {
             console.log(error)
@@ -740,6 +745,36 @@
             alert("屏蔽回答成功")
             console.log("屏蔽回答成功")
             history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        chooseBestAnswer(ansid,quesid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/user/modifyBestAns',
+            qs.stringify({
+              ansId: ansid,
+            })
+          ).then(response => {
+            console.log(response.data)
+            console.log("Adata:",this.answerlist)
+            //alert("设置最佳回答成功")
+            console.log("设置最佳回答成功")
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/modifyQuesAnsState',
+              qs.stringify({
+                quesId: quesid,
+                quesAnsState: '1',
+              })
+            ).then(response => {
+              console.log(response)
+              console.log("修改问题回答状态成功")
+              //alert("修改问题回答状态成功")
+              //history.go(0)
+            }).catch(error => {
+              console.log(error)
+            })
+            //history.go(0)
           }).catch(error => {
             console.log(error)
           })
