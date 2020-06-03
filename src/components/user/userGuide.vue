@@ -3,7 +3,7 @@
     <el-aside width="200px" >
       <el-menu :unique-opened="true" :default-active="$route.path" @select="handleSelect">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>问题管理</template>
+          <template slot="title"><i class="el-icon-postcard"></i>问题管理</template>
           <el-menu-item index="questionListOfUser">所有问题列表</el-menu-item>
           <el-menu-item index="blockedQuestionListOfUser">被屏蔽问题列表</el-menu-item>
         </el-submenu>

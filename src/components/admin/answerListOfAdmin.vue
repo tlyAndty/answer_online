@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">所有问题列表</span>
+    <span style="font-size: 30px">所有回答列表</span>
     <div>
       <el-row>
         <el-col :span="4">
@@ -14,78 +14,78 @@
     </div>
     <div style="margin: 20px 0">
       <el-table
-      class="questionList"
-      :data="qListData"
-      style="width: 100%"
-      :default-sort = "{prop: 'quesTime', order: 'descending'}">
+        class="questionList"
+        :data="qListData"
+        style="width: 100%"
+        :default-sort = "{prop: 'quesTime', order: 'descending'}">
 
-      <el-table-column
-        label="问题id"
-        header-align="left"
-        align="left"
-        :show-overflow-tooltip="true"
-      >
-        <template scope="scope">
-          <span>{{(page - 1) * limit + scope.$index + 1}}</span>
-        </template>
-      </el-table-column>
+        <el-table-column
+          label="问题id"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+        >
+          <template scope="scope">
+            <span>{{(page - 1) * limit + scope.$index + 1}}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column
-        sortable
-        prop="question.quesTitle"
-        label="问题标题"
-        header-align="left"
-        align="left"
-        :show-overflow-tooltip="true"
-      >
-      </el-table-column>
+        <el-table-column
+          sortable
+          prop="question.quesTitle"
+          label="问题标题"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+        >
+        </el-table-column>
 
-      <el-table-column
-        sortable
-        prop="question.quesTime"
-        label="发布的最新时间"
-        header-align="left"
-        align="left"
-        :show-overflow-tooltip="true">
-        <template slot-scope="qListData">
-          {{ qListData.row.question.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
-        </template>
-      </el-table-column>
+        <el-table-column
+          sortable
+          prop="question.quesTime"
+          label="发布的最新时间"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true">
+          <template slot-scope="qListData">
+            {{ qListData.row.question.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          </template>
+        </el-table-column>
 
-      <el-table-column
-        sortable
-        prop="question.quesAnsState"
-        label="问题解决状态"
-        header-align="left"
-        align="left"
-        :show-overflow-tooltip="true"
-        :formatter="formatAnsState"
-      >
-      </el-table-column>
+        <el-table-column
+          sortable
+          prop="question.quesAnsState"
+          label="问题解决状态"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+          :formatter="formatAnsState"
+        >
+        </el-table-column>
 
-      <el-table-column
-        sortable
-        prop="question.quesState"
-        label="问题状态"
-        header-align="left"
-        align="left"
-        :show-overflow-tooltip="true"
-        :formatter="formatState"
-      >
-      </el-table-column>
+        <el-table-column
+          sortable
+          prop="question.quesState"
+          label="问题状态"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+          :formatter="formatState"
+        >
+        </el-table-column>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        min-width="100">
-        <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
-          <el-button type="text" @click="blockQues(scope.row.quesId)">屏蔽</el-button>
-          <el-button type="text" @click="unblockQues(scope.row.quesId)">取消屏蔽</el-button>
-        </template>
-      </el-table-column>
+        <el-table-column
+          label="操作"
+          align="center"
+          min-width="100">
+          <template slot-scope="scope">
+            <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
+            <el-button type="text" @click="blockQues(scope.row.quesId)">屏蔽</el-button>
+            <el-button type="text" @click="unblockQues(scope.row.quesId)">取消屏蔽</el-button>
+          </template>
+        </el-table-column>
 
-    </el-table>
+      </el-table>
     </div>
     <div>
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
@@ -99,7 +99,7 @@
 <script>
   import qs from 'qs';
   export default {
-    name: "questionListOfAdmin",
+    name: "answerListOfAdmin",
     data() {
       return {
         qListData:[],

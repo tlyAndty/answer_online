@@ -27,6 +27,14 @@ import userList from "../components/admin/userList";
 import blacklistedUserList from "../components/admin/blacklistedUserList";
 import registrationAudit from "../components/admin/registrationAudit";
 import personalInformationOfAdmin from "../components/admin/personalInformationOfAdmin";
+import answerListOfAdmin from "../components/admin/answerListOfAdmin";
+import blockedAnswerListOfAdmin from "../components/admin/blockedAnswerListOfAdmin";
+import commentListOfAdmin from "../components/admin/commentListOfAdmin";
+import blockedCommentListOfAdmin from "../components/admin/blockedCommentListOfAdmin";
+import reportUser from "../components/admin/reportUser";
+import reportQuestion from "../components/admin/reportQuestion";
+import reportAnswer from "../components/admin/reportAnswer";
+import reportComment from "../components/admin/reportComment";
 
 Vue.use(Router)
 export default new Router({
@@ -261,6 +269,70 @@ export default new Router({
           path:'/registrationAudit',
           name:'registrationAudit',
           component:registrationAudit,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/answerListOfAdmin',
+          name:'answerListOfAdmin',
+          component:answerListOfAdmin,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/blockedAnswerListOfAdmin',
+          name:'blockedAnswerListOfAdmin',
+          component:blockedAnswerListOfAdmin,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/commentListOfAdmin',
+          name:'commentListOfAdmin',
+          component:commentListOfAdmin,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/blockedCommentListOfAdmin',
+          name:'blockedCommentListOfAdmin',
+          component:blockedCommentListOfAdmin,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportUser',
+          name:'reportUser',
+          component:reportUser,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportQuestion',
+          name:'reportQuestion',
+          component:reportQuestion,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportAnswer',
+          name:'reportAnswer',
+          component:reportAnswer,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportComment',
+          name:'reportComment',
+          component:reportComment,
           meta:{
             keepAlive:true
           },
