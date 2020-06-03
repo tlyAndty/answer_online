@@ -93,7 +93,12 @@
             this.admin.name = this.aData.name
             this.admin.mail = this.aData.mail
             this.admin.pwd = this.aData.pwd
-            console.log("aname:",this.aData.name)
+            this.$store.state.admin.image=this.admin.image
+            this.imageUrl = "http://localhost:8080"+this.aData.image
+            console.log("aname",this.aData.name)
+            console.log("在数据库中的image：",this.aData.image)
+            console.log("该data中的imageUrl：",this.imageUrl)
+            //console.log("aname:",this.aData.name)
           }).catch((error) => {
             console.log(error);
           });
@@ -133,14 +138,15 @@
         beforeAvatarUpload(file,id) {
           let fd = new FormData()
           fd.append('file',file)
-          fd.append('userId',this.aData.userId)
+          fd.append('adminId',this.aData.adminId)
           this.$axios.post('http://localhost:8080/online_answer/admin/upload',
             fd
           ).then((response) => {
-            console.log("我是beforeAvatarUpload，并且userId:"+this.aData.userId)
+            console.log("我是beforeAvatarUpload，并且userId:"+this.aData.adminId)
             console.log("我是beforeAvatarUpload，并且文件:"+file)
             console.log("我是beforeAvatarUpload:"+response)
             this.$store.state.admin.image=this.admin.image
+            console.log("this.admin.image:",this.admin.image)
             console.log("state.admin",this.$store.state.admin)
             history.go(0)
           })
@@ -163,5 +169,23 @@
 <style scoped>
   .top{
     text-align:center;
+  }
+  .avatar-uploader{
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>

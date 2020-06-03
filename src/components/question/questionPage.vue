@@ -142,6 +142,9 @@
                                 <div v-if="admin && item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
                                   屏蔽
                                 </div>
+                                <div class="del_comment" style="color: #333333;float: left;margin-left: 20px" @click="">
+                                  回复
+                                </div>
                                 <div v-if="item1.comment.userId ==userId" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
                                   删除
                                 </div>
