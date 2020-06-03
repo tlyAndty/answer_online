@@ -96,10 +96,13 @@
                             [已被屏蔽]
                           </div>
                         </div>
-                        <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 20px;padding: 0 0 2px">
-                          发布于：{{item.answer.ansTime}}
+                        <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 20px;padding: 0 0 2px;height: 20px">
+                          <div style="float: left">发布于：{{item.answer.ansTime}}</div>
+                          <div v-if="item.answer.bestAnswer==1" style="color:lightcoral;float: left;margin-left: 20px">
+                            [最佳答案]
+                          </div>
                         </div>
-                        <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 10px 20px 10px 0;height: 30px">
+                        <div class="a_share_bar_con" style="color: #999;width:850px;font-size: 12px;background: none;margin: 5px 20px 0px 0px;height: 30px">
                           <a class="comment" style="color: #999;" @click="showcomment(index)">
                             评论 {{item.answer.ansComNum}}
                           </a>
@@ -115,8 +118,6 @@
                             <i v-else-if="item.likeOrNots[0].likeState==2" class="el-icon-thirdcai"></i>
                           </a>
                           {{item.answer.badCount}}
-
-                          <!--span>flag:{{item.answer.ansId}}:{{flag}}</span-->
                           <a v-if="quesUserId==userId && quesAnsState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="chooseBestAnswer(item.answer.ansId,id)">
                             设为最佳答案
                           </a>
@@ -774,7 +775,7 @@
             }).catch(error => {
               console.log(error)
             })
-            //history.go(0)
+            history.go(0)
           }).catch(error => {
             console.log(error)
           })
