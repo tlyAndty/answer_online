@@ -20,6 +20,15 @@
                     <span>[已被屏蔽]</span>
                   </div>
                 </div>
+                <div class="state" v-if="this.quesAnsState==0" style="float: left;margin-left: 20px;">
+                  问题未解决
+                </div>
+                <div class="state" v-else-if="this.quesAnsState==1" style="float: left;margin-left: 20px;">
+                  问题已解决
+                </div>
+                <div class="state" v-else-if="this.quesAnsState==2" style="float: left;margin-left: 20px;">
+                  问题已关闭
+                </div>
               </div>
               <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
                 编辑于：{{this.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}
@@ -42,6 +51,11 @@
                   <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(this.quesId)">
                     删除
                   </a-->
+                </div>
+                <div v-if="this.quesUserId==userId && this.quesAnsState==0" class="choose_quesAnsState" style="color: #333333;float: left;margin-left: 20px">
+                  <a class="change_quesAnsState" style="float:left;color: #999;text-decoration:none" data-bind-login="true" @click="changeQuesAnsState(id)" href="javascript:;" rel="nofollow" title="收藏">
+                    将问题设为已解决
+                  </a>
                 </div>
                 <!--span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <i class="el-icon-thumb"></i>
@@ -278,6 +292,7 @@
           quesState: '',
           quesReward: '',
           quesAnsNum: '',
+          quesAnsState:'',
           userId: '',
           com_flag: {
             flag: [],
@@ -365,6 +380,7 @@
             this.quesState = response.data.data.question.quesState
             this.quesReward = response.data.data.question.quesReward
             this.quesAnsNum = response.data.data.question.quesAnsNum
+            this.quesAnsState = response.data.data.question.quesAnsState
             this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
               qs.stringify({
                 userId: this.quesUserId
@@ -551,6 +567,22 @@
           } else {
             this.$router.push('/userlogin')
           }
+        },
+        changeQuesAnsState(quesid){
+          this.$axios.post(
+            'http://localhost:8080/online_answer/user/modifyQuesAnsState',
+            qs.stringify({
+              quesId: quesid,
+              quesAnsState: '1',
+            })
+          ).then(response => {
+            console.log(response)
+            console.log("修改问题回答状态成功")
+            alert(response.data.resultDesc)
+            history.go(0)
+          }).catch(error => {
+            console.log(error)
+          })
         },
         addBad(item) {
           if (this.$store.state.user) {
