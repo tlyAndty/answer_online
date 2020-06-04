@@ -21,6 +21,12 @@ import blockedCommentList from "../components/user/blockedCommentList";
 import reportedQuestionList from "../components/user/reportedQuestionList";
 import reportedAnswerList from "../components/user/reportedAnswerList";
 import reportedCommentList from "../components/user/reportedCommentList";
+import reportQuestionList from "../components/user/reportQuestionList";
+import reportAnswerList from "../components/user/reportAnswerList";
+import reportCommentList from "../components/user/reportCommentList";
+import processedReportQuestionList from "../components/user/processedReportQuestionList";
+import processedReportAnswerList from "../components/user/processedReportAnswerList";
+import processedReportCommentList from "../components/user/processedReportCommentList";
 import personalInformationOfUser from "../components/user/personalInformationOfUser";
 import collectionList from "../components/user/collectionList";
 import adminGuide from "../components/admin/adminGuide";
@@ -230,6 +236,54 @@ export default new Router({
           path:'/reportedCommentList',
           name:'reportedCommentList',
           component:reportedCommentList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportQuestionList',
+          name:'reportQuestionList',
+          component:reportQuestionList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportAnswerList',
+          name:'reportAnswerList',
+          component:reportAnswerList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportCommentList',
+          name:'reportCommentList',
+          component:reportCommentList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/processedReportQuestionList',
+          name:'processedReportQuestionList',
+          component:processedReportQuestionList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/processedReportAnswerList',
+          name:'processedReportAnswerList',
+          component:processedReportAnswerList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/processedReportCommentList',
+          name:'processedReportCommentList',
+          component:processedReportCommentList,
           meta:{
             keepAlive:true
           },

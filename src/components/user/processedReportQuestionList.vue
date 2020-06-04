@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">被举报回答列表</span>
+    <span style="font-size: 30px">举报的问题列表</span>
     <div>
       <el-row>
         <el-col :span="4">
@@ -116,7 +116,7 @@
   import qs from 'qs';
 
   export default {
-    name: "reportedAnswerList",
+    name: "processedReportQuestionList",
     //inject:['reload'],
     data() {
       return {
@@ -148,14 +148,14 @@
         this.getuListData()
       },
       getuListData: function () {
-        this.$axios.post('http://localhost:8080/online_answer/user/searchReportedsByTypeAndState',
+        this.$axios.post('http://localhost:8080/online_answer/user/searchReportsByTypeAndState',
           qs.stringify({
-            reportedUserId: this.id,
-            reportType: '2',
+            reportUserId: this.id,
+            reportType: '1',
             reportState: '3',
           })
         ).then((response) => {
-          console.log("response.data.data",response.data.data);
+          console.log(response.data.data);
           this.uListData = response.data.data;
           for(let item of this.uListData) {
             console.log("item:",item.reportState)

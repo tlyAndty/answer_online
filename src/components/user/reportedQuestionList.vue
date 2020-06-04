@@ -179,7 +179,7 @@
         this.uListData=uListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
         )
-        this.total = uListData.length
+        this.total = puListData.length
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);

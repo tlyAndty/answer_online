@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">被举报回答列表</span>
+    <span style="font-size: 30px">举报的评论列表</span>
     <div>
       <el-row>
         <el-col :span="4">
@@ -15,7 +15,7 @@
     <div style="margin: 20px 0">
       <el-table
         class="reportUserList"
-        :data="puListData"
+        :data="uListData"
         style="width: 100%"
         :default-sort = "{prop: 'reportTime', order: 'descending'}">
 
@@ -70,24 +70,13 @@
 
         <el-table-column
           sortable
-          prop="reportState"
-          label="处理结果"
-          header-align="left"
-          align="left"
-          :show-overflow-tooltip="true"
-          :formatter="formatReportState"
-        >
-        </el-table-column>
-
-        <el-table-column
-          sortable
           prop="reportTime"
           label="举报时间"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
-          <template slot-scope="puListData">
-            {{ puListData.row.reportTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          <template slot-scope="uListData">
+            {{ uListData.row.reportTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
@@ -116,12 +105,11 @@
   import qs from 'qs';
 
   export default {
-    name: "reportedAnswerList",
+    name: "reportCommentList",
     //inject:['reload'],
     data() {
       return {
         uListData:[],
-        puListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -148,26 +136,17 @@
         this.getuListData()
       },
       getuListData: function () {
-        this.$axios.post('http://localhost:8080/online_answer/user/searchReportedsByTypeAndState',
+        this.$axios.post('http://localhost:8080/online_answer/user/searchReportsByTypeAndState',
           qs.stringify({
-            reportedUserId: this.id,
-            reportType: '2',
-            reportState: '3',
+            reportUserId: this.id,
+            reportType: '3',
+            reportState: '0'
           })
         ).then((response) => {
-          console.log("response.data.data",response.data.data);
+          console.log(response.data.data);
           this.uListData = response.data.data;
-          for(let item of this.uListData) {
-            console.log("item:",item.reportState)
-            if(item.reportState!=0){
-              console.log(item.reportContent)
-              this.puListData.push(item)
-              console.log(item)
-            }
-          }
-          this.data = this.puListData
+          this.data = this.uListData
           this.getlist();
-          console.log("得到了被举报的问题",this.puListData)
         }).catch((error) => {
           console.log(error);
         });
@@ -179,7 +158,7 @@
         this.uListData=uListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
         )
-        this.total = puListData.length
+        this.total = uListData.length
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -225,12 +204,22 @@
         //this.reload()
         location.reload()
       },
-      formatReportState(row, column) {
-        if (row.reportState === 1) {
-          return '同意'
-        } else if (row.reportState === 2) {
-          return '拒绝'
-        }
+      formatUserId(row, column) {
+        var name;
+        console.log("userId:",row.reportUserId)
+        this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
+          qs.stringify({
+            userId: row.reportUserId,
+          })
+        ).then((response) => {
+          console.log(response.data.data.name)
+          console.log("修改成功")
+          name=response.data.data.name
+          console.log("name",name)
+        }).catch((error) => {
+          console.log(error);
+        });
+        return name
       }
     },
   }
