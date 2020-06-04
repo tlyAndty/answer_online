@@ -33,18 +33,15 @@
           <template slot="title"><i class="el-icon-message"></i>举报管理</template>
           <el-submenu index="4-1">
             <template slot="title">发出的举报</template>
-              <el-submenu index="4-1-1">
-                <template slot="title">未被处理的举报</template>
-                  <el-menu-item index="reportQuestionList">被举报的问题列表</el-menu-item>
-                  <el-menu-item index="reportAnswerList">被举报的回答列表</el-menu-item>
-                  <el-menu-item index="reportCommentList">被举报的评论列表</el-menu-item>
-              </el-submenu>
-              <el-submenu index="4-1-2">
+              <el-menu-item index="reportQuestionList">被举报的问题列表</el-menu-item>
+              <el-menu-item index="reportAnswerList">被举报的回答列表</el-menu-item>
+              <el-menu-item index="reportCommentList">被举报的评论列表</el-menu-item>
+              <!--el-submenu index="4-1-2">
                 <template slot="title">已被处理的举报</template>
                   <el-menu-item index="processedReportQuestionList">被举报的问题列表</el-menu-item>
                   <el-menu-item index="processedReportAnswerList">被举报的回答列表</el-menu-item>
                   <el-menu-item index="processedReportCommentList">被举报的评论列表</el-menu-item>
-              </el-submenu>
+              </el-submenu-->
           </el-submenu>
           <el-submenu index="4-2">
             <template slot="title">收到的举报</template>

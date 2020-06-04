@@ -52,8 +52,8 @@
                     删除
                   </a-->
                 </div>
-                <div v-if="this.quesUserId==userId && this.quesAnsState==0" class="choose_quesAnsState" style="color: #333333;float: left;margin-left: 20px">
-                  <a class="change_quesAnsState" style="float:left;color: lightcoral;text-decoration:none" data-bind-login="true" @click="changeQuesAnsState(id)" href="javascript:;" rel="nofollow" title="收藏">
+                <div v-if="this.quesUserId==userId && this.quesAnsState==0" class="choose_quesAnsState" style="float: left;margin-left: 20px">
+                  <a class="change_quesAnsState" style="float:left;color: #999;text-decoration:none" data-bind-login="true" @click="changeQuesAnsState(id)" href="javascript:;" rel="nofollow" title="收藏">
                     将问题设为已解决
                   </a>
                 </div>
@@ -123,7 +123,7 @@
                             <i v-else-if="item.likeOrNots[0].likeState==2" class="el-icon-thirdcai"></i>
                           </a>
                           {{item.answer.badCount}}
-                          <a v-if="quesUserId==userId && quesAnsState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="chooseBestAnswer(item.answer.ansId,id)">
+                          <a v-if="quesUserId==userId && quesAnsState==0" class="blo_question" style="margin-left: 20px" @click="chooseBestAnswer(item.answer.ansId,id)">
                             设为最佳答案
                           </a>
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
