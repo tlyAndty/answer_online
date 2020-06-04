@@ -57,6 +57,11 @@
                     将问题设为已解决
                   </a>
                 </div>
+                <div class="report" style="float: left;margin-left: 20px;">
+                  <a class="reportQues" @click="reportQues(quesUserId)">
+                    举报此问题
+                  </a>
+                </div>
                 <!--span class="interval" style="margin: 10px;color: #cdcdcd;">|</span>
                 <i class="el-icon-thumb"></i>
                 <em>0</em-->
@@ -124,7 +129,10 @@
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
-                          <a v-if="item.answer.userId ==userId" class="del_answer" style="color: lightcoral;margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
+                          <a class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId)">
+                            举报此回答
+                          </a>
+                          <a v-if="item.answer.userId ==userId" class="del_answer" style="margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
                             删除
                           </a>
                         </div>
@@ -161,14 +169,19 @@
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
                                 <div style="float: left">发布于：{{item1.comment.comTime}}</div>
+                                <div class="report" style="float: left;margin-left: 20px;">
+                                  <a class="reportCom" @click="reportCom(item1.comment.userId)">
+                                    举报此评论
+                                  </a>
+                                </div>
                                 <div v-if="item.answer.bestAnswer==1" style="float: left">本问题的最佳答案</div>
                                 <div v-if="admin && item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
                                   屏蔽
                                 </div>
-                                <div class="del_comment" style="color: #333333;float: left;margin-left: 20px" @click="">
+                                <div class="del_comment" style="float: left;margin-left: 20px" @click="">
                                   回复
                                 </div>
-                                <div v-if="item1.comment.userId ==userId" class="del_comment" style="color: lightcoral;float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
+                                <div v-if="item1.comment.userId ==userId" class="del_comment" style="float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
                                   删除
                                 </div>
                               </div>
@@ -836,6 +849,30 @@
           }).catch(error => {
             console.log(error)
           })
+        },
+        reportQues(reportedUserid){
+          if (this.$store.state.user){
+            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'1'}})
+          } else{
+            this.$router.push('/userlogin')
+          }
+          //alert("举报了")
+        },
+        reportAns(reportedUserid){
+          if (this.$store.state.user){
+            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'2'}})
+          } else{
+            this.$router.push('/userlogin')
+          }
+          //alert("举报了")
+        },
+        reportCom(reportedUserid){
+          if (this.$store.state.user){
+            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'3'}})
+          } else{
+            this.$router.push('/userlogin')
+          }
+          //alert("举报了")
         },
       },
     }

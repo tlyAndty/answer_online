@@ -10,7 +10,7 @@
                 <el-input type="textarea" :rows="8" v-model="reportForm.r_content" placeholder="请输入投诉理由"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button style="float: right;color: white;margin-bottom: 100px" @click.native="onSubmit" >确定提交</el-button>
+                <el-button style="float: right;margin-bottom: 100px" @click.native="onSubmit" >确定提交</el-button>
               </el-form-item>
             </el-form>
           </div>
