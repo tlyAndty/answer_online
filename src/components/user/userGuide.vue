@@ -1,6 +1,6 @@
 <template>
   <el-container style="height: 565px; border: 1px solid #eee;">
-    <el-aside width="200px" >
+    <el-aside width="240px" >
       <el-menu :unique-opened="true" :default-active="$route.path" @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-postcard"></i>问题管理</template>
@@ -30,6 +30,30 @@
             </el-submenu>
         </el-submenu>
         <el-submenu index="4">
+          <template slot="title"><i class="el-icon-message"></i>举报管理</template>
+          <el-submenu index="4-1">
+            <template slot="title">发出的举报</template>
+              <el-submenu index="4-1-1">
+                <template slot="title">未被处理的举报</template>
+                  <el-menu-item index="commentList">被举报的问题列表</el-menu-item>
+                  <el-menu-item index="blockedCommentList">被举报的回答列表</el-menu-item>
+                  <el-menu-item index="commentList">被举报的评论列表</el-menu-item>
+              </el-submenu>
+              <el-submenu index="4-1-2">
+                <template slot="title">已被处理的举报</template>
+                <el-menu-item index="commentList">被举报的问题列表</el-menu-item>
+                <el-menu-item index="blockedCommentList">被举报的回答列表</el-menu-item>
+                <el-menu-item index="commentList">被举报的评论列表</el-menu-item>
+              </el-submenu>
+          </el-submenu>
+          <el-submenu index="4-2">
+            <template slot="title">收到的举报</template>
+              <el-menu-item index="commentList">被举报的问题列表</el-menu-item>
+              <el-menu-item index="blockedCommentList">被举报的回答列表</el-menu-item>
+              <el-menu-item index="commentList">被举报的评论列表</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+        <el-submenu index="5">
           <template slot="title"><i class="el-icon-star-on"></i>收藏夹</template>
             <el-menu-item index="collectionList">收藏列表</el-menu-item>
         </el-submenu>
