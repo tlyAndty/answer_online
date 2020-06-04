@@ -67,7 +67,7 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.comId)">查看详情</el-button>
+          <!--el-button type="text" @click="checkDetail(scope.row.comId)">查看详情</el-button-->
           <!--el-button type="text" @click="modifyCom(scope.row.comId)">修改</el-button-->
           <el-button type="text" @click="deleteCom(scope.row.comId)">删除</el-button>
         </template>
