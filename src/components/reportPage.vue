@@ -34,7 +34,7 @@
           },
           rules: {
             r_content: [
-              {required: true, message: '投诉理由不能为空', trigger: 'blur'}
+              {required: true, message: '举报理由不能为空', trigger: 'blur'}
             ],
           }
         }

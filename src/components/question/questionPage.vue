@@ -148,9 +148,12 @@
                           <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
                             <li v-if="item1.comment.userId ==userId || item1.comment.comState==0 || admin" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
                               <div>{{item1.comment.comContent}}</div>
-                              <div style="height:12px;font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;padding-top: 5px">
+                              <div style="height:12px;font-size: 12px;color: #999;margin-bottom: 10px;line-height: 12px;padding-top: 5px">
                                 <div style="float: left">
                                   {{item1.com_user_name}}
+                                </div>
+                                <div v-if="item1.comment.ansComId!=0" style="float: left;margin-left: 10px">
+                                  回复@{{item1.reply_user_name}}
                                 </div>
                                 <div v-if="item1.comment.comState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
                                   [已被屏蔽]
@@ -413,7 +416,31 @@
             console.log("quesId:" + this.id)
             console.log("adata:", response.data.data);
             this.answerlist = response.data.data
-            //var maxid=0
+            for(var i=0;i < this.answerlist.length; i++){
+              console.log("这是第",i,"个回答")
+              for(var j=0;j < this.answerlist[i].comments.length; j++)
+              {
+                console.log("的第",j,"个评论")
+                if(this.answerlist[i].comments[j].comment.ansComId==0){
+                  console.log("无需比较")
+                  this.answerlist[i].comments[j].reply_user_name=null
+                }
+                else{
+                  for(var h=0; h <this.answerlist[i].comments.length; h++) {
+                    console.log("回复的是第",h,"个评论吗")
+                    console.log("比较",this.answerlist[i].comments[j].comment.ansComId,"和",this.answerlist[i].comments[h].comment.comId)
+                    if (this.answerlist[i].comments[j].comment.ansComId == this.answerlist[i].comments[h].comment.comId){
+                      console.log("是")
+                      this.answerlist[i].comments[j].reply_user_name=this.answerlist[i].comments[h].com_user_name
+                      console.log("赋值成功",this.answerlist[i].comments[j])
+                    }
+                    else{
+                      console.log("不是")
+                    }
+                  }
+                }
+              }
+            }
             if (this.com_flag.quesid == null) {
               console.log("com_flag为空")
               this.com_flag.quesid = this.id
@@ -495,11 +522,11 @@
                 userId: this.$store.state.user.userId,
                 ansId: ansid,
                 comContent: this.commentForm.c_content,
+                ansComId:'0'
               })
             ).then(response => {
-              console.log(response)
-              console.log("评论成功")
-              alert(response.data.resultDesc)
+              console.log("评论结果：",response.data.resultDesc)
+              alert("评论成功")
               history.go(0)
               /*this.$router.push({
                     path: '/userGuide', query:{user_id: this.data.userId}
