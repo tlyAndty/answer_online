@@ -114,7 +114,6 @@
 
 <script>
   import qs from 'qs';
-
   export default {
     name: "reportedQuestionList",
     //inject:['reload'],
