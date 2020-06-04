@@ -174,12 +174,23 @@
                                     举报此评论
                                   </a>
                                 </div>
+                                <div class="del_comment" style="float: left;margin-left: 20px" @click="dialogFormVisible = true">
+                                  回复
+                                </div>
+                                <el-dialog title="回复" :visible.sync="dialogFormVisible">
+                                  <el-form :model="replyCommentForm">
+                                    <el-form-item>
+                                      <el-input v-model="replyCommentForm.rc_content" type="textarea" :rows="6" autocomplete="off" placeholder="请输入回复内容"></el-input>
+                                    </el-form-item>
+                                  </el-form>
+                                  <div slot="footer" class="dialog-footer">
+                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                    <el-button type="primary" @click="replycommentSubmit(item.answer.ansId,item1.comment.comId)">确 定</el-button>
+                                  </div>
+                                </el-dialog>
                                 <div v-if="item.answer.bestAnswer==1" style="float: left">本问题的最佳答案</div>
                                 <div v-if="admin && item1.comment.comState==0" class="blo_question" style="float: left;color: lightcoral;margin-left: 20px" @click="blockAnswer(item1.comment.comId)">
                                   屏蔽
-                                </div>
-                                <div class="del_comment" style="float: left;margin-left: 20px" @click="">
-                                  回复
                                 </div>
                                 <div v-if="item1.comment.userId ==userId" class="del_comment" style="float: left;margin-left: 20px" @click="deleteComment(item1.comment.comId)">
                                   删除
@@ -289,6 +300,9 @@
           commentForm: {
             c_content: '',
           },
+          replyCommentForm: {
+            rc_content:'',
+          },
           editorOption: {
             placeholder: "请输入",
             theme: "snow", // or 'bubble'
@@ -324,6 +338,7 @@
           flag: false,
           indexes: [],
           activenum: '',
+          dialogFormVisible: false,
         }
       },
       computed: {
@@ -536,6 +551,34 @@
                 ansId: ansid,
                 comContent: this.commentForm.c_content,
                 ansComId:'0'
+              })
+            ).then(response => {
+              console.log("评论结果：",response.data.resultDesc)
+              alert("评论成功")
+              history.go(0)
+              /*this.$router.push({
+                    path: '/userGuide', query:{user_id: this.data.userId}
+                  });*/
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
+            this.$router.push('/userlogin')
+          }
+        },
+        replycommentSubmit(ansid,comid){
+          if (this.$store.state.user) {
+            console.log("已登录")
+            console.log(this.$store.state.user.userId)
+            console.log("要评论的回答的id", ansid)
+            console.log(this.replyCommentForm.rc_content)
+            this.$axios.post(
+              'http://localhost:8080/online_answer/user/comment',
+              qs.stringify({
+                userId: this.$store.state.user.userId,
+                ansId: ansid,
+                comContent: this.replyCommentForm.rc_content,
+                ansComId: comid,
               })
             ).then(response => {
               console.log("评论结果：",response.data.resultDesc)
