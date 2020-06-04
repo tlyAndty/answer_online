@@ -32,8 +32,8 @@
 
         <el-table-column
           sortable
-          prop="reportUserId"
-          label="举报者用户id"
+          prop="reportTypeId"
+          label="回答id"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
@@ -42,8 +42,8 @@
 
         <el-table-column
           sortable
-          prop="reportTypeId"
-          label="举报者对象id"
+          prop="reportUserId"
+          label="举报者用户id"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
@@ -56,16 +56,6 @@
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
-        </el-table-column>
-
-        <el-table-column
-          sortable
-          prop="reportedUserId"
-          label="被举报人用户id"
-          header-align="left"
-          align="left"
-          :show-overflow-tooltip="true"
-        >
         </el-table-column>
 
         <el-table-column
