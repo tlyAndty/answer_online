@@ -31,24 +31,26 @@
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-message"></i>举报管理</template>
-          <el-submenu index="4-1">
+            <el-menu-item index="reportQuestionList">举报的信息列表</el-menu-item>
+          <!--el-submenu index="4-1">
             <template slot="title">发出的举报</template>
-              <el-menu-item index="reportQuestionList">被举报的问题列表</el-menu-item>
+              <el-menu-item index="reportQuestionList">被举报的信息列表</el-menu-item>
               <el-menu-item index="reportAnswerList">被举报的回答列表</el-menu-item>
               <el-menu-item index="reportCommentList">被举报的评论列表</el-menu-item>
-              <!--el-submenu index="4-1-2">
+              <el-submenu index="4-1-2">
                 <template slot="title">已被处理的举报</template>
                   <el-menu-item index="processedReportQuestionList">被举报的问题列表</el-menu-item>
                   <el-menu-item index="processedReportAnswerList">被举报的回答列表</el-menu-item>
                   <el-menu-item index="processedReportCommentList">被举报的评论列表</el-menu-item>
-              </el-submenu-->
-          </el-submenu>
-          <el-submenu index="4-2">
+              </el-submenu>
+          </el-submenu-->
+          <el-menu-item index="reportedQuestionList">被举报的信息列表</el-menu-item>
+          <!--el-submenu index="4-2">
             <template slot="title">收到的举报</template>
               <el-menu-item index="reportedQuestionList">被举报的问题列表</el-menu-item>
               <el-menu-item index="reportedAnswerList">被举报的回答列表</el-menu-item>
               <el-menu-item index="reportedCommentList">被举报的评论列表</el-menu-item>
-          </el-submenu>
+          </el-submenu-->
         </el-submenu>
         <el-submenu index="5">
           <template slot="title"><i class="el-icon-star-on"></i>收藏夹</template>

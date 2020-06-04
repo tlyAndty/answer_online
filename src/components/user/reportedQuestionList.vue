@@ -31,19 +31,19 @@
         </el-table-column>
 
         <el-table-column
-          sortable
-          prop="reportTypeId"
-          label="问题id"
+          prop="reportType"
+          label="被举报对象的类型"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
+          :formatter="formatReportType"
         >
-        </el-table-column>
 
+        </el-table-column>
         <el-table-column
           sortable
-          prop="reportUserId"
-          label="举报者用户id"
+          prop="reportTypeId"
+          label="被举报对象的id"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
@@ -66,6 +66,16 @@
           align="left"
           :show-overflow-tooltip="true"
           :formatter="formatReportState"
+        >
+        </el-table-column>
+
+        <el-table-column
+          sortable
+          prop="reportUserId"
+          label="举报者用户id"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
         >
         </el-table-column>
 
@@ -141,21 +151,22 @@
         this.$axios.post('http://localhost:8080/online_answer/user/searchReportedsByTypeAndState',
           qs.stringify({
             reportedUserId: this.id,
-            reportType: '1',
+            reportType: '4',
             reportState: '3',
           })
         ).then((response) => {
           console.log(response.data.data);
           this.uListData = response.data.data;
-          for(let item of this.uListData) {
+          /*for(let item of this.uListData) {
             console.log("item:",item.reportState)
             if(item.reportState!=0){
               console.log(item.reportContent)
               this.puListData.push(item)
               console.log(item)
             }
-          }
-          this.data = this.puListData
+          }*/
+          //this.data = this.puListData
+          this.puListData=this.uListData
           this.getlist();
           console.log("得到了被举报的问题",this.puListData)
         }).catch((error) => {
@@ -216,12 +227,24 @@
         location.reload()
       },
       formatReportState(row, column) {
-        if (row.reportState === 1) {
+        console.log("处理结果格式化")
+        if (row.reportState === 0) {
+          return '未处理'
+        } else if (row.reportState === 1) {
           return '同意'
         } else if (row.reportState === 2) {
           return '拒绝'
         }
-      }
+      },
+      formatReportType(row, column) {
+        if (row.reportType === 1) {
+          return '问题'
+        } else if (row.reportType === 2) {
+          return '回答'
+        } else if (row.reportType === 3) {
+          return '评论'
+        }
+      },
     },
   }
 </script>

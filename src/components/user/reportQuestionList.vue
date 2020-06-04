@@ -31,9 +31,19 @@
         </el-table-column>
 
         <el-table-column
+          prop="reportType"
+          label="被举报对象的类型"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+          :formatter="formatReportType"
+        >
+        </el-table-column>
+
+        <el-table-column
           sortable
-          prop="reportUserId"
-          label="问题id"
+          prop="reportTypeId"
+          label="被举报对象的id"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
@@ -46,6 +56,17 @@
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
+        </el-table-column>
+
+        <el-table-column
+          sortable
+          prop="reportState"
+          label="处理结果"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+          :formatter="formatReportState"
+        >
         </el-table-column>
 
         <el-table-column
@@ -129,11 +150,11 @@
         this.$axios.post('http://localhost:8080/online_answer/user/searchReportsByTypeAndState',
           qs.stringify({
             reportUserId: this.id,
-            reportType: '1',
-            reportState: '0'
+            reportType: '4',
+            reportState: '3',
           })
         ).then((response) => {
-          console.log(response.data.data);
+          console.log("response.data.data",response.data.data);
           this.uListData = response.data.data;
           this.data = this.uListData
           this.getlist();
@@ -210,7 +231,26 @@
           console.log(error);
         });
         return name
-      }
+      },
+      formatReportState(row, column) {
+        console.log("处理结果格式化")
+        if (row.reportState === 0) {
+          return '未处理'
+        } else if (row.reportState === 1) {
+          return '同意'
+        } else if (row.reportState === 2) {
+          return '拒绝'
+        }
+      },
+      formatReportType(row, column) {
+        if (row.reportType === 1) {
+          return '问题'
+        } else if (row.reportType === 2) {
+          return '回答'
+        } else if (row.reportType === 3) {
+          return '评论'
+        }
+      },
     },
   }
 </script>
