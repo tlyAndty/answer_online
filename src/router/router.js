@@ -18,6 +18,9 @@ import blockedAnswerList from "../components/user/blockedAnswerList";
 import commentList from "../components/user/commentList";
 import commentInfo from "../components/user/commentInfo";
 import blockedCommentList from "../components/user/blockedCommentList";
+import reportedQuestionList from "../components/user/reportedQuestionList";
+import reportedAnswerList from "../components/user/reportedAnswerList";
+import reportedCommentList from "../components/user/reportedCommentList";
 import personalInformationOfUser from "../components/user/personalInformationOfUser";
 import collectionList from "../components/user/collectionList";
 import adminGuide from "../components/admin/adminGuide";
@@ -203,6 +206,30 @@ export default new Router({
           path:'/blockedCommentList',
           name:'blockedCommentList',
           component:blockedCommentList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportedQuestionList',
+          name:'reportedQuestionList',
+          component:reportedQuestionList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportedAnswerList',
+          name:'reportedAnswerList',
+          component:reportedAnswerList,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/reportedCommentList',
+          name:'reportedCommentList',
+          component:reportedCommentList,
           meta:{
             keepAlive:true
           },

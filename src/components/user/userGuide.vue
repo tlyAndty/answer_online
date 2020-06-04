@@ -48,9 +48,9 @@
           </el-submenu>
           <el-submenu index="4-2">
             <template slot="title">收到的举报</template>
-              <el-menu-item index="commentList">被举报的问题列表</el-menu-item>
-              <el-menu-item index="blockedCommentList">被举报的回答列表</el-menu-item>
-              <el-menu-item index="commentList">被举报的评论列表</el-menu-item>
+              <el-menu-item index="reportedQuestionList">被举报的问题列表</el-menu-item>
+              <el-menu-item index="reportedAnswerList">被举报的回答列表</el-menu-item>
+              <el-menu-item index="reportedCommentList">被举报的评论列表</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-submenu index="5">
