@@ -15,7 +15,7 @@
     <div style="margin: 20px 0">
       <el-table
         class="reportUserList"
-        :data="uListData"
+        :data="puListData"
         style="width: 100%"
         :default-sort = "{prop: 'reportTime', order: 'descending'}">
 
@@ -70,17 +70,28 @@
 
         <el-table-column
           sortable
+          prop="reportState"
+          label="处理结果"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+          :formatter="formatReportState"
+        >
+        </el-table-column>
+
+        <el-table-column
+          sortable
           prop="reportTime"
           label="举报时间"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
-          <template slot-scope="uListData">
-            {{ uListData.row.reportTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          <template slot-scope="puListData">
+            {{ puListData.row.reportTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
-        <el-table-column
+        <!--el-table-column
           label="操作"
           align="center"
           min-width="100">
@@ -88,7 +99,7 @@
             <el-button type="text" @click="passReport(scope.row.reportId)">通过</el-button>
             <el-button type="text" @click="rejectReport(scope.row.reportId)">拒绝</el-button>
           </template>
-        </el-table-column>
+        </el-table-column-->
 
       </el-table>
     </div>
@@ -105,11 +116,12 @@
   import qs from 'qs';
 
   export default {
-    name: "reportComment",
+    name: "processedReportComment",
     //inject:['reload'],
     data() {
       return {
         uListData:[],
+        puListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -139,12 +151,19 @@
         this.$axios.post('http://localhost:8080/online_answer/admin/searchReportsByTypeAndState',
           qs.stringify({
             reportType: '3',
-            reportState: '0',
+            reportState: '3'
           })
         ).then((response) => {
           console.log(response.data.data);
           this.uListData = response.data.data;
-          this.data = this.uListData
+          for(let item of this.uListData) {
+            if(item.reportState!=0){
+              console.log(item.userId)
+              this.puListData.push(item)
+              console.log(item)
+            }
+          }
+          this.data = this.puListData
           this.getlist();
         }).catch((error) => {
           console.log(error);
@@ -203,22 +222,12 @@
         //this.reload()
         location.reload()
       },
-      formatUserId(row, column) {
-        var name;
-        console.log("userId:",row.reportUserId)
-        this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
-          qs.stringify({
-            userId: row.reportUserId,
-          })
-        ).then((response) => {
-          console.log(response.data.data.name)
-          console.log("修改成功")
-          name=response.data.data.name
-          console.log("name",name)
-        }).catch((error) => {
-          console.log(error);
-        });
-        return name
+      formatReportState(row, column) {
+        if (row.reportState === 1) {
+          return '同意'
+        } else if (row.reportState === 2) {
+          return '拒绝'
+        }
       }
     },
   }

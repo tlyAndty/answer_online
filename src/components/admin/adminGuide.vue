@@ -36,9 +36,9 @@
           <el-submenu index="5-2">
             <template slot="title">已处理的举报</template>
               <!--el-menu-item index="reportUser">被举报用户列表</el-menu-item-->
-              <el-menu-item index="reportQuestion">被举报问题列表</el-menu-item>
-              <el-menu-item index="reportAnswer">被举报回答列表</el-menu-item>
-              <el-menu-item index="reportComment">被举报评论列表</el-menu-item>
+              <el-menu-item index="processedReportQuestion">被举报问题列表</el-menu-item>
+              <el-menu-item index="processedReportAnswer">被举报回答列表</el-menu-item>
+              <el-menu-item index="processedReportComment">被举报评论列表</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-menu-item index="personalInformationOfAdmin"><i class="el-icon-setting"></i>个人信息</el-menu-item>

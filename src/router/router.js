@@ -36,6 +36,9 @@ import reportUser from "../components/admin/reportUser";
 import reportQuestion from "../components/admin/reportQuestion";
 import reportAnswer from "../components/admin/reportAnswer";
 import reportComment from "../components/admin/reportComment";
+import processedReportQuestion from "../components/admin/processedReportQuestion";
+import processedReportAnswer from "../components/admin/processedReportAnswer";
+import processedReportComment from "../components/admin/processedReportComment";
 
 Vue.use(Router)
 export default new Router({
@@ -342,6 +345,30 @@ export default new Router({
           path:'/reportComment',
           name:'reportComment',
           component:reportComment,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/processedReportQuestion',
+          name:'processedReportQuestion',
+          component:processedReportQuestion,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/processedReportAnswer',
+          name:'processedReportAnswer',
+          component:processedReportAnswer,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/processedReportComment',
+          name:'processedReportComment',
+          component:processedReportComment,
           meta:{
             keepAlive:true
           },

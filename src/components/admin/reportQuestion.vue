@@ -51,7 +51,6 @@
         </el-table-column>
 
         <el-table-column
-          sortable
           prop="reportContent"
           label="举报理由"
           header-align="left"
