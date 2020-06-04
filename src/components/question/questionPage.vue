@@ -53,7 +53,7 @@
                   </a-->
                 </div>
                 <div v-if="this.quesUserId==userId && this.quesAnsState==0" class="choose_quesAnsState" style="color: #333333;float: left;margin-left: 20px">
-                  <a class="change_quesAnsState" style="float:left;color: #999;text-decoration:none" data-bind-login="true" @click="changeQuesAnsState(id)" href="javascript:;" rel="nofollow" title="收藏">
+                  <a class="change_quesAnsState" style="float:left;color: lightcoral;text-decoration:none" data-bind-login="true" @click="changeQuesAnsState(id)" href="javascript:;" rel="nofollow" title="收藏">
                     将问题设为已解决
                   </a>
                 </div>
@@ -367,7 +367,6 @@
             this.userId = this.$store.state.user.userId
             console.log("USERID==" + this.userId)
           }
-
           //this.textareText = this.id
         },
         getqData() {

@@ -3,33 +3,43 @@
 
     <el-aside width="200px" >
       <el-menu :unique-opened="true" :default-active="$route.path"            @select="handleSelect">
-        <el-menu-item index="registrationAudit"><i class="el-icon-message"></i>注册审核</el-menu-item>
-        <el-submenu index="2">
+        <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>用户管理</template>
           <el-menu-item index="userList">所有用户列表</el-menu-item>
+          <el-menu-item index="registrationAudit">待审核用户列表</el-menu-item>
           <el-menu-item index="blacklistedUserList">被拉黑用户列表</el-menu-item>
         </el-submenu>
-        <el-submenu index="3">
+        <el-submenu index="2">
           <template slot="title"><i class="el-icon-postcard"></i>问题管理</template>
           <el-menu-item index="questionListOfAdmin">所有问题列表</el-menu-item>
           <el-menu-item index="blockedQuestionListOfAdmin">被屏蔽问题列表</el-menu-item>
         </el-submenu>
-        <el-submenu index="4">
+        <el-submenu index="3">
           <template slot="title"><i class="el-icon-chat-round"></i>回答管理</template>
           <el-menu-item index="answerListOfAdmin">所有回答列表</el-menu-item>
           <el-menu-item index="blockedAnswerListOfAdmin">被屏蔽回答列表</el-menu-item>
         </el-submenu>
-        <el-submenu index="5">
+        <el-submenu index="4">
           <template slot="title"><i class="el-icon-chat-dot-square"></i>评论管理</template>
           <el-menu-item index="commentListOfAdmin">所有评论列表</el-menu-item>
           <el-menu-item index="blockedCommentListOfAdmin">被屏蔽评论列表</el-menu-item>
         </el-submenu>
-        <el-submenu index="6">
+        <el-submenu index="5">
           <template slot="title"><i class="el-icon-message"></i>举报管理</template>
-          <el-menu-item index="reportUser">举报用户列表</el-menu-item>
-          <el-menu-item index="reportQuestion">举报问题列表</el-menu-item>
-          <el-menu-item index="reportAnswer">举报回答列表</el-menu-item>
-          <el-menu-item index="reportComment">举报评论列表</el-menu-item>
+          <el-submenu index="5-1">
+            <template slot="title">待处理的举报</template>
+              <!--el-menu-item index="reportUser">被举报用户列表</el-menu-item-->
+              <el-menu-item index="reportQuestion">被举报问题列表</el-menu-item>
+              <el-menu-item index="reportAnswer">被举报回答列表</el-menu-item>
+              <el-menu-item index="reportComment">被举报评论列表</el-menu-item>
+          </el-submenu>
+          <el-submenu index="5-2">
+            <template slot="title">已处理的举报</template>
+              <!--el-menu-item index="reportUser">被举报用户列表</el-menu-item-->
+              <el-menu-item index="reportQuestion">被举报问题列表</el-menu-item>
+              <el-menu-item index="reportAnswer">被举报回答列表</el-menu-item>
+              <el-menu-item index="reportComment">被举报评论列表</el-menu-item>
+          </el-submenu>
         </el-submenu>
         <el-menu-item index="personalInformationOfAdmin"><i class="el-icon-setting"></i>个人信息</el-menu-item>
       </el-menu>

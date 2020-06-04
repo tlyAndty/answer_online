@@ -5,6 +5,7 @@ import userlogin from '../components/userlogin'
 import adminlogin from '../components/adminlogin'
 import register from '../components/register'
 import userPage from "../components/userPage";
+import reportPage from "../components/reportPage";
 import questionPage from "../components/question/questionPage";
 import newquestionPage from "../components/question/newquestionPage";
 import userGuide from "../components/user/userGuide";
@@ -95,6 +96,14 @@ export default new Router({
           component: questionPage,
         }
       ]
+    },
+    {
+      path: '/reportPage',
+      name: 'reportPage',
+      component: reportPage,
+      meta: {
+        keepAlive:true
+      }
     },
     {
       path: '/userPage',

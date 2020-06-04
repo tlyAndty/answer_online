@@ -26,6 +26,11 @@
                 <div class="reward" style="float: left;margin-left: 20px">
                   <span>悬赏积分：{{item.question.quesReward}}</span>
                 </div>
+                <div class="report" style="float: left;margin-left: 20px;">
+                  <a class="reportQues" @click="reportQues(item.question.userId)">
+                    举报此问题
+                  </a>
+                </div>
                 <div class="state" v-if="item.question.quesState!=0" style="float: left;margin-left: 20px;color: lightcoral">
                   <span>[已被屏蔽]</span>
                 </div>
@@ -62,8 +67,8 @@
               <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
                 <router-link  style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesContent}}</router-link>
               </div>
-              <div class="colNum" style="font-size: 12px;">
-                <span>收藏数：{{item.question.quesColNum}}</span>
+              <div class="colNum" style="color: #8a8a8a;font-size: 12px;height: 15px">
+                <span style="float: left">收藏数：{{item.question.quesColNum}}</span>
                 <div class="function_bar" style="float: right;margin-right: 20px;font-size: 12px;">
                   <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
@@ -71,6 +76,11 @@
                   <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
                     删除
                   </a-->
+                </div>
+                <div class="report" style="float: left;margin-left: 20px;">
+                  <a class="reportQues" @click="reportQues(item.question.userId)">
+                    举报此问题
+                  </a>
                 </div>
               </div>
               <div class="state" v-if="item.question.quesState!=0" style="font-size: 12px;color: lightcoral">
@@ -202,7 +212,6 @@
           this.id = this.$store.state.user.userId
           console.log("传来的参数=="+this.id)
         }
-
       },
       getData() {
         //时间排序
@@ -272,6 +281,14 @@
         }).catch(error => {
           console.log(error)
         })
+      },
+      reportQues(reportedUserid){
+        if (this.$store.state.user){
+          this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'1'}})
+        } else{
+          this.$router.push('/userlogin')
+        }
+          //alert("举报了")
       },
     },
 
