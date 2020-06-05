@@ -234,34 +234,38 @@
         this.getuListData()
       },
       passReport(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+        this.$axios.post('http://localhost:8080/online_answer/admin/modifyReportState',
           qs.stringify({
-            userId: val,
-            userState: '1',
+            reportId: val,
+            reportState: '1',
           })
         ).then((response) => {
           console.log(response.data.resultCode)
+          alert("通过了这个举报")
           console.log("修改成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
         //this.reload()
-        location.reload()
+        //location.reload()
       },
       rejectReport(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+        this.$axios.post('http://localhost:8080/online_answer/admin/modifyReportState',
           qs.stringify({
-            userId: val,
-            userState: '2',
+            reportId: val,
+            reportState: '2',
           })
         ).then((response) => {
           console.log(response.data.resultCode)
+          alert("拒绝了这个举报")
           console.log("修改成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
         //this.reload()
-        location.reload()
+        //location.reload()
       },
       formatUserId(row, column) {
         var name;
