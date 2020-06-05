@@ -319,7 +319,6 @@
         else if(value[0]=='reportState'){
           console.log("根据处理结果分类")
         }
-
       },
     },
   }
