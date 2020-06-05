@@ -57,7 +57,7 @@
                     将问题设为已解决
                   </a>
                 </div>
-                <div class="report" style="float: left;margin-left: 20px;">
+                <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
                   <a class="reportQues" @click="reportQues(quesUserId)">
                     举报此问题
                   </a>
@@ -129,7 +129,7 @@
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
-                          <a class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId)">
+                          <a v-if="!admin" class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId)">
                             举报此回答
                           </a>
                           <a v-if="item.answer.userId ==userId" class="del_answer" style="margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
@@ -169,7 +169,7 @@
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
                                 <div style="float: left">发布于：{{item1.comment.comTime}}</div>
-                                <div class="report" style="float: left;margin-left: 20px;">
+                                <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
                                   <a class="reportCom" @click="reportCom(item1.comment.userId)">
                                     举报此评论
                                   </a>
@@ -185,7 +185,7 @@
                                   </el-form>
                                   <div slot="footer" class="dialog-footer">
                                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="replycommentSubmit(item.answer.ansId,item1.comment.comId)">确 定</el-button>
+                                    <el-button @click="replycommentSubmit(item.answer.ansId,item1.comment.comId)">确 定</el-button>
                                   </div>
                                 </el-dialog>
                                 <div v-if="item.answer.bestAnswer==1" style="float: left">本问题的最佳答案</div>

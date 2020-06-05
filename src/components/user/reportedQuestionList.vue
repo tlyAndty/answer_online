@@ -1,18 +1,35 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">被举报问题列表</span>
-    <div>
+    <span style="font-size: 30px">被举报的信息列表</span>
+    <div style="margin-top: 20px">
       <el-row>
+        <el-col :span="17">
+          <el-cascader
+            v-model="value"
+            style="width: 100px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+
+          </el-cascader>
+          <!--el-select style="width: 100px;float: left;margin-left: 20px" v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select-->
+        </el-col>
         <el-col :span="4">
-          <el-input v-model="search_input" placeholder="请输入用户名" ></el-input>
+          <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button @click="search">搜索</el-button>
+          <el-button style="float: left" @click="search">搜索</el-button>
         </el-col>
-        <el-col></el-col>
       </el-row>
     </div>
-    <div style="margin: 20px 0">
+    <div style="margin: 10px 0">
       <el-table
         class="reportUserList"
         :data="puListData"
