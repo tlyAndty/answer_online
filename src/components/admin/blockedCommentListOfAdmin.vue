@@ -1,18 +1,18 @@
 <template>
   <div class="top">
     <span style="font-size: 30px">被屏蔽评论列表</span>
-    <div>
+    <div style="margin-top: 20px;">
       <el-row>
         <el-col :span="4">
-          <el-input v-model="search_input" placeholder="请输入评论者" ></el-input>
+          <el-input style="width: 140px;margin-left: 20px" v-model="search_input" placeholder="请输入评论者" ></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button @click="search">搜索</el-button>
+          <el-button style="float: left;margin-left: 20px" @click="search">搜索</el-button>
         </el-col>
         <el-col></el-col>
       </el-row>
     </div>
-    <div style="margin: 20px 0">
+    <div style="margin: 10px 0">
       <el-table
         class="commentList"
         :data="bcListData"
