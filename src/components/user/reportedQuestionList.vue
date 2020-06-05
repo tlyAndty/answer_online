@@ -145,6 +145,34 @@
         total: null,
         page:1,
         id:'',
+        options: [{
+          value: 'reportType',
+          label: '被举报对象的类型',
+          children: [{
+            value: '1',
+            label: '问题'
+          }, {
+            value: '2',
+            label: '回答'
+          }, {
+            value: '3',
+            label: '评论'
+          }]
+        }, {
+          value: 'reportState',
+          label: '处理结果',
+          children: [{
+            value: '0',
+            label: '未处理'
+          }, {
+            value: '1',
+            label: '同意'
+          }, {
+            value: '2',
+            label: '拒绝'
+          }]
+        },],
+        value: ''
       }
     },
     created() {
@@ -260,6 +288,31 @@
         } else if (row.reportType === 3) {
           return '评论'
         }
+      },
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
+          /*this.$axios.post('http://localhost:8080/online_answer/user/searchReportsByTypeAndState',
+            qs.stringify({
+              reportUserId: this.id,
+              reportType: value[1],
+              reportState: '3',
+            })
+          ).then((response) => {
+            console.log("根据处理结果分类data",response.data.data);
+            this.uListData = response.data.data;
+            this.data = this.uListData
+            this.getlist();
+          }).catch((error) => {
+            console.log(error);
+          });*/
+        }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }
+
       },
     },
   }
