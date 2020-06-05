@@ -2,7 +2,7 @@
   <div class="userInfo" >
       <!--router-link to="/" class="gobackLink"><< 返回列表</router-link-->
     <div class="u_Info_cont" style="color: #666;width: 100%;height:20%;text-align: center;margin-top: 10px">
-      <div class="u_info_title" v-for="u in u_info" style="margin-right:80px;
+      <div class="u_info_title" style="margin-right:80px;
                                                            margin-left:80px;
                                                            border: 1px solid #f4f4f4;
                                                            background-color: #fbfdf8">
@@ -135,14 +135,7 @@
     name: "userPage",
     data() {
       return {
-        u_info: [
-          {
-            mail:'',
-            name:'',
-            image:'',
-            capital:''
-          },
-        ],
+        u_info: [],
         list:[
 
         ],
@@ -172,31 +165,16 @@
         console.log(this.$store.state.user)
       },
       getData(){
-        this.u_info.name=this.$store.state.user.name
-        this.u_info.image=this.$store.state.user.image
-        this.userimageUrl="http://localhost:8080"+this.$store.state.user.image
-        console.log("this.imageUrl:",this.userimageUrl)
-        this.u_info.capital=this.$store.state.user.capital
-        //提问
-        this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+        this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
           qs.stringify({
             userId: this.id,
-            quesState: '0',
           })
         ).then((response) => {
-          console.log(response.data.data)
-          this.qListData=response.data.data
-        }).catch((error) => {
-          console.log(error);
-        });
-        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswersByState',
-          qs.stringify({
-            userId: this.id,
-            ansState: '0',
-          })
-        ).then((response) => {
-          console.log(response.data.data)
-          this.aListData=response.data.data
+          console.log("response.data.data",response.data.data)
+          this.u_info=response.data.data
+          this.userimageUrl="http://localhost:8080"+this.u_info.image
+          console.log("this.imageUrl:",this.userimageUrl)
+          this.getqData()
         }).catch((error) => {
           console.log(error);
         });
@@ -211,6 +189,35 @@
         }).catch((error) => {
           console.log(error);
         });*/
+      },
+      getqData(){
+        //提问
+        this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+          qs.stringify({
+            userId: this.id,
+            quesState: '0',
+          })
+        ).then((response) => {
+          console.log(response.data.data)
+          this.qListData=response.data.data
+          this.getaData()
+        }).catch((error) => {
+          console.log(error);
+        });
+      },
+      getaData(){
+        //回答
+        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswersByState',
+          qs.stringify({
+            userId: this.id,
+            ansState: '0',
+          })
+        ).then((response) => {
+          console.log(response.data.data)
+          this.aListData=response.data.data
+        }).catch((error) => {
+          console.log(error);
+        });
       },
       handleClick(tab, event) {
         console.log(tab, event);

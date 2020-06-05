@@ -4,10 +4,10 @@ import main from '../components/main'
 import userlogin from '../components/userlogin'
 import adminlogin from '../components/adminlogin'
 import register from '../components/register'
-import userPage from "../components/userPage";
+import userPage from "../components/otherImportantPages/userPage";
 import reportPage from "../components/reportPage";
-import questionPage from "../components/question/questionPage";
-import newquestionPage from "../components/question/newquestionPage";
+import questionPage from "../components/otherImportantPages/questionPage";
+import newquestionPage from "../components/otherImportantPages/newquestionPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
 //import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";

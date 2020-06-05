@@ -41,13 +41,13 @@
                   <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
                   </a>
-                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
+                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.otherImportantPages.quesId)">
                     删除
                   </a-->
                 </div>
               </div>
             </div>
-            <!--router-link :to="'/question/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
+            <!--router-link :to="'/otherImportantPages/'+item.ques_id">{{item.ques_title}},{{item.ques_time}}</router-link-->
           </li>
         </ul>
       </div>
@@ -73,7 +73,7 @@
                   <a v-if="admin && item.question.quesState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockQuestion(item.question.quesId)">
                     屏蔽
                   </a>
-                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.question.quesId)">
+                  <!--a v-if="admin" class="del_question" style="color: lightcoral;margin-left: 20px" @click="deleteQuestion(item.otherImportantPages.quesId)">
                     删除
                   </a-->
                 </div>
