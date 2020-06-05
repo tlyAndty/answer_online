@@ -1,19 +1,30 @@
 <template>
   <div class="top">
     <span style="font-size: 30px;">问题列表</span>
-    <div>
+    <div style="margin-top: 20px">
       <el-row>
+        <el-col :span="6">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </el-col>
+        <el-col :span="11">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </el-col>
         <el-col :span="4">
-          <el-input v-model="search_input" placeholder="请输入问题标题" ></el-input>
+          <el-input style="width: 140px" v-model="search_input" placeholder="请输入问题标题" ></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button @click="search">搜索</el-button>
+          <el-button style="float: left" @click="search">搜索</el-button>
         </el-col>
-        <el-col></el-col>
       </el-row>
     </div>
 
-    <div style="margin: 20px 0">
+    <div style="margin: 10px 0">
       <el-table
       class="questionList"
       :data="qListData"
@@ -33,7 +44,7 @@
 
       <el-table-column
         sortable
-        prop="question.quesTitle"
+        prop="quesTitle"
         label="问题标题"
         header-align="left"
         align="left"
@@ -43,20 +54,20 @@
 
       <el-table-column
         sortable
-        prop="question.quesTime"
+        prop="quesTime"
         label="发布的最新时间"
         header-align="left"
         align="left"
         :show-overflow-tooltip="true">
         <template slot-scope="qListData">
-          {{ qListData.row.question.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          {{ qListData.row.quesTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
         </template>
       </el-table-column>
 
 
       <el-table-column
         sortable
-        prop="question.quesAnsState"
+        prop="quesAnsState"
         label="问题解决状态"
         header-align="left"
         align="left"
@@ -68,7 +79,7 @@
 
       <el-table-column
         sortable
-        prop="question.quesState"
+        prop="quesState"
         label="问题状态"
         header-align="left"
         align="left"
@@ -82,9 +93,9 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="checkDetail(scope.row.question.quesId)">查看详情</el-button>
+          <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
           <!--el-button type="text" @click="modifyQues(scope.row.quesId)">修改</el-button-->
-          <el-button type="text" @click="deleteQues(scope.row.question.quesId)">删除</el-button>
+          <el-button type="text" @click="deleteQues(scope.row.quesId)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -108,6 +119,7 @@
     data() {
       return {
         qListData: [],
+        testqListData: [],
         data: [],
         search_input: '',
         timeout: null,
@@ -115,6 +127,35 @@
         total: null,
         page:1,
         id:'',
+        options: [{
+          value: 'quesState',
+          label: '问题的状态',
+          children: [{
+            value: '0',
+            label: '未屏蔽'
+          }, {
+            value: '1',
+            label: '管理员屏蔽'
+          }, {
+            value: '2',
+            label: '因用户被拉黑而被屏蔽'
+          }]
+        },
+          {
+          value: 'quesAnsState',
+          label: '问题的解决状态',
+          children: [{
+            value: '0',
+            label: '未解决'
+          }, {
+            value: '1',
+            label: '已解决'
+          }, {
+            value: '2',
+            label: '已关闭'
+          }]
+        }],
+        value: ''
       }
     },
     /*mounted() {
@@ -144,9 +185,56 @@
             quesState: '3',
           })
         ).then((response) => {
-          console.log(response.data.data);
+          console.log("response.data.data",response.data.data);
           this.qListData = response.data.data;
-          this.data = this.qListData
+          if(this.value){
+            if(this.testqListData.length==0){
+              for(let item of this.qListData) {
+                //console.log("item:", this.value[0])
+                if(this.value[0]=='quesState'){
+                  //console.log("value[0]是类型分类")
+                  if(item.quesState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testqListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+                else if(this.value[0]=='quesAnsState'){
+                  if(item.quesAnsState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testqListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+              }
+            }else if(this.testqListData.length!=0){
+              console.log("清空this.testqListData")
+              this.testqListData.length=0
+              for(let item of this.qListData) {
+                //console.log("item:", this.value[0])
+                if(this.value[0]=='quesState'){
+                  //console.log("value[0]是类型分类")
+                  if(item.quesState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testqListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+                else if(this.value[0]=='quesAnsState'){
+                  if(item.quesAnsState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testqListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+              }
+            }
+            console.log("this.testqListData是",this.testqListData)
+            this.data = this.testqListData
+          }else {
+            this.data = this.qListData
+          }
+          //this.data = this.qListData
           this.getlist();
         }).catch((error) => {
           console.log(error);
@@ -155,7 +243,7 @@
       },
       getlist(){
         let qListData = this.data.filter((item,index) =>
-          item.question.quesTitle.includes(this.search_input)
+          item.quesTitle.includes(this.search_input)
         )
         this.qListData=qListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
@@ -195,28 +283,40 @@
         this.$router.push({path:'/questionPage',query:{ques_id:val}})
         console.log(val)
       },
+      formatState(row, column) {
+        if (row.quesState === 0) {
+          return '未屏蔽'
+        } else if (row.quesState === 1) {
+          return '管理员屏蔽'
+        } else if (row.quesState === 2) {
+          return '因用户被拉黑而被屏蔽'
+        }
+      },
       formatAnsState(row, column){
-        if(row.question.quesAnsState=== 0){
+        if(row.quesAnsState=== 0){
           return '未解决'
         }
-        else if(row.question.quesAnsState === 1){
+        else if(row.quesAnsState === 1){
           return '已解决'
         }
-        else if(row.question.quesAnsState === 2){
+        else if(row.quesAnsState === 2){
           return '已关闭'
         }
         //return row.quesAnsState == 0 ? '未解决' : row.quesAnsState == 1 ? '已解决' : row.quesAnsState == 2 ? '已关闭';
         //return '已解决'
       },
-      formatState(row, column) {
-        if (row.question.quesState === 0) {
-          return '未屏蔽'
-        } else if (row.question.quesState === 1) {
-          return '管理员屏蔽'
-        } else if (row.question.quesState === 2) {
-          return '因用户被拉黑而被屏蔽'
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        this.page = 1
+        this.getqListData()
+        /*if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
         }
-      }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }*/
+      },
     },
   }
 </script>

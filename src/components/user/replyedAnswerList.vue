@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">发出的回答列表</span>
+    <span style="font-size: 30px">收到的回答列表</span>
     <div style="margin-top: 20px">
       <el-row>
         <el-col :span="6">
@@ -122,7 +122,7 @@
   import qs from 'qs';
 
   export default {
-    name: "answerList",
+    name: "replyedAnswerList",
     data() {
       return {
         aListData:[],

@@ -154,9 +154,10 @@
         this.getcListData()
       },
       getcListData:function() {
-        this.$axios.post('http://localhost:8080/online_answer/user/searchCommentsByUserId',
+        this.$axios.post('http://localhost:8080/online_answer/user/searchCommentsByState',
           qs.stringify({
             userId: this.id,
+            comState:'5'
           })
         ).then((response) => {
           console.log(response.data.data);
