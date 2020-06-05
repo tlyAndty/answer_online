@@ -43,13 +43,13 @@ import answerListOfAdmin from "../components/admin/answerListOfAdmin";
 import blockedAnswerListOfAdmin from "../components/admin/blockedAnswerListOfAdmin";
 import commentListOfAdmin from "../components/admin/commentListOfAdmin";
 import blockedCommentListOfAdmin from "../components/admin/blockedCommentListOfAdmin";
-import reportUser from "../components/admin/reportUser";
+//import reportUser from "../components/admin/reportUser";
 import reportQuestion from "../components/admin/reportQuestion";
-import reportAnswer from "../components/admin/reportAnswer";
-import reportComment from "../components/admin/reportComment";
+//import reportAnswer from "../components/admin/reportAnswer";
+//import reportComment from "../components/admin/reportComment";
 import processedReportQuestion from "../components/admin/processedReportQuestion";
-import processedReportAnswer from "../components/admin/processedReportAnswer";
-import processedReportComment from "../components/admin/processedReportComment";
+//import processedReportAnswer from "../components/admin/processedReportAnswer";
+//import processedReportComment from "../components/admin/processedReportComment";
 
 Vue.use(Router)
 export default new Router({
@@ -416,14 +416,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/reportUser',
           name:'reportUser',
           component:reportUser,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/reportQuestion',
           name:'reportQuestion',
@@ -432,7 +432,7 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/reportAnswer',
           name:'reportAnswer',
           component:reportAnswer,
@@ -447,7 +447,7 @@ export default new Router({
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/processedReportQuestion',
           name:'processedReportQuestion',
@@ -456,7 +456,7 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/processedReportAnswer',
           name:'processedReportAnswer',
           component:processedReportAnswer,
@@ -471,7 +471,7 @@ export default new Router({
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/personalInformationOfAdmin',
           name:'personalInformationOfAdmin',
