@@ -64,7 +64,6 @@
     </el-aside>
     <el-container>
       <el-main style="background-color: #fbfdf8">
-
         <router-view></router-view>
     </el-main>
       <el-footer style="padding: 0px;height: 40px">
