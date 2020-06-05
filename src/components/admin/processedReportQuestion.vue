@@ -3,7 +3,7 @@
     <span style="font-size: 30px">已处理的信息列表</span>
     <div style="margin-top: 20px">
       <el-row>
-        <el-col :span="17">
+        <el-col :span="6">
           <el-cascader
             v-model="value"
             style="width: 200px;float: left;margin-left: 20px"
@@ -12,9 +12,9 @@
           >
           </el-cascader>
         </el-col>
-        <!--el-col :span="2">
-            <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
-          </el-col-->
+        <el-col :span="11">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </el-col>
         <el-col :span="4">
           <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
         </el-col>
@@ -23,7 +23,7 @@
         </el-col>
       </el-row>
     </div>
-    <div style="margin: 20px 0">
+    <div style="margin: 10px 0">
       <el-table
         class="reportUserList"
         :data="puListData"
@@ -209,6 +209,17 @@
             }else if(this.testuListData.length!=0){
               console.log("清空this.testuListData")
               this.testuListData.length=0
+              for(let item of this.puListData) {
+                console.log("this.value[0]:", this.value[0])
+                if(this.value[0]=='reportType'){
+                  //console.log("value[0]是类型分类")
+                  if(item.reportType==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testuListData.push(item)
+                    console.log(item)
+                  }
+                }
+              }
             }
             console.log("this.testuListData是",this.testuListData)
             this.data = this.testuListData

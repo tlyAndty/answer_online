@@ -9,25 +9,27 @@
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-chat-round"></i>回答管理</template>
-            <el-submenu index="2-1">
+            <el-menu-item index="answerList">发出的回答列表</el-menu-item>
+            <!--el-submenu index="2-1">
               <template slot="title">发布的回答</template>
                 <el-menu-item index="answerList">所有回答列表</el-menu-item>
                 <el-menu-item index="blockedAnswerList">被屏蔽回答列表</el-menu-item>
             </el-submenu>
             <el-submenu index="2-2">
               <template slot="title">收到的回答</template>
-            </el-submenu>
+            </el-submenu-->
         </el-submenu>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-chat-dot-square"></i>评论管理</template>
-            <el-submenu index="3-1">
+            <el-menu-item index="commentList">发出的评论列表</el-menu-item>
+            <!--el-submenu index="3-1">
               <template slot="title">发布的评论</template>
                 <el-menu-item index="commentList">所有评论列表</el-menu-item>
                 <el-menu-item index="blockedCommentList">被屏蔽评论列表</el-menu-item>
             </el-submenu>
             <el-submenu index="3-2">
               <template slot="title">收到的评论</template>
-            </el-submenu>
+            </el-submenu-->
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-message"></i>举报管理</template>
