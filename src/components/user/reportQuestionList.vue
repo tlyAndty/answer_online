@@ -11,10 +11,10 @@
             @change="selectChange"
           >
           </el-cascader>
-          <el-col :span="2">
-            <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
-          </el-col>
         </el-col>
+        <!--el-col :span="2">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </el-col-->
         <el-col :span="4">
           <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
         </el-col>

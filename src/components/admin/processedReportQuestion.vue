@@ -1,15 +1,26 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">被举报问题列表</span>
-    <div>
+    <span style="font-size: 30px">已处理的信息列表</span>
+    <div style="margin-top: 20px">
       <el-row>
+        <el-col :span="17">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </el-col>
+        <!--el-col :span="2">
+            <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+          </el-col-->
         <el-col :span="4">
-          <el-input v-model="search_input" placeholder="请输入用户名" ></el-input>
+          <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button @click="search">搜索</el-button>
+          <el-button style="float: left" @click="search">搜索</el-button>
         </el-col>
-        <el-col></el-col>
       </el-row>
     </div>
     <div style="margin: 20px 0">
@@ -121,6 +132,7 @@
     data() {
       return {
         uListData:[],
+        testuListData:[],
         puListData:[],
         data: [],
         search_input: '',
@@ -129,6 +141,21 @@
         total: null,
         page:1,
         id:'',
+        options: [{
+          value: 'reportType',
+          label: '被举报对象的类型',
+          children: [{
+            value: '1',
+            label: '问题'
+          }, {
+            value: '2',
+            label: '回答'
+          }, {
+            value: '3',
+            label: '评论'
+          }]
+        }],
+        value: ''
       }
     },
     created() {
@@ -150,33 +177,58 @@
       getuListData: function () {
         this.$axios.post('http://localhost:8080/online_answer/admin/searchReportsByTypeAndState',
           qs.stringify({
-            reportType: '1',
+            reportType: '4',
             reportState: '3'
           })
         ).then((response) => {
-          console.log(response.data.data);
+          console.log("response.data.data",response.data.data);
           this.uListData = response.data.data;
           for(let item of this.uListData) {
             if(item.reportState!=0){
-              console.log(item.userId)
+              //console.log(item.userId)
               this.puListData.push(item)
-              console.log(item)
+              //console.log(item)
             }
           }
-          this.data = this.puListData
+          console.log("都是已处理：",this.puListData)
+          if(this.value){
+            console.log("this.value：有值")
+            console.log("this.testuListData.length:",this.testuListData.length)
+            if(this.testuListData.length==0){
+              for(let item of this.puListData) {
+                console.log("this.value[0]:", this.value[0])
+                if(this.value[0]=='reportType'){
+                  //console.log("value[0]是类型分类")
+                  if(item.reportType==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testuListData.push(item)
+                    console.log(item)
+                  }
+                }
+              }
+            }else if(this.testuListData.length!=0){
+              console.log("清空this.testuListData")
+              this.testuListData.length=0
+            }
+            console.log("this.testuListData是",this.testuListData)
+            this.data = this.testuListData
+          }else {
+            console.log("this.value：为空")
+            this.data = this.puListData
+          }
           this.getlist();
         }).catch((error) => {
           console.log(error);
         });
       },
       getlist(){
-        let uListData = this.data.filter((item,index) =>
-          item.name.includes(this.search_input)
+        let puListData = this.data.filter((item,index) =>
+          item.reportContent.includes(this.search_input)
         )
-        this.uListData=uListData.filter((item,index)=>
+        this.puListData=puListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
         )
-        this.total = uListData.length
+        this.total = puListData.length
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -228,7 +280,19 @@
         } else if (row.reportState === 2) {
           return '拒绝'
         }
-      }
+      },
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        this.page = 1
+        this.getuListData()
+        /*if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
+        }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }*/
+      },
     },
   }
 </script>

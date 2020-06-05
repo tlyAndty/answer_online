@@ -44,7 +44,7 @@
                   <el-menu-item index="processedReportCommentList">被举报的评论列表</el-menu-item>
               </el-submenu>
           </el-submenu-->
-          <el-menu-item index="reportedQuestionList">被举报的信息列表</el-menu-item>
+            <el-menu-item index="reportedQuestionList">被举报的信息列表</el-menu-item>
           <!--el-submenu index="4-2">
             <template slot="title">收到的举报</template>
               <el-menu-item index="reportedQuestionList">被举报的问题列表</el-menu-item>
