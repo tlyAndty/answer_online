@@ -231,7 +231,7 @@
       },
       getlist(){
         let puListData = this.data.filter((item,index) =>
-          item.name.includes(this.search_input)
+          item.reportContent.includes(this.search_input)
         )
         this.puListData=puListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
