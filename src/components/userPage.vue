@@ -1,17 +1,19 @@
 <template>
   <div class="userInfo" >
-    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
       <!--router-link to="/" class="gobackLink"><< 返回列表</router-link-->
-    <div class="u_Info_cont" style="width: 100%;height:20%;text-align: center;">
+    <div class="u_Info_cont" style="color: #666;width: 100%;height:20%;text-align: center;margin-top: 10px">
       <div class="u_info_title" v-for="u in u_info" style="margin-right:80px;
                                                            margin-left:80px;
                                                            border: 1px solid #f4f4f4;
                                                            background-color: #fbfdf8">
         <div class="headshot" style="text-align: center;margin-top: 10px">
-          <img src="../assets/headshot.png" style="width: auto;height: auto;max-width: 100px;max-height: 100px">
+          <img v-if="userimageUrl" :src="userimageUrl" class="avatar" height="160px" width="160px">
         </div>
-        <div class="user_name" style="text-align: center;margin-bottom: 5px">
-          {{u.name}}
+        <div class="user_name" style="text-align: center;margin-bottom: 5px;margin-top: 10px;font-size: 16px">
+          {{u_info.name}}
+        </div>
+        <div class="user_capital" style="text-align: center;margin-bottom: 10px;font-size: 16px">
+          积分：{{u_info.capital}}
         </div>
       </div>
       <div class="u_info_detail" style="margin-right:80px;margin-left:80px;margin-top:5px;border: 1px solid #f4f4f4;background-color: #fbfdf8">
@@ -80,7 +82,7 @@
               >
 
                 <el-table-column
-                  prop="ans_content"
+                  prop="ansContent"
                   label="回答内容"
                   header-align="left"
                   align="left"
@@ -89,7 +91,7 @@
                 </el-table-column>
 
                 <el-table-column
-                  prop="ans_time"
+                  prop="ansTime"
                   label="回答发布时间"
                   header-align="left"
                   align="left"
@@ -99,7 +101,7 @@
 
 
                 <el-table-column
-                  prop="good_count"
+                  prop="goodCount"
                   label="赞的个数"
                   header-align="left"
                   align="left"
@@ -108,7 +110,7 @@
 
 
                 <el-table-column
-                  prop="ans_state"
+                  prop="ansState"
                   label="回答的状态"
                   header-align="left"
                   align="left"
@@ -127,97 +129,88 @@
 </template>
 
 <script>
+  import qs from 'qs';
+
   export default {
     name: "userPage",
     data() {
       return {
         u_info: [
           {
-            mail:'1@qq.com',
-            name:'李四',
+            mail:'',
+            name:'',
+            image:'',
+            capital:''
           },
         ],
         list:[
 
         ],
+        id:'',
         radio: '提问',
         q_flag: false,
         a_flag: false,
-        qListData: [{
-          quesId: '1',
-          quesTitle: 'hhh',
-          quesTime: '2011',
-          quesAnsState: '1',
-          quesState: '2',
-        },
-          {
-            quesId: '2',
-            quesTitle: 'yyy',
-            quesTime: '2016',
-            quesAnsState: '1',
-            quesState: '2',
-          },
-          {
-            quesId: '3',
-            quesTitle: 'ttt',
-            quesTime: '2014',
-            quesAnsState: '1',
-            quesState: '2',
-          }],
-        aListData: [{
-          ans_id:'1',
-          ans_content:'内容a',
-          ans_time:'2020-03-27 13:07:40',
-          good_count:'1',
-          bad_count:'2',
-          ans_state:'0',
-        },
-          {
-            ans_id:'2',
-            ans_content:'内容g',
-            ans_time:'2020-03-24 13:07:40',
-            good_count:'1',
-            bad_count:'2',
-            ans_state:'0',
-          },
-          {
-            ans_id:'3',
-            ans_content:'内容w',
-            ans_time:'2020-03-21 13:07:40',
-            good_count:'1',
-            bad_count:'2',
-            ans_state:'0',
-          }],
-        activeName: 'first'
+        qListData: [],
+        aListData: [],
+        cListData: [],
+        activeName: 'first',
+        userimageUrl:'',
+
       }
     },
     created(){
       this.getParams();
+      this.getData();
     },
     watch:{
       '$route':'getParams'
     },
     methods:{
       getParams:function () {
-        var id = this.$route.query.user_id
-        console.log("传来的参数=="+id)
-        this.textareText = id
+        this.id = this.$route.query.user_id
+        console.log("传来的参数user_id=="+this.id)
+        console.log(this.$store.state.user)
       },
-      getData(id){
-        this.axios.get('http://localhost:8080/online_answer/user/displayPersonalCollections',
-          {
-            params:{
-              userId:this.id
-            }
+      getData(){
+        this.u_info.name=this.$store.state.user.name
+        this.u_info.image=this.$store.state.user.image
+        this.userimageUrl="http://localhost:8080"+this.$store.state.user.image
+        console.log("this.imageUrl:",this.userimageUrl)
+        this.u_info.capital=this.$store.state.user.capital
+        //提问
+        this.$axios.post('http://localhost:8080/online_answer/user/searchQuestionsByState',
+          qs.stringify({
+            userId: this.id,
+            quesState: '0',
           })
-          .then((response)=>{
-            console.log(response);
-            this.u_info=response.data.result;
-            //console.log(response.data.result);
+        ).then((response) => {
+          console.log(response.data.data)
+          this.qListData=response.data.data
+        }).catch((error) => {
+          console.log(error);
+        });
+        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswersByState',
+          qs.stringify({
+            userId: this.id,
+            ansState: '0',
           })
-          .catch((error)=>{
-            console.log(error);
-          });
+        ).then((response) => {
+          console.log(response.data.data)
+          this.aListData=response.data.data
+        }).catch((error) => {
+          console.log(error);
+        });
+        /*this.$axios.post('http://localhost:8080/online_answer/user/searchCommentsByState',
+          qs.stringify({
+            userId: this.id,
+            comState: '0',
+          })
+        ).then((response) => {
+          console.log(response.data.data)
+          this.cListData=response.data.data
+        }).catch((error) => {
+          console.log(error);
+        });*/
       },
       handleClick(tab, event) {
         console.log(tab, event);

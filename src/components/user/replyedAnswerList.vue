@@ -169,13 +169,12 @@
         this.getaListData()
       },
       getaListData:function() {
-        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswersByState',
+        this.$axios.post('http://localhost:8080/online_answer/user/searchInformation',
           qs.stringify({
             userId: this.id,
-            ansState:'4',
           })
         ).then((response) => {
-          console.log(response.data.data);
+          console.log("response.data.data",response.data.data);
           this.aListData = response.data.data;
           if(this.value){
             if(this.testaListData.length==0){

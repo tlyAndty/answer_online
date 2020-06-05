@@ -10,25 +10,25 @@ import questionPage from "../components/question/questionPage";
 import newquestionPage from "../components/question/newquestionPage";
 import userGuide from "../components/user/userGuide";
 import questionListOfUser from "../components/user/questionListOfUser";
-import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";
+//import blockedQuestionListOfUser from "../components/user/blockedQuestionListOfUser";
 import questionInfo from "../components/user/questionInfo";
 import answerList from "../components/user/answerList";
 import replyedAnswerList from "../components/user/replyedAnswerList";
 import answerInfo from "../components/user/answerInfo";
-import blockedAnswerList from "../components/user/blockedAnswerList";
+//import blockedAnswerList from "../components/user/blockedAnswerList";
 import commentList from "../components/user/commentList";
 import replyedCommentList from "../components/user/replyedCommentList";
 import commentInfo from "../components/user/commentInfo";
-import blockedCommentList from "../components/user/blockedCommentList";
+//import blockedCommentList from "../components/user/blockedCommentList";
 import reportedQuestionList from "../components/user/reportedQuestionList";
-import reportedAnswerList from "../components/user/reportedAnswerList";
-import reportedCommentList from "../components/user/reportedCommentList";
+//import reportedAnswerList from "../components/user/reportedAnswerList";
+//import reportedCommentList from "../components/user/reportedCommentList";
 import reportQuestionList from "../components/user/reportQuestionList";
-import reportAnswerList from "../components/user/reportAnswerList";
-import reportCommentList from "../components/user/reportCommentList";
-import processedReportQuestionList from "../components/user/processedReportQuestionList";
-import processedReportAnswerList from "../components/user/processedReportAnswerList";
-import processedReportCommentList from "../components/user/processedReportCommentList";
+//import reportAnswerList from "../components/user/reportAnswerList";
+//import reportCommentList from "../components/user/reportCommentList";
+//import processedReportQuestionList from "../components/user/processedReportQuestionList";
+//import processedReportAnswerList from "../components/user/processedReportAnswerList";
+//import processedReportCommentList from "../components/user/processedReportCommentList";
 import personalInformationOfUser from "../components/user/personalInformationOfUser";
 import collectionList from "../components/user/collectionList";
 import adminGuide from "../components/admin/adminGuide";
@@ -154,14 +154,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blockedQuestionListOfUser',
           name:'blockedQuestionListOfUser',
           component:blockedQuestionListOfUser,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/questionInfo',
           name:'questionInfo',
@@ -194,14 +194,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blockedAnswerList',
           name:'blockedAnswerList',
           component:blockedAnswerList,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/commentList',
           name:'commentList',
@@ -226,14 +226,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blockedCommentList',
           name:'blockedCommentList',
           component:blockedCommentList,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/reportedQuestionList',
           name:'reportedQuestionList',
@@ -242,7 +242,7 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/reportedAnswerList',
           name:'reportedAnswerList',
           component:reportedAnswerList,
@@ -257,7 +257,7 @@ export default new Router({
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/reportQuestionList',
           name:'reportQuestionList',
@@ -266,7 +266,7 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/reportAnswerList',
           name:'reportAnswerList',
           component:reportAnswerList,
@@ -281,8 +281,8 @@ export default new Router({
           meta:{
             keepAlive:true
           },
-        },
-        {
+        },*/
+        /*{
           path:'/processedReportQuestionList',
           name:'processedReportQuestionList',
           component:processedReportQuestionList,
@@ -305,7 +305,7 @@ export default new Router({
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/collectionList',
           name:'collectionList',
