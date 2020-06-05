@@ -1,15 +1,26 @@
 <template>
   <div class="top">
     <span style="font-size: 30px">评论列表</span>
-    <div>
+    <div style="margin-top: 20px">
       <el-row>
+        <el-col :span="6">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </el-col>
+        <el-col :span="11">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </el-col>
         <el-col :span="4">
-          <el-input v-model="search_input" placeholder="请输入问题标题" ></el-input>
+          <el-input style="width: 140px" v-model="search_input" placeholder="请输入评论内容" ></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button @click="search">搜索</el-button>
+          <el-button style="float: left" @click="search">搜索</el-button>
         </el-col>
-        <el-col></el-col>
       </el-row>
     </div>
 
@@ -97,6 +108,7 @@
     data() {
       return {
         cListData:[],
+        testcListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -104,6 +116,27 @@
         total: null,
         page:1,
         id:'',
+        options: [{
+          value: 'comState',
+          label: '评论的状态',
+          children: [{
+            value: '0',
+            label: '未屏蔽'
+          }, {
+            value: '1',
+            label: '管理员屏蔽'
+          }, {
+            value: '2',
+            label: '因回答者被拉黑而被屏蔽'
+          }, {
+            value: '3',
+            label: '因问题被屏蔽而被屏蔽'
+          }, {
+            value: '4',
+            label: '因回答被屏蔽而被屏蔽'
+          }]
+        }],
+        value: ''
       }
     },
     created() {
@@ -128,7 +161,40 @@
         ).then((response) => {
           console.log(response.data.data);
           this.cListData = response.data.data;
-          this.data = this.cListData;
+          if(this.value){
+            if(this.testcListData.length==0){
+              for(let item of this.cListData) {
+                //console.log("item:", this.value[0])
+                if(this.value[0]=='comState'){
+                  //console.log("value[0]是类型分类")
+                  if(item.comState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testcListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+              }
+            }else if(this.testcListData.length!=0){
+              console.log("清空this.testcListData")
+              this.testcListData.length=0
+              for(let item of this.cListData) {
+                //console.log("item:", this.value[0])
+                if(this.value[0]=='comState'){
+                  //console.log("value[0]是类型分类")
+                  if(item.comState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testcListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+              }
+            }
+            console.log("this.testcListData是",this.testcListData)
+            this.data = this.testcListData
+          }else {
+            this.data = this.cListData
+          }
+          //this.data = this.cListData;
           this.getlist();
         }).catch((error) => {
           console.log(error);
@@ -190,9 +256,20 @@
         } else if (row.comState === 4) {
           return '因回答被屏蔽而被屏蔽'
         }
-      }
+      },
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        this.page = 1
+        this.getcListData()
+        /*if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
+        }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }*/
+      },
     }
-
   }
 </script>
 

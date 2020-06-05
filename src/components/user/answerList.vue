@@ -136,7 +136,7 @@
         id:'',
         options: [{
           value: 'ansState',
-          label: '被举报对象的类型',
+          label: '回答的状态',
           children: [{
             value: '0',
             label: '未屏蔽'
