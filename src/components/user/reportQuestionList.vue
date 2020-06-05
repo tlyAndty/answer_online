@@ -6,20 +6,14 @@
         <el-col :span="17">
           <el-cascader
             v-model="value"
-            style="width: 100px;float: left;margin-left: 20px"
+            style="width: 200px;float: left;margin-left: 20px"
             :options="options"
             @change="selectChange"
           >
-
           </el-cascader>
-          <!--el-select style="width: 100px;float: left;margin-left: 20px" v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select-->
+          <el-col :span="2">
+            <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+          </el-col>
         </el-col>
         <el-col :span="4">
           <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
@@ -138,6 +132,7 @@
     data() {
       return {
         uListData:[],
+        testuListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -201,7 +196,36 @@
         ).then((response) => {
           console.log("response.data.data",response.data.data);
           this.uListData = response.data.data;
-          this.data = this.uListData
+          if(this.value){
+            if(this.testuListData.length==0){
+              for(let item of this.uListData) {
+                console.log("item:", this.value[0])
+                if(this.value[0]=='reportType'){
+                  console.log("value[0]是类型分类")
+                  if(item.reportType==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testuListData.push(item)
+                    console.log(item)
+                  }
+                }
+                else if(this.value[0]=='reportState'){
+                  console.log("value[0]是结果分类")
+                  if(item.reportState==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testuListData.push(item)
+                    console.log(item)
+                  }
+                }
+              }
+            }else if(this.testuListData.length!=0){
+              console.log("清空this.testuListData")
+              this.testuListData.length=0
+            }
+            console.log("this.testuListData是",this.testuListData)
+            this.data = this.testuListData
+          }else {
+            this.data = this.uListData
+          }
           this.getlist();
         }).catch((error) => {
           console.log(error);
@@ -299,26 +323,14 @@
       selectChange(value) {
         console.log("value0",value[0])
         console.log("value1",value[1])
-        if(value[0]=='reportType'){
+        this.page = 1
+        this.getuListData()
+        /*if(value[0]=='reportType'){
           console.log("根据处理结果分类")
-          /*this.$axios.post('http://localhost:8080/online_answer/user/searchReportsByTypeAndState',
-            qs.stringify({
-              reportUserId: this.id,
-              reportType: value[1],
-              reportState: '3',
-            })
-          ).then((response) => {
-            console.log("根据处理结果分类data",response.data.data);
-            this.uListData = response.data.data;
-            this.data = this.uListData
-            this.getlist();
-          }).catch((error) => {
-            console.log(error);
-          });*/
         }
         else if(value[0]=='reportState'){
           console.log("根据处理结果分类")
-        }
+        }*/
       },
     },
   }
