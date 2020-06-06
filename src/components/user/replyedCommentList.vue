@@ -230,7 +230,6 @@
         }).catch((error) => {
           console.log(error);
         });
-
       },
       getlist(){
         let cListData = this.data.filter((item,index) =>
