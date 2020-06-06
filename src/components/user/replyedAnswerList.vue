@@ -86,12 +86,12 @@
 
         <el-table-column
           sortable
-          prop="ansState"
-          label="回答的状态"
+          prop="isRead"
+          label="已读/未读"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
-          :formatter="formatState"
+          :formatter="formatReadState"
         >
         </el-table-column>
 
@@ -100,7 +100,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <!--el-button type="text" @click="checkDetail(scope.row.ansId)">查看详情</el-button-->
+            <el-button type="text" @click="checkDetail(scope.row.quesId,scope.row.ansId,scope.row.isRead)">查看详情</el-button>
             <!--el-button type="text" @click="modifyAns(scope.row.ansId,scope.row.ansContent)">查看详情</el-button-->
             <el-button type="text" @click="deleteAns(scope.row.ansId)">删除</el-button>
           </template>
@@ -126,6 +126,7 @@
     data() {
       return {
         aListData:[],
+        baListData:[],
         testaListData:[],
         data: [],
         search_input: '',
@@ -135,20 +136,14 @@
         page:1,
         id:'',
         options: [{
-          value: 'ansState',
+          value: 'isRead',
           label: '回答的状态',
           children: [{
             value: '0',
-            label: '未屏蔽'
+            label: '未读'
           }, {
             value: '1',
-            label: '管理员屏蔽'
-          }, {
-            value: '2',
-            label: '因回答者被拉黑而被屏蔽'
-          }, {
-            value: '3',
-            label: '因问题被屏蔽而被屏蔽'
+            label: '已读'
           }]
         }],
         value: ''
@@ -169,38 +164,38 @@
         this.getaListData()
       },
       getaListData:function() {
-        this.$axios.post('http://localhost:8080/online_answer/user/searchInformation',
+        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswerInfo',
           qs.stringify({
             userId: this.id,
           })
         ).then((response) => {
           console.log("response.data.data",response.data.data);
           this.aListData = response.data.data;
+          if(this.baListData.length!=0){
+            this.baListData.length=0
+          }
+          for(let item of this.aListData) {
+            if(item.ansState==0){
+              console.log(item.userId)
+              this.baListData.push(item)
+              console.log(item)
+            }
+          }
+          this.aListData = this.baListData;
+          console.log("this.baListData",this.baListData)
           if(this.value){
-            if(this.testaListData.length==0){
-              for(let item of this.aListData) {
-                //console.log("item:", this.value[0])
-                if(this.value[0]=='ansState'){
-                  //console.log("value[0]是类型分类")
-                  if(item.ansState==this.value[1]) {
-                    console.log("value[1]是",this.value[1])
-                    this.testaListData.push(item)
-                    console.log("item",item)
-                  }
-                }
-              }
-            }else if(this.testaListData.length!=0){
+            if(this.testaListData.length!=0){
               console.log("清空this.testuListData")
               this.testaListData.length=0
-              for(let item of this.aListData) {
-                //console.log("item:", this.value[0])
-                if(this.value[0]=='ansState'){
-                  //console.log("value[0]是类型分类")
-                  if(item.ansState==this.value[1]) {
-                    console.log("value[1]是",this.value[1])
-                    this.testaListData.push(item)
-                    console.log("item",item)
-                  }
+            }
+            for(let item of this.aListData) {
+              //console.log("item:", this.value[0])
+              if(this.value[0]=='isRead'){
+                //console.log("value[0]是类型分类")
+                if(item.isRead==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testaListData.push(item)
+                  console.log("item",item)
                 }
               }
             }
@@ -255,19 +250,31 @@
         this.$router.push({path:'/answerInfo',query:{ans_id:val1,ans_content:val2,user_id:this.id}})
         console.log(val1)
       },
-      checkDetail(val){
-        this.$router.push({path:'/questionPage',query:{ques_id:val}})
-        console.log(val)
+      checkDetail(quesid,ansid,isread){
+        if(isread==0){
+          this.$axios.post('http://localhost:8080/online_answer/user/readAnswer',
+            qs.stringify({
+              ansId: ansid,
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode);
+            alert("阅读此回答")
+            console.log("quesid",quesid)
+            this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+        else {
+          console.log("quesid",quesid)
+          this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
+        }
       },
-      formatState(row, column) {
-        if (row.ansState === 0) {
-          return '未屏蔽'
-        } else if (row.ansState === 1) {
-          return '管理员屏蔽'
-        } else if (row.ansState === 2) {
-          return '因回答者被拉黑而被屏蔽'
-        } else if (row.ansState === 3) {
-          return '因问题被屏蔽而被屏蔽'
+      formatReadState(row, column) {
+        if (row.isRead === 0) {
+          return '未读'
+        } else if (row.isRead === 1) {
+          return '已读'
         }
       },
       selectChange(value) {

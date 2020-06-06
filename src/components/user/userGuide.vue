@@ -23,6 +23,7 @@
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-chat-dot-square"></i>评论管理</template>
             <el-menu-item index="commentList">发出的评论列表</el-menu-item>
+            <el-menu-item index="replyedCommentList">收到的评论列表</el-menu-item>
             <!--el-submenu index="3-1">
               <template slot="title">发布的评论</template>
                 <el-menu-item index="commentList">所有评论列表</el-menu-item>
