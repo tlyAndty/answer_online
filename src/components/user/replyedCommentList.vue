@@ -91,7 +91,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.quesId,scope.row.comId,scope.row.isRead)">查看详情</el-button>
+            <el-button type="text" @click="checkDetail(scope.row.ansId,scope.row.comId,scope.row.isRead)">查看详情</el-button>
             <!--el-button type="text" @click="modifyCom(scope.row.comId,scope.row.comContent)">查看详情</el-button-->
             <el-button type="text" @click="deleteCom(scope.row.comId)">删除</el-button>
           </template>
@@ -270,7 +270,7 @@
         this.$router.push({path:'/commentInfo',query:{com_id:val1,com_content:val2,user_id:this.id}})
         console.log(val1)
       },
-      checkDetail(quesid,comid,isread){
+      checkDetail(ansid,comid,isread){
         if(isread==0){
           this.$axios.post('http://localhost:8080/online_answer/user/readComment',
             qs.stringify({
@@ -279,15 +279,35 @@
           ).then((response) => {
             console.log(response.data.resultCode);
             alert("阅读此评论")
-            console.log("quesid",quesid)
-            this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
+            console.log("ansid",ansid)
+            this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+              qs.stringify({
+                ansId: ansid,
+              })
+            ).then((response) => {
+              console.log("查看",response.data.data);
+              this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+            }).catch((error) => {
+              console.log(error);
+            });
           }).catch((error) => {
             console.log(error);
           });
         }
         else {
-          console.log("quesid",quesid)
-          this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
+          console.log("ansid",ansid)
+          this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+            qs.stringify({
+              ansId: ansid,
+            })
+          ).then((response) => {
+            console.log("查看",response.data.data);
+            this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+          }).catch((error) => {
+            console.log(error);
+          });
+          //console.log("quesid",quesid)
+          //this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
         }
       },
       formatComState(row, column) {
