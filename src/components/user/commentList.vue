@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">评论列表</span>
+    <span style="font-size: 30px">发出的评论列表</span>
     <div style="margin-top: 20px">
       <el-row>
         <el-col :span="6">
