@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import qs from 'qs'
 import {isValidMail} from '../js/rule'
 export default {
   data() {
@@ -101,6 +102,9 @@ export default {
 <style>
   .bg{
     height:663px;
+    text-align:center;
+    background: url(../assets/login_bg.jpg);
+    background-repeat: no-repeat;
   }
   #footer{
     background-color: rgba(255, 255, 255, 0.3);
@@ -111,11 +115,6 @@ export default {
     position: fixed;
     bottom: 0;
     width:100%;
-  }
-  body{
-    text-align:center;
-    background: url(../assets/login_bg.jpg);
-    background-repeat: no-repeat;
   }
   .panel{
     position: relative;
