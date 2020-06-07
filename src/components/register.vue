@@ -29,6 +29,13 @@
         </el-form>
       </el-row>
     </div>
+    <div id="footer">
+      <div >
+        <a id="main" href="/" style="margin-right:10px;color:black;text-decoration:none">首页</a>
+        <a id="user_login" href="/userlogin" style="margin-left:10px;color:black;text-decoration:none">用户登录</a>
+      </div>
+      <span>Copyright © 2020-3020 tly&ty. All Rights Reserved.</span>
+    </div>
   </div>
 </template>
 
@@ -141,6 +148,16 @@ import {isValidMail} from '../js/rule'
 </script>
 
 <style>
+  #footer{
+    background-color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    font-size: 12px;
+    height: 40px;
+    /*margin-top: 61px;*/
+    position: fixed;
+    bottom: 0;
+    width:100%;
+  }
   .registertext{
     text-align:center;
     background: url(../assets/login_bg.jpg);

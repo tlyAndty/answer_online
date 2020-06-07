@@ -17,7 +17,7 @@
         </el-form>
       </el-row>
     </div>
-    <div style="background-color: rgba(255, 255, 255, 0.3);;text-align: center;font-size: 12px;height: 40px;margin-top: 101px">
+    <div id="footer">
       <div >
         <a id="main" href="/" style="margin-right:10px;color:black;text-decoration:none">首页</a>
         <a id="user_login" href="/userlogin" style="margin-left:10px;color:black;text-decoration:none">用户登录</a>
@@ -80,11 +80,20 @@ export default {
 </script>
 
 <style>
-  .bg{
+  #footer{
+    background-color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    font-size: 12px;
+    height: 40px;
+    /*margin-top: 61px;*/
+    position: fixed;
+    bottom: 0;
+    width:100%;
+  }
+  body{
     text-align:center;
     background: url(../assets/login_bg.jpg);
     background-repeat: no-repeat;
-    height: 625px;
   }
   .panel{
     position: relative;
