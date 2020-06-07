@@ -6,10 +6,10 @@
         <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="100px">
           <h1 style="padding-left:90px;">管理员登录</h1>
           <el-form-item label="邮箱" prop="mail">
-            <el-input v-model="user.Mail"></el-input>
+            <el-input v-model="user.mail"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pwd">
-            <el-input v-model="user.Pwd" type="password"></el-input>
+            <el-input v-model="user.pwd" type="password"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="loginBtn"  style="width:100px;" @click="adminlogin">登录</el-button><br>
@@ -28,18 +28,37 @@
 </template>
 
 <script>
-import axios from 'axios'
-import qs from 'qs'
+import {isValidMail} from '../js/rule'
 export default {
   data() {
+    var validMail=(rule, value,callback)=>{
+      if (!value){
+        callback(new Error('请输入邮箱！'))
+      }else  if (!isValidMail(value)){
+        callback(new Error('请输入正确的邮箱！'))
+      }else {
+        callback()
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入密码!'));
+      } else {
+        callback();
+      }
+    };
     return {
-      user: {},
+      user: {
+        mail:"",
+        pwd:""
+      },
       rules: {
-        Mail: [
-          {required: true, message: '邮箱不能为空', trigger: 'blur'}
+        mail: [
+          {required: true, trigger: 'blur',validator: validMail}
         ],
-        Pwd: [
-          {required: true, message: '密码不能为空', trigger: 'blur'}
+        pwd: [
+          {required: true, trigger: 'blur', validator: validatePass},
+          { min: 6, max: 20, message: '请输入6-20位字符!', trigger: 'blur' }
         ]
       }
     }
@@ -52,21 +71,21 @@ export default {
             'http://localhost:8080/online_answer/admin/login',
             qs.stringify({
               // loginForm: this.loginForm
-              mail:this.user.Mail,
-              pwd:this.user.Pwd
+              mail:this.user.mail,
+              pwd:this.user.pwd
             })
           ).then(response => {
-            console.log(response)
-            console.log("登录成功")
+
             const {data} = response
-            console.log('adminId:',data.data.adminId)
-            this.data = data.data
-            data.data.role='admin';
-            this.$store.dispatch('adminlogin',data.data)
-            alert(response.data.resultDesc)
-            this.$router.push({
-              path: '/adminGuide', query:{admin_id: this.data.adminId}
-            });
+            alert(response.data.resultDesc);
+            if(response.data.resultCode === "4000") {
+              this.data = data.data
+              data.data.role = 'admin';
+              this.$store.dispatch('adminlogin', data.data)
+              this.$router.push({
+                path: '/adminGuide', query: {admin_id: this.data.adminId}
+              });
+            }
           }).catch(error => {
             console.log(error)
           })
@@ -80,6 +99,9 @@ export default {
 </script>
 
 <style>
+  .bg{
+    height:663px;
+  }
   #footer{
     background-color: rgba(255, 255, 255, 0.3);
     text-align: center;

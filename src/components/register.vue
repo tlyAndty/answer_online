@@ -42,6 +42,7 @@
 <script>
 import qs from 'qs'
 import {isValidMail} from '../js/rule'
+import {isValidConfirmCode} from '../js/rule'
 
   export default {
     data() {
@@ -55,7 +56,7 @@ import {isValidMail} from '../js/rule'
         }
       };
       var validatePass = (rule, value, callback) => {
-        if (value === '') {
+        if (!value) {
           callback(new Error('请输入密码!'));
         } else {
           if (this.user.pwd !== '') {
@@ -65,32 +66,48 @@ import {isValidMail} from '../js/rule'
         }
       };
       var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
+        if (!value) {
+          callback(new Error('请再次输入密码!'));
         } else if (value !== this.user.pwd) {
           callback(new Error('两次输入密码不一致!'));
-        } else {
+        }
           callback();
+      };
+      var validateConfirmCode = (rule, value, callback) => {
+        if(!value) {
+          callback(new Error('请输入验证码!'));
+        }else  if (!isValidConfirmCode(value)){
+          callback(new Error('请输入六位验证码！'))
+        }else {
+          callback()
         }
       };
 
+
       return {
-        user: {},
+        user: {
+          name:"",
+          mail:"",
+          pwd:"",
+          conPwd:"",
+          confirmCode:""
+        },
         rules: {
           name: [
-            {required: true, message: '昵称不能为空', trigger: 'blur'}
+            {required: true, message: '请输入昵称!', trigger: 'blur'}
           ],
           mail: [
             {required: true, trigger: 'blur',validator: validMail}
           ],
           pwd: [
-            {required: true, trigger: 'blur', validator: validatePass}
+            {required: true, trigger: 'blur', validator: validatePass},
+            { min: 6, max: 20, message: '请输入6-20位字符!', trigger: 'blur' }
           ],
           conPwd: [
             {required: true, trigger: 'blur', validator: validatePass2}
           ],
           confirmCode: [
-            {required: true, message: '邮箱验证码不能为空', trigger: 'blur'}
+            {required: true, trigger: 'blur', validator:validateConfirmCode}
           ]
         }
       }
