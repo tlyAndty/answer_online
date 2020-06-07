@@ -5,6 +5,8 @@ import userlogin from '../components/userlogin'
 import adminlogin from '../components/adminlogin'
 import register from '../components/register'
 import userPage from "../components/otherImportantPages/userPage";
+import userQuestions from "../components/otherImportantPages/userQuestions";
+import userAnswers from "../components/otherImportantPages/userAnswers";
 import reportPage from "../components/reportPage";
 import questionPage from "../components/otherImportantPages/questionPage";
 import newquestionPage from "../components/otherImportantPages/newquestionPage";
@@ -112,14 +114,6 @@ export default new Router({
       ]
     },
     {
-      path: '/reportPage',
-      name: 'reportPage',
-      component: reportPage,
-      meta: {
-        keepAlive:true
-      }
-    },
-    {
       path: '/userPage',
       name:'userPage',
       component: userPage,
@@ -130,8 +124,32 @@ export default new Router({
         {
           path: ':user_id',
           component: userPage,
-        }
+        },
+        {
+          path:'/userQuestions',
+          name:'userQuestions',
+          component:userQuestions,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/userAnswers',
+          name:'userAnswers',
+          component:userAnswers,
+          meta:{
+            keepAlive:true
+          },
+        },
       ]
+    },
+    {
+      path: '/reportPage',
+      name: 'reportPage',
+      component: reportPage,
+      meta: {
+        keepAlive:true
+      }
     },
     {
       path: '/userGuide',

@@ -1,6 +1,6 @@
 <template>
   <el-container style="height: 565px; border: 1px solid #eee;">
-    <el-aside width="240px" >
+    <el-aside width="200px" >
       <el-menu :unique-opened="true" :default-active="$route.path" @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-postcard"></i>问题管理</template>
