@@ -85,7 +85,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;" @click="blockCom(scope.row.comment.comId)">屏蔽</a>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockCom(scope.row.comment.comId)">屏蔽</a>
             <a style="text-decoration: none;color: #409EFF;" @click="unblockCom(scope.row.comment.comId)">取消屏蔽</a>
           </template>
         </el-table-column>

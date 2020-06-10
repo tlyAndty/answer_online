@@ -78,7 +78,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;" @click="checkDetail(scope.row.quesId)">查看详情</a>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.quesId)">查看详情</a>
             <a style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.quesId)">取消屏蔽</a>
           </template>
         </el-table-column>

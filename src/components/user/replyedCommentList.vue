@@ -91,7 +91,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;" @click="checkDetail(scope.row.ansId,scope.row.comId,scope.row.isRead)">查看详情</a>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.ansId,scope.row.comId,scope.row.isRead)">查看详情</a>
             <!--el-button type="text" @click="modifyCom(scope.row.comId,scope.row.comContent)">查看详情</el-button-->
             <a style="text-decoration: none;color: #409EFF;" @click="deleteCom(scope.row.comId)">删除</a>
           </template>

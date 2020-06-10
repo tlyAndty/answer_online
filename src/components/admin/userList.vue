@@ -76,8 +76,8 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <a style="text-decoration: none;color: #409EFF;" @click="checkDetail(scope.row.userId)">查看详情</a>
-          <a style="text-decoration: none;color: #409EFF;" @click="blacklistUser(scope.row.userId)">拉黑</a>
+          <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.userId)">查看详情</a>
+          <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blacklistUser(scope.row.userId)">拉黑</a>
           <a style="text-decoration: none;color: #409EFF;" @click="unblacklistUser(scope.row.userId)">取消拉黑</a>
         </template>
       </el-table-column>

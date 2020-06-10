@@ -93,7 +93,7 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <a style="text-decoration: none;color: #409EFF;" @click="checkDetail(scope.row.quesId)">查看详情</a>
+          <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.quesId)">查看详情</a>
           <!--el-button type="text" @click="modifyQues(scope.row.quesId)">修改</el-button-->
           <a style="text-decoration: none;color: #409EFF;" @click="deleteQues(scope.row.quesId)">删除</a>
         </template>
