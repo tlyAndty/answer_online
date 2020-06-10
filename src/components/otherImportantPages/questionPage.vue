@@ -83,8 +83,8 @@
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
-              </div>
             </div>
+          </div>
             <div class="answer_list" style="background: #fcfcff;">
               <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;padding-top: 16px;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
@@ -269,7 +269,7 @@
                 </el-form>
               </div>
             </div>
-          </div>
+      </div>
     </div>
   </div>
 </template>
@@ -504,36 +504,44 @@
             console.log("已登录")
             console.log(this.$store.state.user.userId)
             console.log(this.quesId)
-            if(this.quesAnsState==0){
-              this.answerForm.a_content = this.answerForm.a_contenttest.replace(/<[^>]+>/g, "")
-              console.log(this.answerForm.a_content)
-              this.$refs.answerForm.validate((valid) => {
-                if (valid) {
-                  this.$axios.post(
-                    'http://localhost:8080/online_answer/user/answer',
-                    qs.stringify({
-                      userId: this.$store.state.user.userId,
-                      quesId: this.id,
-                      ansContent: this.answerForm.a_content,
+            console.log("问题有无被屏蔽",this.quesState)
+            console.log("问题是否还可继续回答",this.quesAnsState)
+            if(this.quesState==0){
+              if(this.quesAnsState==0){
+                this.answerForm.a_content = this.answerForm.a_contenttest.replace(/<[^>]+>/g, "")
+                console.log(this.answerForm.a_content)
+                this.$refs.answerForm.validate((valid) => {
+                  if (valid) {
+                    this.$axios.post(
+                      'http://localhost:8080/online_answer/user/answer',
+                      qs.stringify({
+                        userId: this.$store.state.user.userId,
+                        quesId: this.id,
+                        ansContent: this.answerForm.a_content,
+                      })
+                    ).then(response => {
+                      console.log(response)
+                      console.log("回答成功")
+                      alert(response.data.resultDesc)
+                      //history.go(0)
+                      /*this.$router.push({
+                        path: '/userGuide', query:{user_id: this.data.userId}
+                      });*/
+                    }).catch(error => {
+                      console.log(error)
                     })
-                  ).then(response => {
-                    console.log(response)
-                    console.log("回答成功")
-                    alert(response.data.resultDesc)
-                    history.go(0)
-                    /*this.$router.push({
-                      path: '/userGuide', query:{user_id: this.data.userId}
-                    });*/
-                  }).catch(error => {
-                    console.log(error)
-                  })
-                } else {
-                  return false
-                }
-              })
-            }else {
-              alert("此问题已不能回答")
+                  } else {
+                    return false
+                  }
+                })
+              }else {
+                alert("由于此问题不再是未解决，已不能回答")
+              }
             }
+            else {
+              alert("由于此问题已被屏蔽，已不能回答")
+            }
+
           } else {
             this.$router.push('/userlogin')
           }
