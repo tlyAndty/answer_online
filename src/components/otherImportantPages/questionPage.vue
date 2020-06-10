@@ -1,6 +1,6 @@
 <template>
   <div class="questionInfo" style="background: white;padding: 0px">
-    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
+    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;"><img id="return" src="../../assets/左箭头.png"></a>
     <!--router-link to="/" class="gobackLink"><< 返回列表</router--->
     <div class="main clearfix" style="margin: 0px;">
       <div class="q_info" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
@@ -943,5 +943,10 @@
   }
   .el-button{
     background-color: #ffc9a4;
+  }
+  #return{
+    height:40px;
+    width:40px;
+    margin:20px 0px 0px 20px;
   }
 </style>

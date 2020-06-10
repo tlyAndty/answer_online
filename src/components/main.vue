@@ -1,6 +1,6 @@
 <template>
   <div class="hometext" style="margin: 0px">
-    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
+    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;"><img id="return" src="../assets/左箭头.png"></a>
     <div class="maintext" style="margin: 0px">
       <div class="main" style="float: left;width: 70%;margin-top: 0px">
       <p>
@@ -303,5 +303,9 @@
   .maintext{
     text-align:center;
   }
-
+  #return{
+    height:40px;
+    width:40px;
+    margin-left:40px;
+  }
 </style>
