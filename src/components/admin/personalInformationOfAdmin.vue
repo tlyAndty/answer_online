@@ -13,25 +13,23 @@
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
+        <div>点击头像即可更换</div>
       </el-form-item>
-      <!--el-form-item label="ID" prop="adminid">
-        <el-input class="text" placeholder=data.adminid v-model="admin.adminid" autocomplete="off" :readonly="true"></el-input>
-      </el-form-item-->
       <el-form-item label="名字" prop="name">
-        <el-input class="text" placeholder=data.name v-model="admin.name" autocomplete="off"></el-input>
+        <el-input class="text" placeholder=请输入名字 v-model="admin.name" autocomplete="off" :readonly="isRead"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail">
-        <el-input class="text" placeholder=data.mail v-model="admin.mail" autocomplete="off"></el-input>
+        <el-input class="text" placeholder=请输入邮箱 v-model="admin.mail" autocomplete="off" :readonly="isRead"></el-input>
       </el-form-item>
-      <!--el-form-item label="密码" prop="pwd">
-        <el-input class="text" placeholder=data.pwd v-model.number="admin.pwd" :readonly="true"></el-input>
-      </el-form-item-->
-      <el-form-item label="新密码" prop="newPwd">
-        <el-input class="text" placeholder=请输入新密码 v-model.number="admin.newPwd"></el-input>
+      <el-form-item v-show="isShow" label="旧密码" prop="pwd">
+        <el-input class="text" type="password" placeholder=请输入旧密码 v-model="admin.pwd"></el-input>
+      </el-form-item>
+      <el-form-item v-show="isShow" label="新密码" prop="newPwd">
+        <el-input class="text" type="password" placeholder=请输入新密码 v-model="admin.newPwd"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('infoForm')">修改</el-button>
-        <el-button @click="resetForm('infoForm')">重置</el-button>
+        <el-button type="primary" @click="show();submitForm('infoForm')">修改</el-button>
+        <el-button v-show="isShow" @click="resetForm('infoForm')">重置</el-button>
       </el-form-item>
     </el-form >
   </div>
@@ -39,19 +37,28 @@
 
 <script>
   import qs from 'qs';
-
+  import {isValidMail} from '../../js/rule';
     export default {
         name: "personalInformationOfAdmin",
       data() {
-        var validatePass = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请再次输入密码'));
-          } else if (value == this.admin.pwd) {
-            callback(new Error('新密码不能与旧密码相同!'));
-          } else {
-            callback();
+        var validMail=(rule, value,callback)=>{
+          if (!value){
+            callback(new Error('请输入邮箱！'))
+          }else  if (!isValidMail(value)){
+            callback(new Error('请输入正确的邮箱！'))
+          }else {
+            callback()
           }
         };
+        // var validatePass = (rule, value, callback) => {
+        //   if (value === '') {
+        //     callback(new Error('请再次输入密码'));
+        //   } else if (value == this.admin.pwd) {
+        //     callback(new Error('新密码不能与旧密码相同!'));
+        //   } else {
+        //     callback();
+        //   }
+        // };
         return {
           admin: {
             adminid:'',
@@ -61,9 +68,19 @@
             newPwd:'',
             image:'',
           },
+          isShow:false,
+          isRead:true,
           rules: {
+            pwd: [
+              {required: true, message: '请输入密码!', trigger: 'blur'},
+              { min: 6, max: 20, message: '请输入6-20位字符!', trigger: 'blur' }
+            ],
             newPwd: [
-              { validator: validatePass, trigger: 'blur' }
+              { required: true, message: '请再次输入旧密码或者重新输入新密码!', trigger: 'blur' },
+              { min: 6, max: 20, message: '请输入6-20位字符!', trigger: 'blur' }
+            ],
+            mail: [
+              {trigger: 'blur',validator: validMail}
             ],
           },
           imageUrl:'',
@@ -77,6 +94,11 @@
         this.getqListData()
       },
       methods: {
+        show: function (){
+          console.log("show");
+          this.isShow = true;
+          this.isRead = false;
+        },
         getParams:function () {
           this.id = this.$route.query.admin_id
           console.log("传来的adminid参数=="+this.id)
@@ -109,7 +131,7 @@
             console.log("formName:",this.admin.name)
             if (valid) {
               this.$axios.post(
-                'http://localhost:8080/online_answer/user/modifyUserInfo',
+                'http://localhost:8080/online_answer/admin/modifyAdminInfo',
                 qs.stringify({
                   adminId: this.admin.adminid,
                   mail: this.admin.mail,
@@ -132,7 +154,11 @@
           });
         },
         resetForm(formName) {
-          this.$refs[formName].resetFields();
+          // this.$refs[formName].resetFields();
+          this.admin.name = '';
+          this.admin.mail = '';
+          this.admin.pwd = '';
+          this.admin.newPwd = '';
         },
         handleAvatarSuccess(res,file) {
           this.imageUrl = URL.createObjectURL(file.raw);

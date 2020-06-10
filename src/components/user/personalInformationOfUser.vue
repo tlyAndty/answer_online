@@ -16,23 +16,23 @@
         <div>点击头像即可更换</div>
       </el-form-item>
       <el-form-item label="名字" prop="name">
-        <el-input class="text" placeholder=data.name v-model="user.name" autocomplete="off" :readonly="isRead"></el-input>
+        <el-input class="text" placeholder=请输入名字 v-model="user.name" autocomplete="off" :readonly="isRead"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail">
-        <el-input class="text" placeholder=data.mail v-model="user.mail" autocomplete="off" :readonly="isRead"></el-input>
+        <el-input class="text" placeholder=请输入邮箱 v-model="user.mail" autocomplete="off" :readonly="isRead"></el-input>
       </el-form-item>
       <el-form-item label="积分" prop="capital">
-        <el-input class="text" placeholder=data.capital v-model="user.capital" autocomplete="off" :readonly="true"></el-input>
+        <el-input class="text" placeholder=资产 v-model="user.capital" autocomplete="off" :readonly="true"></el-input>
       </el-form-item>
       <el-form-item v-show="isShow" label="旧密码" prop="pwd">
-        <el-input class="text" v-show="isShow" placeholder=请输入旧密码 v-model.number="user.pwd"></el-input>
+        <el-input class="text" type="password" v-show="isShow" placeholder=请输入旧密码 v-model="user.pwd"></el-input>
       </el-form-item>
       <el-form-item v-show="isShow" label="新密码" prop="newPwd">
-        <el-input class="text" v-show="isShow" placeholder=请输入新密码 v-model.number="user.newPwd"></el-input>
+        <el-input class="text" type="password" v-show="isShow" placeholder=请输入新密码 v-model="user.newPwd"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="show();submitForm('infoForm')">修改</el-button>
-        <el-button @click="resetForm('infoForm')">重置</el-button>
+        <el-button v-show="isShow" @click="resetForm('infoForm')">重置</el-button>
       </el-form-item>
     </el-form >
   </div>
@@ -76,10 +76,12 @@
         isRead:true,
         rules: {
           pwd: [
-            {required: true, message: '请输入密码!', trigger: 'blur'}
+            {required: true, message: '请输入密码!', trigger: 'blur'},
+            { min: 6, max: 20, message: '请输入6-20位字符!', trigger: 'blur' }
           ],
           newPwd: [
-            { required: true, message: '请再次输入旧密码或者输入新密码!', trigger: 'blur' }
+            { required: true, message: '请再次输入旧密码或者重新输入新密码!', trigger: 'blur' },
+            { min: 6, max: 20, message: '请输入6-20位字符!', trigger: 'blur' }
           ],
           mail: [
             {trigger: 'blur',validator: validMail}
@@ -171,7 +173,11 @@
         });
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        // this.$refs[formName].resetFields();
+        this.user.name = '';
+        this.user.mail = '';
+        this.user.pwd = '';
+        this.user.newPwd = '';
       },
       handleAvatarSuccess(res,file) {
         this.imageUrl = URL.createObjectURL(file.raw);
