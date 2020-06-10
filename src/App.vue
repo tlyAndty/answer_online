@@ -9,7 +9,7 @@
           <router-link style="color:white;text-decoration:none;margin-right:20px;" :to="{name:'newquestionPage',query:{user_id:user.userId}}">我要提问</router-link>
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'userGuide',query:{user_id:user.userId}}">{{user.name}}</router-link>
           <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position: relative;top: 20px" :to="{name:'userGuide',query:{user_id:user.userId}}">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" height="50px" width="50px">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" style="height:50px;width:50px;border-radius:25px;border:none;">
           </router-link>
         <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
