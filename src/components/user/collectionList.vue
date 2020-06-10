@@ -181,12 +181,15 @@
         ).then((response) => {
           console.log(response.data);
           console.log("取消成功")
+          alert("取消收藏成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
         console.log("colUserId:",this.id)
         console.log("colQuesId:",val)
         //location.reload()
+
       },
       checkDetail(val){
         this.$router.push({path:'/questionPage',query:{ques_id:val}})
