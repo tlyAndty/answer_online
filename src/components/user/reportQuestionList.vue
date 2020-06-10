@@ -3,7 +3,7 @@
     <span style="font-size: 30px">举报的信息列表</span>
     <div style="margin-top: 20px">
       <el-row>
-        <el-col :span="6">
+        <div style="float: left">
           <el-cascader
             v-model="value"
             style="width: 200px;float: left;margin-left: 20px"
@@ -11,16 +11,16 @@
             @change="selectChange"
           >
           </el-cascader>
-        </el-col>
-        <el-col :span="11">
+        </div>
+        <div style="float: left">
           <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
-        </el-col>
-        <el-col :span="4">
-          <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
-        </el-col>
-        <el-col :span="2">
+        </div>
+        <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
-        </el-col>
+        </div>
+        <div style="float: right;margin-right: 10px;">
+          <el-input style="width: 140px" v-model="search_input" placeholder="请输入举报理由" ></el-input>
+        </div>
       </el-row>
     </div>
     <div style="margin: 10px 0">

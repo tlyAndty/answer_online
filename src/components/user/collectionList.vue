@@ -3,13 +3,12 @@
     <span style="font-size: 30px;">收藏列表</span>
     <div>
       <el-row>
-        <el-col :span="4">
-          <el-input v-model="search_input" placeholder="请输入问题标题" ></el-input>
-        </el-col>
-        <el-col :span="2">
-          <el-button @click="search">搜索</el-button>
-        </el-col>
-        <el-col></el-col>
+        <div style="float: right;margin-right:20px;">
+          <el-button style="float: left" @click="search">搜索</el-button>
+        </div>
+        <div style="float: right;margin-right: 10px;">
+          <el-input style="width: 140px" v-model="search_input" placeholder="请输入问题标题" ></el-input>
+        </div>
       </el-row>
     </div>
 
