@@ -3,7 +3,7 @@
     <span style="font-size: 30px;">收藏列表</span>
     <div>
       <el-row>
-        <el-col :span="4">
+        <el-col :span="4"  style="margin-left:20px;">
           <el-input v-model="search_input" placeholder="请输入问题标题" ></el-input>
         </el-col>
         <el-col :span="2">
