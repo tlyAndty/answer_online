@@ -13,24 +13,25 @@
           <img v-if="imageUrl" :src="imageUrl" class="avatar" style="">
           <i v-else class="el-icon-plus avatar-uploader-icon" style=""></i>
         </el-upload>
+        <div>点击头像即可更换</div>
       </el-form-item>
-      <!--el-form-item label="ID" prop="userid">
-        <el-input class="text" placeholder=data.userid v-model="user.userid" autocomplete="off" :readonly="true"></el-input>
-      </el-form-item-->
       <el-form-item label="名字" prop="name">
-        <el-input class="text" placeholder=data.name v-model="user.name" autocomplete="off"></el-input>
+        <el-input class="text" placeholder=data.name v-model="user.name" autocomplete="off" :readonly="isRead"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail">
-        <el-input class="text" placeholder=data.mail v-model="user.mail" autocomplete="off"></el-input>
+        <el-input class="text" placeholder=data.mail v-model="user.mail" autocomplete="off" :readonly="isRead"></el-input>
       </el-form-item>
-      <!--el-form-item label="旧密码" prop="pwd">
-        <el-input class="text" placeholder=data.pwd v-model.number="user.pwd" :readonly="true"></el-input>
-      </el-form-item-->
-      <el-form-item label="新密码" prop="newPwd">
-        <el-input class="text" placeholder=请输入新密码 v-model.number="user.newPwd"></el-input>
+      <el-form-item label="积分" prop="capital">
+        <el-input class="text" placeholder=data.capital v-model="user.capital" autocomplete="off" :readonly="true"></el-input>
+      </el-form-item>
+      <el-form-item v-show="isShow" label="旧密码" prop="pwd">
+        <el-input class="text" v-show="isShow" placeholder=请输入旧密码 v-model.number="user.pwd"></el-input>
+      </el-form-item>
+      <el-form-item v-show="isShow" label="新密码" prop="newPwd">
+        <el-input class="text" v-show="isShow" placeholder=请输入新密码 v-model.number="user.newPwd"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('infoForm')">修改</el-button>
+        <el-button type="primary" @click="show();submitForm('infoForm')">修改</el-button>
         <el-button @click="resetForm('infoForm')">重置</el-button>
       </el-form-item>
     </el-form >
@@ -39,18 +40,28 @@
 
 <script>
   import qs from 'qs';
+  import {isValidMail} from '../../js/rule';
   export default {
     name: "personalInformationOfUser",
     data() {
-      var validatePass = (rule, newPwd, callback) => {
-        if (newPwd === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (newPwd == this.user.pwd) {
-          callback(new Error('新密码不能与旧密码相同!'));
-        } else {
-          callback();
+      var validMail=(rule, value,callback)=>{
+        if (!value){
+          callback(new Error('请输入邮箱！'))
+        }else  if (!isValidMail(value)){
+          callback(new Error('请输入正确的邮箱！'))
+        }else {
+          callback()
         }
       };
+      // var validatePass = (rule, newPwd, callback) => {
+      //   if (!newPwd) {
+      //     callback(new Error('请再次输入密码'));
+      //   } else if (newPwd == this.user.pwd) {
+      //     callback(new Error('新密码不能与旧密码相同!'));
+      //   } else {
+      //     callback();
+      //   }
+      // };
       return {
         user: {
           userid:'',
@@ -59,10 +70,19 @@
           pwd: '',
           newPwd:'',
           image:'',
+          capital:'',
         },
+        isShow:false,
+        isRead:true,
         rules: {
+          pwd: [
+            {required: true, message: '请输入密码!', trigger: 'blur'}
+          ],
           newPwd: [
-            { validator: validatePass, trigger: 'blur' }
+            { required: true, message: '请再次输入旧密码或者输入新密码!', trigger: 'blur' }
+          ],
+          mail: [
+            {trigger: 'blur',validator: validMail}
           ],
         },
         imageUrl:'',
@@ -85,6 +105,11 @@
         this.id = this.$route.query.user_id
         console.log("传来的u参数=="+this.id)
       },
+      show: function (){
+        console.log("show");
+        this.isShow = true;
+        this.isRead = false;
+      },
       getqListData: function () {
         this.$axios.post('http://localhost:8080/online_answer/user/searchUserInfoByUserId',
           qs.stringify({
@@ -98,6 +123,7 @@
           this.user.mail = this.uData.mail
           this.user.pwd = this.uData.pwd
           this.user.image=this.uData.image
+          this.user.capital = this.uData.capital
           this.$store.state.user.image=this.user.image
           this.imageUrl = "http://localhost:8080"+this.uData.image
           console.log("uname",this.uData.name)
