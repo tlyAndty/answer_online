@@ -69,6 +69,8 @@
         uData:{},
         id:'',
         doUpload:'',
+        pwd:'',
+        newPwd:'',
       };
     },
     watch:{
@@ -106,6 +108,16 @@
         });
       },
       submitForm(formName) {
+        /*if(!this.user.newPwd){
+          console.log("没有修改密码")
+          this.pwd=this.user.pwd
+          this.newPwd=this.user.pwd
+        }
+        else {
+          console.log("修改了密码")
+          this.pwd=this.user.pwd
+          this.newPwd=this.user.newPwd
+        }*/
         this.$refs[formName].validate((valid) => {
           console.log("formName:",this.user.name)
           if (valid) {
