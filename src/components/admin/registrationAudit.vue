@@ -63,9 +63,9 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.mail)">查看详情</el-button>
-            <el-button type="text" @click="acceptUser(scope.row.userId)">通过</el-button>
-            <el-button type="text" @click="rejectUser(scope.row.userId)">拒绝</el-button>
+            <a style="text-decoration: none;color: #409EFF;" @click="checkDetail(scope.row.mail)">查看详情</a>
+            <a style="text-decoration: none;color: #409EFF;" @click="acceptUser(scope.row.userId)">通过</a>
+            <a style="text-decoration: none;color: #409EFF;" @click="rejectUser(scope.row.userId)">拒绝</a>
           </template>
         </el-table-column>
 

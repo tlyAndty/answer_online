@@ -84,7 +84,7 @@
         <template slot-scope="scope">
           <!--el-button type="text" @click="checkDetail(scope.row.comId)">查看详情</el-button-->
           <!--el-button type="text" @click="modifyCom(scope.row.comId,scope.row.comContent)">查看详情</el-button-->
-          <el-button type="text" @click="deleteCom(scope.row.comId)">删除</el-button>
+          <a style="text-decoration: none;color: #409EFF;" @click="deleteCom(scope.row.comId)">删除</a>
         </template>
       </el-table-column>
 

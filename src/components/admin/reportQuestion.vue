@@ -97,8 +97,8 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="passReport(scope.row.reportId)">通过</el-button>
-            <el-button type="text" @click="rejectReport(scope.row.reportId)">拒绝</el-button>
+            <a style="text-decoration: none;color: #409EFF;" @click="passReport(scope.row.reportId)">通过</a>
+            <a style="text-decoration: none;color: #409EFF;" @click="rejectReport(scope.row.reportId)">拒绝</a>
           </template>
         </el-table-column>
 

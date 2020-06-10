@@ -80,8 +80,8 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.quesId)">查看详情</el-button>
-            <el-button type="text" @click="deleteCol(scope.row.quesId)">取消收藏</el-button>
+            <a style="text-decoration: none;color: #409EFF;" @click="checkDetail(scope.row.quesId)">查看详情</a>
+            <a style="text-decoration: none;color: #409EFF;" @click="deleteCol(scope.row.quesId)">取消收藏</a>
           </template>
         </el-table-column>
 
