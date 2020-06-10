@@ -258,7 +258,7 @@
             })
           ).then((response) => {
             console.log(response.data.resultCode);
-            alert("阅读此回答")
+            console.log("阅读此回答")
             console.log("quesid",quesid)
             this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
           }).catch((error) => {

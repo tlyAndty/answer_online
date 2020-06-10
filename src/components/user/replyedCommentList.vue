@@ -278,7 +278,7 @@
             })
           ).then((response) => {
             console.log(response.data.resultCode);
-            alert("阅读此评论")
+            console.log("阅读此评论")
             console.log("ansid",ansid)
             this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
               qs.stringify({

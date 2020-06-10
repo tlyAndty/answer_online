@@ -17,7 +17,7 @@
                 <router-link style="font-size: 30px;color: #333333;text-decoration:none;text-shadow: none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesTitle}}</router-link>
               </div>
               <div class="summary_oneline" style="margin-bottom: 4px;color: #8a8a8a;font-size: 14px;line-height: 24px;">
-                <router-link style style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesContent}}</router-link>
+                <router-link style="color: #8a8a8a;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesContent}}</router-link>
               </div>
               <div class="list_userbar" style="line-height: 24px;font-size: 14px;color: #8a8a8a;height: 24px">
                 <div class="name" style="float: left">
