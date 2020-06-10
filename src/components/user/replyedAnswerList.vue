@@ -100,9 +100,9 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="checkDetail(scope.row.quesId,scope.row.ansId,scope.row.isRead)">查看详情</el-button>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.quesId,scope.row.ansId,scope.row.isRead)">查看详情</a>
             <!--el-button type="text" @click="modifyAns(scope.row.ansId,scope.row.ansContent)">查看详情</el-button-->
-            <el-button type="text" @click="deleteAns(scope.row.ansId)">删除</el-button>
+            <a style="text-decoration: none;color: #409EFF;" @click="deleteAns(scope.row.ansId)">删除</a>
           </template>
         </el-table-column>
 
