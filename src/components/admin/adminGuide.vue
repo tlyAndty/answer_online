@@ -17,12 +17,12 @@
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-chat-round"></i>回答管理</template>
           <el-menu-item index="answerListOfAdmin">所有回答列表</el-menu-item>
-          <el-menu-item index="blockedAnswerListOfAdmin">被屏蔽回答列表</el-menu-item>
+          <!--el-menu-item index="blockedAnswerListOfAdmin">被屏蔽回答列表</el-menu-item-->
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-chat-dot-square"></i>评论管理</template>
           <el-menu-item index="commentListOfAdmin">所有评论列表</el-menu-item>
-          <el-menu-item index="blockedCommentListOfAdmin">被屏蔽评论列表</el-menu-item>
+          <!--el-menu-item index="blockedCommentListOfAdmin">被屏蔽评论列表</el-menu-item-->
         </el-submenu>
         <el-submenu index="5">
           <template slot="title"><i class="el-icon-message"></i>举报管理</template>

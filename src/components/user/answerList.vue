@@ -191,7 +191,7 @@
                 }
               }
             }else if(this.testaListData.length!=0){
-              console.log("清空this.testuListData")
+              console.log("清空this.testaListData")
               this.testaListData.length=0
               for(let item of this.aListData) {
                 //console.log("item:", this.value[0])

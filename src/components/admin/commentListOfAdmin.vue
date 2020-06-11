@@ -3,6 +3,18 @@
     <span style="font-size: 30px">所有评论列表</span>
     <div style="margin-top: 20px;">
       <el-row>
+        <div style="float: left">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </div>
+        <div style="float: left">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -86,7 +98,7 @@
           min-width="100">
           <template slot-scope="scope">
             <a v-if="scope.row.comment.comState==0" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockCom(scope.row.comment.comId)">屏蔽</a>
-            <a v-if="scope.row.comment.comState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockCom(scope.row.comment.comId)">取消屏蔽</a>
+            <a v-if="scope.row.comment.comState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockCom(scope.row.comment.comId,scope.row.comment.comState)">取消屏蔽</a>
           </template>
         </el-table-column>
 
@@ -108,6 +120,7 @@
     data() {
       return {
         cListData:[],
+        testcListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -115,6 +128,27 @@
         total: null,
         page:1,
         id: '',
+        options: [{
+          value: 'comState',
+          label: '评论的状态',
+          children: [{
+            value: '0',
+            label: '未屏蔽'
+          }, {
+            value: '1',
+            label: '管理员屏蔽'
+          }, {
+            value: '2',
+            label: '因回答者被拉黑而被屏蔽'
+          }, {
+            value: '3',
+            label: '因问题被屏蔽而被屏蔽'
+          }, {
+            value: '4',
+            label: '因回答被屏蔽而被屏蔽'
+          }]
+        }],
+        value: ''
       }
     },
     watch:{
@@ -142,7 +176,28 @@
         ).then((response) => {
           console.log("Cdata:",response.data.data);
           this.cListData = response.data.data;
-          this.data=this.cListData
+          if(this.value){
+            if(this.testcListData.length!=0){
+              console.log("清空this.testcListData")
+              this.testcListData.length=0
+            }
+            for(let item of this.cListData) {
+              //console.log("item:", this.value[0])
+              if(this.value[0]=='comState'){
+                //console.log("value[0]是类型分类")
+                if(item.comment.comState==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testcListData.push(item)
+                  console.log("item",item)
+                }
+              }
+            }
+            console.log("this.testcListData是",this.testcListData)
+            this.data = this.testcListData
+          }else {
+            this.data = this.cListData
+          }
+          //this.data=this.cListData
           console.log("this.data:",this.data)
           console.log("total1:",this.data.length)
           this.getlist()
@@ -176,19 +231,26 @@
         this.page = 1
         this.getcListData()
       },
-      unblockCom(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
-          qs.stringify({
-            ansId: val,
-            ansState: '0',
-          })
-        ).then((response) => {
-          console.log(response.data.resultCode)
-          console.log("修改成功")
-        }).catch((error) => {
-          console.log(error);
-        });
-        location.reload()
+      unblockCom(val1,val2){
+        if(val2==1){
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
+            qs.stringify({
+              ansId: val1,
+              ansState: '0',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+            alert("取消屏蔽成功")
+            history.go(0)
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+        else {
+          alert("不属于被管理员屏蔽，无法取消屏蔽")
+        }
+        //location.reload()
       },
       blockCom(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
@@ -199,10 +261,12 @@
         ).then((response) => {
           console.log(response.data.resultCode)
           console.log("修改成功")
+          alert("屏蔽成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
-        location.reload()
+        //location.reload()
       },
       formatState(row, column) {
         if (row.comment.comState === 0) {
@@ -213,9 +277,22 @@
           return '因回答者被拉黑而被屏蔽'
         } else if (row.comment.comState === 3) {
           return '因问题被屏蔽而被屏蔽'
+        } else if (row.comment.comState === 4){
+          return '因回答被屏蔽而被屏蔽'
         }
-
-      }
+      },
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        this.page = 1
+        this.getcListData()
+        /*if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
+        }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }*/
+      },
 
     },
 

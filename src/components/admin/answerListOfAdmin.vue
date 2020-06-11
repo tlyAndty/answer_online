@@ -3,6 +3,18 @@
     <span style="font-size: 30px">所有回答列表</span>
     <div style="margin-top: 20px;">
       <el-row>
+        <div style="float: left">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </div>
+        <div style="float: left">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -116,7 +128,7 @@
           min-width="100">
           <template slot-scope="scope">
             <a v-if="scope.row.answer.ansState==0" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockAns(scope.row.answer.ansId)">屏蔽</a>
-            <a v-if="scope.row.answer.ansState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockAns(scope.row.answer.ansId)">取消屏蔽</a>
+            <a v-if="scope.row.answer.ansState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockAns(scope.row.answer.ansId,scope.row.answer.ansState)">取消屏蔽</a>
           </template>
         </el-table-column>
 
@@ -138,6 +150,7 @@
     data() {
       return {
         aListData:[],
+        testaListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -145,6 +158,24 @@
         total: null,
         page:1,
         id: '',
+        options: [{
+          value: 'ansState',
+          label: '回答的状态',
+          children: [{
+            value: '0',
+            label: '未屏蔽'
+          }, {
+            value: '1',
+            label: '管理员屏蔽'
+          }, {
+            value: '2',
+            label: '因回答者被拉黑而被屏蔽'
+          }, {
+            value: '3',
+            label: '因问题被屏蔽而被屏蔽'
+          }]
+        }],
+        value: ''
       }
     },
     watch:{
@@ -172,9 +203,31 @@
         ).then((response) => {
           console.log("Adata:",response.data.data);
           this.aListData = response.data.data;
-          this.data=this.aListData
+          console.log("this.value:", this.value)
+          if(this.value){
+            if(this.testaListData.length!=0){
+              console.log("清空this.testaListData")
+              this.testaListData.length=0
+            }
+            for(let item of this.aListData) {
+              //console.log("item:", item)
+              if(this.value[0]=='ansState'){
+                //console.log("value[0]是类型分类")
+                if(item.answer.ansState==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testaListData.push(item)
+                  console.log("item:",item.answer)
+                }
+              }
+            }
+            console.log("this.testaListData是",this.testaListData)
+            this.data = this.testaListData
+          }else {
+            this.data = this.aListData
+          }
+          //this.data=this.aListData
           console.log("this.data:",this.data)
-          console.log("total1:",this.data.length)
+          //console.log("total1:",this.data.length)
           this.getlist()
         }).catch((error) => {
           console.log(error);
@@ -183,14 +236,14 @@
       },
       getlist(){
         let aListData = this.data.filter((item,index) =>
-          item.user_name.includes(this.search_input)
+          item.answer.ansContent.includes(this.search_input)
         )
         this.aListData=aListData.filter((item,index)=>
           index < this.page * this.limit && index >= this.limit * (this.page - 1)
           //console.log(index,index < this.page * this.limit && index >= this.limit * (this.page - 1))
         )
         this.total = aListData.length
-        console.log("total2:",aListData.length)
+       //console.log("total2:",aListData.length)
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -206,20 +259,25 @@
         this.page = 1
         this.getaListData()
       },
-      unblockAns(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
-          qs.stringify({
-            ansId: val,
-            ansState: '0',
-          })
-        ).then((response) => {
-          console.log(response.data.resultCode)
-          console.log("修改成功")
-          alert("取消屏蔽成功")
-          history.go(0)
-        }).catch((error) => {
-          console.log(error);
-        });
+      unblockAns(val1,val2){
+        if(val2==1) {
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
+            qs.stringify({
+              ansId: val1,
+              ansState: '0',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+            alert("取消屏蔽成功")
+            history.go(0)
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+        else {
+          alert("不属于被管理员屏蔽，无法取消屏蔽")
+        }
         //location.reload()
       },
       blockAns(val){
@@ -256,8 +314,19 @@
           return '因问题被屏蔽而被屏蔽'
         }
 
-      }
-
+      },
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        this.page = 1
+        this.getaListData()
+        /*if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
+        }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }*/
+      },
     },
 
   }
