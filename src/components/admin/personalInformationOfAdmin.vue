@@ -100,6 +100,7 @@
           this.isRead = false;
         },
         getParams:function () {
+          console.log("")
           this.id = this.$route.query.admin_id
           console.log("传来的adminid参数=="+this.id)
         },

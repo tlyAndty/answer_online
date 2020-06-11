@@ -77,14 +77,14 @@
                     删除
                   </a-->
                 </div>
+                <div class="state" v-if="item.question.quesState!=0" style="float: left;margin-left: 20px;font-size: 12px;color: lightcoral">
+                  <span>[已被屏蔽]</span>
+                </div>
                 <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
                   <a class="reportQues" @click="reportQues(item.question.userId)">
                     举报此问题
                   </a>
                 </div>
-              </div>
-              <div class="state" v-if="item.question.quesState!=0" style="font-size: 12px;color: lightcoral">
-                <span>[已被屏蔽]</span>
               </div>
             </div>
           </li>
