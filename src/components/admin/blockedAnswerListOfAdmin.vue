@@ -115,7 +115,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="unblockAns(scope.row.answer.ansId)">取消屏蔽</a>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="unblockAns(scope.row.answer.ansId,scope.row.answer.ansState)">取消屏蔽</a>
           </template>
         </el-table-column>
 
@@ -216,19 +216,27 @@
         this.page = 1
         this.getbaListData()
       },
-      unblockAns(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
-          qs.stringify({
-            ansId: val,
-            ansState: '0',
-          })
-        ).then((response) => {
-          console.log(response.data.resultCode)
-          console.log("修改成功")
-        }).catch((error) => {
-          console.log(error);
-        });
-        location.reload()
+      unblockAns(val1,val2){
+        if(val2==1){
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
+            qs.stringify({
+              ansId: val1,
+              ansState: '0',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+            alert("取消屏蔽成功")
+            history.go(0)
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+        else {
+          alert("不属于被管理员屏蔽，无法取消屏蔽")
+        }
+
+        //location.reload()
       },
       blockAns(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
@@ -239,10 +247,12 @@
         ).then((response) => {
           console.log(response.data.resultCode)
           console.log("修改成功")
+          alert("屏蔽成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
-        location.reload()
+        //location.reload()
       },
       formatBestAnswer(row, column) {
         if (row.answer.bestAnswer === 0) {

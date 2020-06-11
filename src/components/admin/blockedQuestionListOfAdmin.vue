@@ -70,7 +70,7 @@
           header-align="left"
           align="left"
           :show-overflow-tooltip="true"
-          :formatter="formatAnsState"
+          :formatter="formatState"
         >
         </el-table-column>
         <el-table-column
@@ -78,8 +78,8 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.quesId)">查看详情</a>
-            <a style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.quesId)">取消屏蔽</a>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.question.quesId)">查看详情</a>
+            <a style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.quesId,scope.row.question.quesState)">取消屏蔽</a>
           </template>
         </el-table-column>
 
@@ -206,19 +206,26 @@
           this.page = 1
           this.getbqListData()
         },
-        unblockQues(val){
-          this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
-            qs.stringify({
-              quesId: val,
-              quesState: '0',
-            })
-          ).then((response) => {
-            console.log(response.data.resultCode)
-            console.log("修改成功")
-          }).catch((error) => {
-            console.log(error);
-          });
-          location.reload()
+        unblockQues(val1,val2){
+          if(val2==1){
+            this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
+              qs.stringify({
+                quesId: val1,
+                quesState: '0',
+              })
+            ).then((response) => {
+              console.log(response.data.resultCode)
+              console.log("修改成功")
+              alert("取消屏蔽成功")
+              history.go(0)
+            }).catch((error) => {
+              console.log(error);
+            });
+          }
+          else {
+            alert("不属于被管理员屏蔽，无法取消屏蔽")
+          }
+
         },
         checkDetail(val){
           this.$router.push({path:'/questionPage',query:{ques_id:val}})

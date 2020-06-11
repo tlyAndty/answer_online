@@ -215,10 +215,12 @@
         ).then((response) => {
           console.log(response.data.resultCode)
           console.log("修改成功")
+          alert("取消屏蔽成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
-        location.reload()
+        //location.reload()
       },
       blockAns(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
@@ -229,10 +231,12 @@
         ).then((response) => {
           console.log(response.data.resultCode)
           console.log("修改成功")
+          alert("屏蔽成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
-        location.reload()
+        //location.reload()
       },
       formatBestAnswer(row, column) {
         if (row.answer.bestAnswer === 0) {

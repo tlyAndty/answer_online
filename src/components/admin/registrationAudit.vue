@@ -37,14 +37,14 @@
         >
         </el-table-column>
 
-        <el-table-column
+        <!--el-table-column
           sortable
           prop="pwd"
           label="用户密码"
           header-align="left"
           align="left"
           :show-overflow-tooltip="true">
-        </el-table-column>
+        </el-table-column-->
 
         <el-table-column
           sortable
@@ -63,7 +63,7 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.mail)">查看详情</a>
+            <!--a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.mail)">查看详情</a-->
             <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="acceptUser(scope.row.userId)">通过</a>
             <a style="text-decoration: none;color: #409EFF;" @click="rejectUser(scope.row.userId)">拒绝</a>
           </template>
@@ -185,7 +185,7 @@
         }).catch((error) => {
           console.log(error);
         });
-        location.reload()
+        //location.reload()
       },
       checkDetail(val){
         this.$router.push({path:'/registerInfo',query:{user_mail:val,user_id:this.id}})

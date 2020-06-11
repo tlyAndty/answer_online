@@ -11,9 +11,9 @@
       <el-form-item label="邮箱" prop="mail">
         <el-input class="text" placeholder=data.mail v-model="user.mail" :readonly="true" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pwd">
+      <!--el-form-item label="密码" prop="pwd">
         <el-input class="text" placeholder=data.pwd v-model="user.pwd" type="password" :readonly="true"></el-input>
-      </el-form-item>
+      </el-form-item-->
       <el-form-item label="注册时间" prop="pwd">
         <el-input class="text" placeholder=data.add_time v-model="user.add_time" :readonly="true">
         </el-input>

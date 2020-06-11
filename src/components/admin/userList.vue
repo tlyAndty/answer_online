@@ -3,6 +3,18 @@
     <span style="font-size: 30px">所有用户列表</span>
     <div style="margin-top: 20px;">
       <el-row>
+        <div style="float: left">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </div>
+        <div style="float: left">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -76,9 +88,11 @@
         align="center"
         min-width="100">
         <template slot-scope="scope">
-          <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.userId)">查看详情</a>
-          <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blacklistUser(scope.row.userId)">拉黑</a>
-          <a style="text-decoration: none;color: #409EFF;" @click="unblacklistUser(scope.row.userId)">取消拉黑</a>
+          <a v-if="scope.row.state==1||scope.row.state==2" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.userId)">查看详情</a>
+          <a v-if="scope.row.state==1" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blacklistUser(scope.row.userId)">拉黑</a>
+          <a v-if="scope.row.state==2" style="text-decoration: none;color: #409EFF;" @click="unblacklistUser(scope.row.userId)">取消拉黑</a>
+          <a v-if="scope.row.state==0" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="acceptUser(scope.row.userId)">通过</a>
+          <a v-if="scope.row.state==0" style="text-decoration: none;color: #409EFF;" @click="rejectUser(scope.row.userId)">拒绝</a>
         </template>
       </el-table-column>
 
@@ -102,6 +116,7 @@
       data() {
         return {
           uListData:[],
+          testuListData:[],
           data: [],
           search_input: '',
           timeout: null,
@@ -109,6 +124,24 @@
           total: null,
           page:1,
           id:'',
+          options: [{
+            value: 'state',
+            label: '用户的状态',
+            children: [{
+              value: '0',
+              label: '未审核'
+            }, {
+              value: '1',
+              label: '正常'
+            }, {
+              value: '2',
+              label: '被拉黑'
+            },{
+              value: '3',
+              label: '审核未通过'
+            }]
+          }],
+          value: ''
         }
       },
       created() {
@@ -135,7 +168,28 @@
           ).then((response) => {
             console.log(response.data.data);
             this.uListData = response.data.data;
-            this.data = this.uListData
+            if(this.value){
+              if(this.testuListData.length!=0){
+                console.log("清空this.testuListData")
+                this.testuListData.length=0
+              }
+              for(let item of this.uListData) {
+                //console.log("item:", this.value[0])
+                if(this.value[0]=='state'){
+                  //console.log("value[0]是类型分类")
+                  if(item.state==this.value[1]) {
+                    console.log("value[1]是",this.value[1])
+                    this.testuListData.push(item)
+                    console.log("item",item)
+                  }
+                }
+              }
+              console.log("this.testuListData是",this.testuListData)
+              this.data = this.testuListData
+            }else {
+              this.data = this.uListData
+            }
+            //this.data = this.uListData
             this.getlist();
           }).catch((error) => {
             console.log(error);
@@ -173,11 +227,13 @@
           ).then((response) => {
             console.log(response.data.resultCode)
             console.log("修改成功")
+            alert("取消拉黑成功")
+            history.go(0)
           }).catch((error) => {
             console.log(error);
           });
           //this.reload()
-          location.reload()
+          //location.reload()
         },
         blacklistUser(val){
           this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
@@ -188,11 +244,13 @@
           ).then((response) => {
             console.log(response.data.resultCode)
             console.log("修改成功")
+            alert("拉黑成功")
+            history.go(0)
           }).catch((error) => {
             console.log(error);
           });
           //this.reload()
-          location.reload()
+          //location.reload()
         },
         checkDetail(val){
           this.$router.push({path:'/userPage',query:{user_id:val}})
@@ -208,7 +266,54 @@
           } else if (row.state === 3) {
             return '审核未通过'
           }
-        }
+        },
+        rejectUser(val){
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+            qs.stringify({
+              userId: val,
+              userState: '3',
+            })
+          ).then((response) => {
+            console.log(response.data)
+            console.log("修改成功")
+            alert("拒绝此用户的申请")
+            history.go(0)
+          }).catch((error) => {
+            console.log(error);
+          });
+          //location.reload()
+        },
+        acceptUser(val){
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+            qs.stringify({
+              userId: val,
+              userState: '1',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+            alert("通过此用户的申请")
+            history.go(0)
+          }).catch((error) => {
+            console.log(error);
+          });
+        },
+        checkDetail(val){
+          this.$router.push({path:'/userPage',query:{user_id:val}})
+          console.log(val)
+        },
+        selectChange(value) {
+          console.log("value0",value[0])
+          console.log("value1",value[1])
+          this.page = 1
+          this.getuListData()
+          /*if(value[0]=='reportType'){
+            console.log("根据处理结果分类")
+          }
+          else if(value[0]=='reportState'){
+            console.log("根据处理结果分类")
+          }*/
+        },
       },
     }
 </script>

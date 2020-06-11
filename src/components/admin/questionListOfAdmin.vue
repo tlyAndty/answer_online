@@ -3,6 +3,18 @@
     <span style="font-size: 30px">所有问题列表</span>
     <div style="margin-top: 20px;">
       <el-row>
+        <div style="float: left">
+          <el-cascader
+            v-model="value"
+            style="width: 200px;float: left;margin-left: 20px"
+            :options="options"
+            @change="selectChange"
+          >
+          </el-cascader>
+        </div>
+        <div style="float: left">
+          <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -80,7 +92,7 @@
         <template slot-scope="scope">
           <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.question.quesId)">查看详情</a>
           <a v-if="scope.row.question.quesState==0" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockQues(scope.row.question.quesId)">屏蔽</a>
-          <a v-if="scope.row.question.quesState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.question.quesId)">取消屏蔽</a>
+          <a v-if="scope.row.question.quesState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.question.quesId,scope.row.question.quesState)">取消屏蔽</a>
         </template>
       </el-table-column>
 
@@ -102,6 +114,7 @@
     data() {
       return {
         qListData:[],
+        testqListData:[],
         data: [],
         search_input: '',
         timeout: null,
@@ -109,6 +122,21 @@
         total: null,
         page:1,
         id: '',
+        options: [{
+          value: 'quesState',
+          label: '问题的状态',
+          children: [{
+            value: '0',
+            label: '未屏蔽'
+          }, {
+            value: '1',
+            label: '管理员屏蔽'
+          }, {
+            value: '2',
+            label: '因用户被拉黑而被屏蔽'
+          }]
+        }],
+        value: ''
       }
     },
     watch:{
@@ -136,7 +164,28 @@
         ).then((response) => {
           console.log(response.data.data);
           this.qListData = response.data.data;
-          this.data=this.qListData
+          if(this.value){
+            if(this.testqListData.length!=0){
+              console.log("清空this.testqListData")
+              this.testqListData.length=0
+            }
+            for(let item of this.qListData) {
+              //console.log("item:", this.value[0])
+              if(this.value[0]=='quesState'){
+                //console.log("value[0]是类型分类")
+                if(item.question.quesState==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testqListData.push(item)
+                  console.log("item",item)
+                }
+              }
+            }
+            console.log("this.testqListData是",this.testqListData)
+            this.data = this.testqListData
+          }else {
+            this.data = this.qListData
+          }
+          //this.data=this.qListData
           console.log("this.data:",this.data)
           console.log("total1:",this.data.length)
           this.getlist()
@@ -179,24 +228,33 @@
         ).then((response) => {
           console.log(response.data.resultCode)
           console.log("修改成功")
+          alert("屏蔽成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
-        location.reload()
+        //location.reload()
       },
-      unblockQues(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
-          qs.stringify({
-            quesId: val,
-            quesState: '0',
-          })
-        ).then((response) => {
-          console.log(response.data.resultCode)
-          console.log("修改成功")
-        }).catch((error) => {
-          console.log(error);
-        });
-        location.reload()
+      unblockQues(val1,val2){
+        if(val2==1){
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
+            qs.stringify({
+              quesId: val1,
+              quesState: '0',
+            })
+          ).then((response) => {
+            console.log(response.data.resultCode)
+            console.log("修改成功")
+            alert("取消屏蔽成功")
+            history.go(0)
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+        else {
+          alert("不属于被管理员屏蔽，无法取消屏蔽")
+        }
+        //location.reload()
       },
       checkDetail(val){
         this.$router.push({path:'/questionPage',query:{ques_id:val}})
@@ -223,8 +281,19 @@
         } else if (row.question.quesState === 2) {
           return '因用户被拉黑而被屏蔽'
         }
-      }
-
+      },
+      selectChange(value) {
+        console.log("value0",value[0])
+        console.log("value1",value[1])
+        this.page = 1
+        this.getqListData()
+        /*if(value[0]=='reportType'){
+          console.log("根据处理结果分类")
+        }
+        else if(value[0]=='reportState'){
+          console.log("根据处理结果分类")
+        }*/
+      },
     },
 
   }

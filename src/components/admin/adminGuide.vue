@@ -5,14 +5,14 @@
       <el-menu :unique-opened="true" :default-active="$route.path"            @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>用户管理</template>
-          <el-menu-item index="userList">所有用户列表</el-menu-item>
-          <el-menu-item index="registrationAudit">待审核用户列表</el-menu-item>
-          <el-menu-item index="blacklistedUserList">被拉黑用户列表</el-menu-item>
+          <el-menu-item index="userList">用户列表</el-menu-item>
+          <!--el-menu-item index="registrationAudit">待审核用户列表</el-menu-item>
+          <el-menu-item index="blacklistedUserList">被拉黑用户列表</el-menu-item-->
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-postcard"></i>问题管理</template>
-          <el-menu-item index="questionListOfAdmin">所有问题列表</el-menu-item>
-          <el-menu-item index="blockedQuestionListOfAdmin">被屏蔽问题列表</el-menu-item>
+          <el-menu-item index="questionListOfAdmin">问题列表</el-menu-item>
+          <!--el-menu-item index="blockedQuestionListOfAdmin">被屏蔽问题列表</el-menu-item-->
         </el-submenu>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-chat-round"></i>回答管理</template>
