@@ -82,7 +82,6 @@
         </el-table-column>
 
         <el-table-column
-          sortable
           prop="comment.comState"
           label="评论状态"
           header-align="left"

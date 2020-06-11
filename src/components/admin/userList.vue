@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">所有用户列表</span>
+    <span style="font-size: 30px">用户列表</span>
     <div style="margin-top: 20px;">
       <el-row>
         <div style="float: left">
@@ -42,7 +42,6 @@
       </el-table-column>
 
       <el-table-column
-        sortable
         prop="mail"
         label="用户邮箱"
         header-align="left"
@@ -52,7 +51,6 @@
       </el-table-column>
 
       <el-table-column
-        sortable
         prop="name"
         label="用户名字"
         header-align="left"
@@ -61,7 +59,6 @@
       </el-table-column>
 
       <el-table-column
-        sortable
         prop="state"
         label="用户状态"
         header-align="left"
@@ -82,6 +79,15 @@
           {{ uListData.row.addTime | dateFmt('YYYY-MM-DD HH:mm:ss')}}
         </template>
       </el-table-column>
+
+        <el-table-column
+          sortable
+          prop="reportNum"
+          label="被举报数量"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true">
+        </el-table-column>
 
       <el-table-column
         label="操作"

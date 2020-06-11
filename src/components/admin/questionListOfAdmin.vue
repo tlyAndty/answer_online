@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">所有问题列表</span>
+    <span style="font-size: 30px">问题列表</span>
     <div style="margin-top: 20px;">
       <el-row>
         <div style="float: left">
@@ -42,7 +42,6 @@
       </el-table-column>
 
       <el-table-column
-        sortable
         prop="question.quesTitle"
         label="问题标题"
         header-align="left"
@@ -64,7 +63,6 @@
       </el-table-column>
 
       <el-table-column
-        sortable
         prop="question.quesAnsState"
         label="问题解决状态"
         header-align="left"
@@ -75,7 +73,6 @@
       </el-table-column>
 
       <el-table-column
-        sortable
         prop="question.quesState"
         label="问题状态"
         header-align="left"
