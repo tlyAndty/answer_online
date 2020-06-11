@@ -36,7 +36,7 @@
           <!--span style="margin-right: 5px">{{admin.name}}</span-->
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">{{admin.name}}</router-link>
           <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position: relative;top: 20px" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" height="50px" width="50px">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" style="height:50px;width:50px;border-radius:25px;border:none;">
           </router-link>
           <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
