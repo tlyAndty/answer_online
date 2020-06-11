@@ -36,15 +36,15 @@ import collectionList from "../components/user/collectionList";
 import adminGuide from "../components/admin/adminGuide";
 import registerInfo from "../components/admin/registerInfo";
 import questionListOfAdmin from "../components/admin/questionListOfAdmin";
-import blockedQuestionListOfAdmin from "../components/admin/blockedQuestionListOfAdmin";
+//import blockedQuestionListOfAdmin from "../components/admin/blockedQuestionListOfAdmin";
 import userList from "../components/admin/userList";
-import blacklistedUserList from "../components/admin/blacklistedUserList";
+//import blacklistedUserList from "../components/admin/blacklistedUserList";
 import registrationAudit from "../components/admin/registrationAudit";
 import personalInformationOfAdmin from "../components/admin/personalInformationOfAdmin";
 import answerListOfAdmin from "../components/admin/answerListOfAdmin";
-import blockedAnswerListOfAdmin from "../components/admin/blockedAnswerListOfAdmin";
+//import blockedAnswerListOfAdmin from "../components/admin/blockedAnswerListOfAdmin";
 import commentListOfAdmin from "../components/admin/commentListOfAdmin";
-import blockedCommentListOfAdmin from "../components/admin/blockedCommentListOfAdmin";
+//import blockedCommentListOfAdmin from "../components/admin/blockedCommentListOfAdmin";
 //import reportUser from "../components/admin/reportUser";
 import reportQuestion from "../components/admin/reportQuestion";
 //import reportAnswer from "../components/admin/reportAnswer";
@@ -52,6 +52,7 @@ import reportQuestion from "../components/admin/reportQuestion";
 import processedReportQuestion from "../components/admin/processedReportQuestion";
 //import processedReportAnswer from "../components/admin/processedReportAnswer";
 //import processedReportComment from "../components/admin/processedReportComment";
+import registerChart from "../components/admin/registerChart";
 
 Vue.use(Router)
 export default new Router({
@@ -370,14 +371,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blockedQuestionListOfAdmin',
           name:'blockedQuestionListOfAdmin',
           component:blockedQuestionListOfAdmin,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/userList',
           name:'userList',
@@ -386,14 +387,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blacklistedUserList',
           name:'blacklistedUserList',
           component:blacklistedUserList,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/registrationAudit',
           name:'registrationAudit',
@@ -410,14 +411,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blockedAnswerListOfAdmin',
           name:'blockedAnswerListOfAdmin',
           component:blockedAnswerListOfAdmin,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         {
           path:'/commentListOfAdmin',
           name:'commentListOfAdmin',
@@ -426,14 +427,14 @@ export default new Router({
             keepAlive:true
           },
         },
-        {
+        /*{
           path:'/blockedCommentListOfAdmin',
           name:'blockedCommentListOfAdmin',
           component:blockedCommentListOfAdmin,
           meta:{
             keepAlive:true
           },
-        },
+        },*/
         /*{
           path:'/reportUser',
           name:'reportUser',
@@ -490,6 +491,14 @@ export default new Router({
             keepAlive:true
           },
         },*/
+        {
+          path:'/registerChart',
+          name:'registerChart',
+          component:registerChart,
+          meta:{
+            keepAlive:true
+          },
+        },
         {
           path:'/personalInformationOfAdmin',
           name:'personalInformationOfAdmin',

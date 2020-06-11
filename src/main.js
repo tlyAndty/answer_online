@@ -14,12 +14,14 @@ import axios from 'axios'
 import qs from 'qs'
 import VueResource from 'vue-resource'
 import moment from 'moment'
+import echarts from 'echarts'
 import './assets/icon/iconfont.css'
 
 
 Vue.use(VueQuillEditor)
 Vue.use(VueResource);
 Vue.prototype.$axios=axios
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 //全局过滤器
 Vue.filter('dateFmt', (input, formatString = "YYYY-MM-DD") => {
