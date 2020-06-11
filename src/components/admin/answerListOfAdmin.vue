@@ -115,8 +115,8 @@
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockAns(scope.row.answer.ansId)">屏蔽</a>
-            <a style="text-decoration: none;color: #409EFF;" @click="unblockAns(scope.row.answer.ansId)">取消屏蔽</a>
+            <a v-if="scope.row.answer.ansState==0" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockAns(scope.row.answer.ansId)">屏蔽</a>
+            <a v-if="scope.row.answer.ansState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockAns(scope.row.answer.ansId)">取消屏蔽</a>
           </template>
         </el-table-column>
 

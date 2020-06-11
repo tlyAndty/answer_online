@@ -79,8 +79,8 @@
         min-width="100">
         <template slot-scope="scope">
           <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.question.quesId)">查看详情</a>
-          <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockQues(scope.row.question.quesId)">屏蔽</a>
-          <a style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.question.quesId)">取消屏蔽</a>
+          <a v-if="scope.row.question.quesState==0" style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="blockQues(scope.row.question.quesId)">屏蔽</a>
+          <a v-if="scope.row.question.quesState!=0" style="text-decoration: none;color: #409EFF;" @click="unblockQues(scope.row.question.quesId)">取消屏蔽</a>
         </template>
       </el-table-column>
 
@@ -170,11 +170,11 @@
         this.page = 1
         this.getqListData()
       },
-      unblockQues(val){
+      blockQues(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
           qs.stringify({
             quesId: val,
-            quesState: '0',
+            quesState: '1',
           })
         ).then((response) => {
           console.log(response.data.resultCode)
@@ -184,11 +184,11 @@
         });
         location.reload()
       },
-      blockQues(val){
+      unblockQues(val){
         this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
           qs.stringify({
             quesId: val,
-            quesState: '1',
+            quesState: '0',
           })
         ).then((response) => {
           console.log(response.data.resultCode)
