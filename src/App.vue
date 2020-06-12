@@ -30,7 +30,7 @@
             <el-dropdown-item class="clearfix">
               <!--a href="" style="text-decoration:none">评论</a-->
               <router-link style="text-decoration:none" :to="{path:'replyedCommentList',query:{user_id: this.$store.state.user.userId}}">举报</router-link>
-              <el-badge class="mark" :value="this.notReadComment" />
+              <el-badge class="mark" :value="this.notReadReport" />
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -94,6 +94,9 @@
         cListData:[],
         bcListData:[],
         testcListData:[],
+        rListData:[],
+        brListData:[],
+        testrListData:[],
       }
     },
     methods:{
@@ -188,6 +191,33 @@
           console.log(error);
         });
       },
+      getrListData: function () {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchReportedsByTypeAndState',
+          qs.stringify({
+            reportedUserId: this.$store.state.user.userId,
+            reportType: '4',
+            reportState: '3',
+          })
+        ).then((response) => {
+          console.log("response.data.data",response.data.data);
+          this.brListData = response.data.data;
+            if(this.testrListData.length!=0){
+              console.log("清空this.testrListData")
+              this.testrListData.length=0
+            }for(let item of this.brListData) {
+              //console.log("item:", this.value[0])
+              if(item.isRead==0) {
+                //console.log("value[1]是",this.value[1])
+                this.testrListData.push(item)
+                //console.log(item)
+              }
+            }
+            console.log("this.testrListData是",this.testrListData)
+
+        }).catch((error) => {
+          console.log(error);
+        });
+      },
     },
     created() {
       //在页面刷新时将vuex里的信息保存到sessionStorage里
@@ -212,6 +242,7 @@
       }
       this.getaListData()
       this.getcListData()
+      this.getrListData()
     },
     computed: {
       user () {
@@ -235,14 +266,21 @@
         if(this.user){
           //this.getaListData()
           console.log("记录未读回答数",this.testaListData.length)
-          return this.testcListData.length
+          return this.testaListData.length
         }
       },
       notReadComment(){
         if(this.user){
           //this.getaListData()
           console.log("记录未读评论数",this.testcListData.length)
-          return this.testaListData.length
+          return this.testcListData.length
+        }
+      },
+      notReadReport(){
+        if(this.user){
+          //this.getaListData()
+          console.log("记录未读被举报数",this.testrListData.length)
+          return this.testrListData.length
         }
       },
     },

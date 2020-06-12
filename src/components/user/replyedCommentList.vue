@@ -128,7 +128,7 @@
         id:'',
         options: [{
           value: 'isRead',
-          label: '评论的状态',
+          label: '评论的阅读状态',
           children: [{
             value: '0',
             label: '未读'
@@ -279,6 +279,7 @@
           ).then((response) => {
             console.log(response.data.resultCode);
             console.log("阅读此评论")
+            alert("阅读此评论")
             console.log("ansid",ansid)
             this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
               qs.stringify({

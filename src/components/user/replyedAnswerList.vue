@@ -137,7 +137,7 @@
         id:'',
         options: [{
           value: 'isRead',
-          label: '回答的状态',
+          label: '回答的阅读状态',
           children: [{
             value: '0',
             label: '未读'
@@ -260,6 +260,7 @@
           ).then((response) => {
             console.log(response.data.resultCode);
             console.log("阅读此回答")
+            alert("阅读此回答")
             console.log("quesid",quesid)
             this.$router.push({path:'/questionPage',query:{ques_id:quesid}})
           }).catch((error) => {

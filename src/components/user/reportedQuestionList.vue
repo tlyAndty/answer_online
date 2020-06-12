@@ -92,6 +92,17 @@
 
         <el-table-column
           sortable
+          prop="isRead"
+          label="已读/未读"
+          header-align="left"
+          align="left"
+          :show-overflow-tooltip="true"
+          :formatter="formatReadState"
+        >
+        </el-table-column>
+
+        <el-table-column
+          sortable
           prop="reportTime"
           label="举报时间"
           header-align="left"
@@ -102,15 +113,14 @@
           </template>
         </el-table-column>
 
-        <!--el-table-column
+        <el-table-column
           label="操作"
           align="center"
           min-width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="passReport(scope.row.reportId)">通过</el-button>
-            <el-button type="text" @click="rejectReport(scope.row.reportId)">拒绝</el-button>
+            <a style="text-decoration: none;color: #409EFF;margin-right: 10px;" @click="checkDetail(scope.row.reportId,scope.row.reportType,scope.row.reportTypeId,scope.row.isRead)">查看详情</a>
           </template>
-        </el-table-column-->
+        </el-table-column>
 
       </el-table>
     </div>
@@ -163,7 +173,17 @@
             value: '2',
             label: '拒绝'
           }]
-        },],
+        }, {
+          value: 'isRead',
+          label: '被举报信息的阅读状态',
+          children: [{
+            value: '0',
+            label: '未读'
+          }, {
+            value: '1',
+            label: '已读'
+          }]
+        }],
         value: ''
       }
     },
@@ -192,48 +212,43 @@
           })
         ).then((response) => {
           console.log("response.data.data",response.data.data);
-          this.puListData = response.data.data;
+          //this.puListData = response.data.data;
+          for(let item of response.data.data) {
+            if(item.reportState!=0) {
+              this.puListData.push(item)
+              console.log(item)
+            }
+          }
+          console.log("this.puListData",this.puListData)
           if(this.value){
-            if(this.testuListData.length==0){
-              for(let item of this.puListData) {
-                console.log("item:", this.value[0])
-                if(this.value[0]=='reportType'){
-                  console.log("value[0]是类型分类")
-                  if(item.reportType==this.value[1]) {
-                    console.log("value[1]是",this.value[1])
-                    this.testuListData.push(item)
-                    console.log(item)
-                  }
-                }
-                else if(this.value[0]=='reportState'){
-                  console.log("value[0]是结果分类")
-                  if(item.reportState==this.value[1]) {
-                    console.log("value[1]是",this.value[1])
-                    this.testuListData.push(item)
-                    console.log(item)
-                  }
-                }
-              }
-            }else if(this.testuListData.length!=0){
+            if(this.testuListData.length!=0){
               console.log("清空this.testuListData")
               this.testuListData.length=0
-              for(let item of this.puListData) {
-                console.log("item:", this.value[0])
-                if(this.value[0]=='reportType'){
-                  console.log("value[0]是类型分类")
-                  if(item.reportType==this.value[1]) {
-                    console.log("value[1]是",this.value[1])
-                    this.testuListData.push(item)
-                    console.log(item)
-                  }
+            }
+            for(let item of this.puListData) {
+              console.log("item:", this.value[0])
+              if(this.value[0]=='reportType'){
+                console.log("value[0]是类型分类")
+                if(item.reportType==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testuListData.push(item)
+                  console.log(item)
                 }
-                else if(this.value[0]=='reportState'){
-                  console.log("value[0]是结果分类")
-                  if(item.reportState==this.value[1]) {
-                    console.log("value[1]是",this.value[1])
-                    this.testuListData.push(item)
-                    console.log(item)
-                  }
+              }
+              else if(this.value[0]=='reportState'){
+                console.log("value[0]是结果分类")
+                if(item.reportState==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testuListData.push(item)
+                  console.log(item)
+                }
+              }
+              else if(this.value[0]=='isRead'){
+                console.log("value[0]是阅读状态分类")
+                if(item.isRead==this.value[1]) {
+                  console.log("value[1]是",this.value[1])
+                  this.testuListData.push(item)
+                  console.log(item)
                 }
               }
             }
@@ -318,6 +333,88 @@
           return '回答'
         } else if (row.reportType === 3) {
           return '评论'
+        }
+      },
+      formatReadState(row, column) {
+        if (row.isRead === 0) {
+          return '未读'
+        } else if (row.isRead === 1) {
+          return '已读'
+        }
+      },
+      checkDetail(reportid,reporttype,reportTypeid,isread){
+        if(isread==0){
+          this.$axios.post('http://localhost:8080/online_answer/user/readReport',
+            qs.stringify({
+              reportId: reportid,
+            })
+          ).then((response) => {
+            console.log(response.data.data);
+            console.log("阅读此举报")
+            alert("阅读此举报")
+            //console.log("quesid",quesid)
+            if(reporttype==1){
+              console.log("这是问题")
+              this.$router.push({path:'/questionPage',query:{ques_id:reportTypeid}})
+            }else if(reporttype==2){
+              console.log("这是回答")
+              this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+                qs.stringify({
+                  ansId: reportTypeid,
+                })
+              ).then((response) => {
+                console.log(response.data.data);
+                this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+              }).catch((error) => {
+                console.log(error);
+              });
+            }else if(reporttype==3){
+              console.log("这是评论")
+              this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+                qs.stringify({
+                  ansId: reportTypeid,
+                })
+              ).then((response) => {
+                console.log(response.data.data);
+                this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+              }).catch((error) => {
+                console.log(error);
+              });
+            }
+
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
+        else {
+          if(reporttype==1){
+            console.log("这是问题")
+            this.$router.push({path:'/questionPage',query:{ques_id:reportTypeid}})
+          }else if(reporttype==2){
+            console.log("这是回答")
+            this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+              qs.stringify({
+                ansId: reportTypeid,
+              })
+            ).then((response) => {
+              console.log(response.data.data);
+              this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+            }).catch((error) => {
+              console.log(error);
+            });
+          }else if(reporttype==3){
+            console.log("这是评论")
+            this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+              qs.stringify({
+                ansId: reportTypeid,
+              })
+            ).then((response) => {
+              console.log(response.data.data);
+              this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+            }).catch((error) => {
+              console.log(error);
+            });
+          }
         }
       },
       selectChange(value) {
