@@ -154,6 +154,7 @@
     },
     methods: {
       getParams:function () {
+        console.log("user",this.$store.state.user)
         this.id = this.$route.query.user_id
         console.log("传来的a参数=="+this.id)
       },
@@ -176,9 +177,9 @@
           }
           for(let item of this.aListData) {
             if(item.ansState==0){
-              console.log(item.userId)
+              //console.log(item.userId)
               this.baListData.push(item)
-              console.log(item)
+              //console.log(item)
             }
           }
           this.aListData = this.baListData;
@@ -193,9 +194,9 @@
               if(this.value[0]=='isRead'){
                 //console.log("value[0]是类型分类")
                 if(item.isRead==this.value[1]) {
-                  console.log("value[1]是",this.value[1])
+                  //console.log("value[1]是",this.value[1])
                   this.testaListData.push(item)
-                  console.log("item",item)
+                  //console.log("item",item)
                 }
               }
             }

@@ -18,12 +18,19 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item class="clearfix">
-              <a href="" style="text-decoration:none">回答</a>
-              <el-badge class="mark" :value="12" />
+              <router-link style="text-decoration:none" :to="{path:'replyedAnswerList',query:{user_id: this.$store.state.user.userId}}">回答</router-link>
+              <!--a href="" style="text-decoration:none">回答</a-->
+              <el-badge class="mark" :value="this.notReadAnswer" />
             </el-dropdown-item>
             <el-dropdown-item class="clearfix">
-              <a href="" style="text-decoration:none">评论</a>
-              <el-badge class="mark" :value="3" />
+              <!--a href="" style="text-decoration:none">评论</a-->
+              <router-link style="text-decoration:none" :to="{path:'replyedCommentList',query:{user_id: this.$store.state.user.userId}}">评论</router-link>
+              <el-badge class="mark" :value="this.notReadComment" />
+            </el-dropdown-item>
+            <el-dropdown-item class="clearfix">
+              <!--a href="" style="text-decoration:none">评论</a-->
+              <router-link style="text-decoration:none" :to="{path:'replyedCommentList',query:{user_id: this.$store.state.user.userId}}">举报</router-link>
+              <el-badge class="mark" :value="this.notReadComment" />
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -46,11 +53,11 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item class="clearfix">
                 <a href="" style="text-decoration:none">回答</a>
-                <el-badge class="mark" :value="12" />
+                <el-badge class="mark" :value="6"/>
               </el-dropdown-item>
               <el-dropdown-item class="clearfix">
                 <a href="" style="text-decoration:none">评论</a>
-                <el-badge class="mark" :value="3" />
+                <el-badge class="mark" :value="6" />
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -74,12 +81,19 @@
 </template>
 
 <script>
+  import qs from 'qs';
 
   export default {
     name: 'App',
     data(){
       return{
         //imageUrl:'',
+        aListData:[],
+        baListData:[],
+        testaListData:[],
+        cListData:[],
+        bcListData:[],
+        testcListData:[],
       }
     },
     methods:{
@@ -95,6 +109,84 @@
       reload(){
         this.isRouterAlive=false
         this.$nextTick(()=>this.isRouterAlive=true)
+      },
+      getaListData:function() {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchAnswerInfo',
+          qs.stringify({
+            userId: this.$store.state.user.userId,
+          })
+        ).then((response) => {
+          console.log("response.data.data",response.data.data);
+          this.aListData = response.data.data;
+          if(this.baListData.length!=0){
+            this.baListData.length=0
+          }
+          for(let item of this.aListData) {
+            if(item.ansState==0){
+              //console.log(item.userId)
+              this.baListData.push(item)
+              //console.log(item)
+            }
+          }
+          this.aListData = this.baListData;
+          console.log("this.aListData",this.aListData)
+          if(this.testaListData.length!=0){
+            console.log("清空this.testuListData")
+            this.testaListData.length=0
+          }
+          for(let item of this.aListData) {
+            //console.log("item:", this.value[0])
+              if(item.isRead==0) {
+                  //console.log("value[1]是",this.value[1])
+                this.testaListData.push(item)
+                  //console.log("item",item)
+              }
+          }
+          //console.log("this.testaListData是",this.testaListData)
+          //this.notReadAnswer=this.testaListData.length
+          console.log("未读回答数量",this.notReadAnswer)
+        }).catch((error) => {
+          console.log(error);
+        });
+
+      },
+      getcListData:function() {
+        this.$axios.post('http://localhost:8080/online_answer/user/searchCommentsByState',
+          qs.stringify({
+            userId: this.$store.state.user.userId,
+            comState:'5'
+          })
+        ).then((response) => {
+          console.log(response.data.data);
+          this.cListData = response.data.data;
+          if(this.bcListData.length!=0){
+            this.bcListData.length=0
+          }
+          for(let item of this.cListData) {
+            if(item.comState==0){
+              console.log(item.userId)
+              this.bcListData.push(item)
+              console.log(item)
+            }
+          }
+          this.cListData = this.bcListData;
+          console.log("this.cListData",this.cListData)
+            if(this.testcListData.length!=0){
+              console.log("清空this.testcListData")
+              this.testcListData.length=0
+            }
+            for(let item of this.cListData) {
+              //console.log("item:", this.value[0])
+                if(item.isRead==0) {
+                 // console.log("value[1]是",this.value[1])
+                  this.testcListData.push(item)
+                  //console.log("item",item)
+                }
+            }
+          console.log("未读评论数量",this.notReadComment)
+        }).catch((error) => {
+          console.log(error);
+        });
       },
     },
     created() {
@@ -118,6 +210,8 @@
         console.log("读取sessionstorage后的数据")
         console.log(this.$store.state,JSON.parse(sessionStorage.getItem("store")))
       }
+      this.getaListData()
+      this.getcListData()
     },
     computed: {
       user () {
@@ -136,7 +230,21 @@
           console.log("管理员头像:",this.$store.state.admin)
           return "http://localhost:8080"+this.$store.state.admin.image
         }
-      }
+      },
+      notReadAnswer(){
+        if(this.user){
+          //this.getaListData()
+          console.log("记录未读回答数",this.testaListData.length)
+          return this.testcListData.length
+        }
+      },
+      notReadComment(){
+        if(this.user){
+          //this.getaListData()
+          console.log("记录未读评论数",this.testcListData.length)
+          return this.testaListData.length
+        }
+      },
     },
   }
 </script>
