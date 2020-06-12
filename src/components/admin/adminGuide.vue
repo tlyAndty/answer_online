@@ -44,8 +44,9 @@
           </el-submenu-->
         </el-submenu>
         <el-submenu index="6">
-          <template slot="title"><i class="el-icon-message"></i>数据可视化</template>
+          <template slot="title"><i class="el-icon-message"></i>数据图像化</template>
           <el-menu-item index="registerChart">注册数据</el-menu-item>
+          <el-menu-item index="quesNumChart">问题数据</el-menu-item>
         </el-submenu>
         <el-menu-item index="personalInformationOfAdmin"><i class="el-icon-setting"></i>个人信息</el-menu-item>
       </el-menu>

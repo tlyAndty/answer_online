@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <span style="font-size: 30px">图表test列表</span>
+    <span style="font-size: 30px">注册数据</span>
     <div style="margin-top: 20px;">
       <el-row>
         <div style="float: left">
@@ -41,8 +41,14 @@
     </div>
     <div id="chartLineBox" style="width: 700px;height:300px;margin: 0 auto;margin-top: 30px">
     </div>
-    <div v-if="value[1]!=1" style="color: lightcoral;font-size: 20px">{{this.selectedYear}}年数据</div>
-    <div v-if="value[1]==1" style="color: lightcoral;font-size: 18px">自{{this.selectedDay}}起的一周数据</div>
+    <div v-if="value[1]!=1" style="color: lightcoral;font-size: 20px">
+      <span>{{this.selectedYear}}年数据</span>
+      <span style="margin-left: 30px">总量：{{this.yearData.all}}</span>
+    </div>
+    <div v-if="value[1]==1" style="color: lightcoral;font-size: 18px">
+      <span>自{{this.selectedDay}}起的一周数据</span>
+      <span style="margin-left: 30px">总量：{{this.dayData.all}}</span>
+    </div>
   </div>
 </template>
 

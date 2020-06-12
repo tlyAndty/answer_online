@@ -53,6 +53,7 @@ import processedReportQuestion from "../components/admin/processedReportQuestion
 //import processedReportAnswer from "../components/admin/processedReportAnswer";
 //import processedReportComment from "../components/admin/processedReportComment";
 import registerChart from "../components/admin/registerChart";
+import quesNumChart from "../components/admin/quesNumChart";
 
 Vue.use(Router)
 export default new Router({
@@ -495,6 +496,14 @@ export default new Router({
           path:'/registerChart',
           name:'registerChart',
           component:registerChart,
+          meta:{
+            keepAlive:true
+          },
+        },
+        {
+          path:'/quesNumChart',
+          name:'quesNumChart',
+          component:quesNumChart,
           meta:{
             keepAlive:true
           },
