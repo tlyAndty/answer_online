@@ -370,13 +370,26 @@
               });
             }else if(reporttype==3){
               console.log("这是评论")
-              this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+              console.log("这是评论")
+              console.log("reportTypeid",reportTypeid)
+              this.$axios.post('http://localhost:8080/online_answer/common/searchCommentByComId',
                 qs.stringify({
-                  ansId: reportTypeid,
+                  comId: reportTypeid,
                 })
               ).then((response) => {
                 console.log(response.data.data);
-                this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+                var ansid=response.data.data.ansId
+                this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+                  qs.stringify({
+                    ansId: ansid,
+                  })
+                ).then((response) => {
+                  console.log(response.data.data);
+                  this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+                }).catch((error) => {
+                  console.log(error);
+                });
+                //this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
               }).catch((error) => {
                 console.log(error);
               });
@@ -404,13 +417,25 @@
             });
           }else if(reporttype==3){
             console.log("这是评论")
-            this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+            console.log("reportTypeid",reportTypeid)
+            this.$axios.post('http://localhost:8080/online_answer/common/searchCommentByComId',
               qs.stringify({
-                ansId: reportTypeid,
+                comId: reportTypeid,
               })
             ).then((response) => {
               console.log(response.data.data);
-              this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+              var ansid=response.data.data.ansId
+              this.$axios.post('http://localhost:8080/online_answer/common/searchAnswerByAnsId',
+                qs.stringify({
+                  ansId: ansid,
+                })
+              ).then((response) => {
+                console.log(response.data.data);
+                this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
+              }).catch((error) => {
+                console.log(error);
+              });
+              //this.$router.push({path:'/questionPage',query:{ques_id:response.data.data.quesId}})
             }).catch((error) => {
               console.log(error);
             });
