@@ -11,6 +11,7 @@
                   <el-input  v-model="questionForm.a_title" placeholder="输入问题标题" style="margin-bottom: 10px;"></el-input>
                 </div>
               </el-form-item>
+
               <el-form-item style="margin-bottom: 0px">
                 <div class="edit_container" style="position: relative;width: 100%;height: 340px;background-color: white">
                   <quill-editor v-model="questionForm.a_contenttest" ref="myQuillEditor"  class="editor" style="height: 300px;background-color: white" :options="editorOption" @ready="onEditorReady($event)" @change="onEditorChange($event)">
