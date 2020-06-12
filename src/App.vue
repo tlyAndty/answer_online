@@ -29,7 +29,7 @@
             </el-dropdown-item>
             <el-dropdown-item class="clearfix">
               <!--a href="" style="text-decoration:none">评论</a-->
-              <router-link style="text-decoration:none" :to="{path:'replyedCommentList',query:{user_id: this.$store.state.user.userId}}">举报</router-link>
+              <router-link style="text-decoration:none" :to="{path:'reportedQuestionList',query:{user_id: this.$store.state.user.userId}}">举报</router-link>
               <el-badge class="mark" :value="this.notReadReport" />
             </el-dropdown-item>
           </el-dropdown-menu>
