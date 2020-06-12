@@ -9,6 +9,7 @@
             style="width: 200px;float: left;margin-left: 20px"
             :options="options"
             @change="selectChange"
+            clearable
           >
           </el-cascader>
         </div>
