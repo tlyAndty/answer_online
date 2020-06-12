@@ -45,7 +45,7 @@
           <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position: relative;top: 20px" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">
             <img v-if="imageUrl" :src="imageUrl" class="avatar" style="height:50px;width:50px;border-radius:25px;border:none;">
           </router-link>
-          <el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
+          <!--el-dropdown trigger="click" style="color: white;margin-right: 10px;font-size: 16px">
           <span class="el-dropdown-link">
             消息
             <i class="el-icon-caret-bottom el-icon--right"></i>
@@ -60,7 +60,7 @@
                 <el-badge class="mark" :value="6" />
               </el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown>
+          </el-dropdown-->
           <!--a id="main_link1" href="/" style="color: white;text-decoration:none">首页</a-->
           <router-link style="color: #ffffff;text-decoration:none" :to="{name:'main'}">首页</router-link>
           /
