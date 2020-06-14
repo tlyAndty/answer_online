@@ -1,7 +1,7 @@
 <template>
     <div class="top">
       <div style="text-align: left">
-        <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;">返回上一页</a>
+        <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;"><img id="return" src="../../assets/左箭头.png"></a>
       </div>
       <span style="font-size: 30px;">问题详情</span>
       <el-form ref="questionForm" :model="questionForm" :rules="rules"  style="margin:40px auto;width: 500px">
@@ -69,5 +69,10 @@
 <style scoped>
   .top{
     text-align:center;
+  }
+  #return{
+    height:40px;
+    width:40px;
+    margin:20px 0px 0px 20px;
   }
 </style>
