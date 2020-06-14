@@ -1,6 +1,6 @@
 <template>
   <div class="questionInfo" style="background: white;padding: 0px">
-    <router-link to="/" class="gobackLink"><< 返回列表</router-link>
+    <router-link to="/" class="gobackLink"><img id="return" src="../assets/左箭头.png"></router-link>
     <div class="main clearfix" style="margin: 0px;">
       <div class="r_info" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
         <div id="report_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
@@ -29,6 +29,7 @@
         return{
           reportedUserid:'',
           reporttype:'',
+          reportTypeId:'',
           reportForm: {
             r_content: '',
           },
@@ -51,6 +52,8 @@
           console.log("传来的参数1==" + this.reportedUserid)
           this.reporttype = this.$route.query.report_type
           console.log("传来的参数2==" + this.reporttype)
+          this.reportTypeId = this.$route.query.reportTypeId
+          console.log("传来的参数3==" + this.reportTypeId)
         },
         onSubmit() {
           console.log("理由：",this.reportForm.r_content)
@@ -66,6 +69,7 @@
                 qs.stringify({
                   reportUserId: this.$store.state.user.userId,
                   reportType: this.reporttype,
+                  reportTypeId: this.reportTypeId,
                   reportedUserId: this.reportedUserid,
                   reportContent: this.reportForm.r_content,
                 })
@@ -85,5 +89,9 @@
 </script>
 
 <style scoped>
-
+  #return{
+    height:40px;
+    width:40px;
+    margin:20px 0px 0px 20px;
+  }
 </style>
