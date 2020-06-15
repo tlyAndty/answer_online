@@ -15,6 +15,9 @@
         <div style="float: left">
           <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
         </div>
+        <div v-if="this.value[1]==0||this.value[1]==1" style="float: right;margin-right: 10px;">
+          <el-button @click="delectAll">批量删除</el-button>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -29,7 +32,15 @@
         class="commentList"
         :data="cListData"
         style="width: 100%"
-        :default-sort = "{prop: 'com_time', order: 'descending'}">
+        :default-sort = "{prop: 'com_time', order: 'descending'}"
+        @selection-change="handleSelectionChange"
+      >
+
+        <el-table-column
+          type="selection"
+          v-if="this.value[1]==0||this.value[1]==1"
+        >
+        </el-table-column>
 
         <el-table-column
           label="评论id"
@@ -149,7 +160,8 @@
           }]
           },
         ],
-        value: ''
+        value: '',
+        multipleSelection: []
       }
     },
     created() {
@@ -260,7 +272,9 @@
             comId: val,
           })
         ).then((response) => {
-          console.log(response.data.resultCode);
+          console.log(response.data);
+          alert("删除成功")
+          history.go(0)
         }).catch((error) => {
           console.log(error);
         });
@@ -325,17 +339,44 @@
           return '已读'
         }
       },
+      delectAll(){
+        if(this.multipleSelection.length==0){
+          alert("您没有选择任何评论")
+        }
+        else {
+          console.log("要删除掉的评论有",this.multipleSelection)
+          this.$confirm('此操作将永久删除评论, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            for(var i=0;i<this.multipleSelection.length;i++){
+              console.log(this.multipleSelection[i].comId)
+              this.$axios.post('http://localhost:8080/online_answer/user/deletePersonalComment',
+                qs.stringify({
+                  comId: this.multipleSelection[i].comId
+                })
+              ).then((response) => {
+                console.log(response.data);
+              }).catch((error) => {
+                console.log(error);
+              });
+            }
+            alert("删除成功")
+            history.go(0)
+          }).catch(() => {
+          });
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+        console.log("this.multipleSelection",this.multipleSelection)
+      },
       selectChange(value) {
         console.log("value0",value[0])
         console.log("value1",value[1])
         this.page = 1
         this.getcListData()
-        /*if(value[0]=='reportType'){
-          console.log("根据处理结果分类")
-        }
-        else if(value[0]=='reportState'){
-          console.log("根据处理结果分类")
-        }*/
       },
     }
   }

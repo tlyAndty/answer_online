@@ -15,7 +15,7 @@
         <div style="float: left">
           <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
         </div>
-        <div style="float: right;margin-right: 10px;">
+        <div v-if="this.value[1]==0||this.value[1]==1||this.value[1]==2" style="float: right;margin-right: 10px;">
           <el-button @click="delectAll">批量删除</el-button>
         </div>
         <div style="float: right;margin-right:20px;">
@@ -36,7 +36,10 @@
       @selection-change="handleSelectionChange"
       >
 
-        <el-table-column type="selection">
+        <el-table-column
+          type="selection"
+          v-if="this.value[1]==0||this.value[1]==1||this.value[1]==2"
+        >
         </el-table-column>
 
       <el-table-column

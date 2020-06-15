@@ -3,6 +3,9 @@
     <span style="font-size: 30px;">收藏列表</span>
     <div>
       <el-row>
+        <div  style="float: right;margin-right: 10px;">
+          <el-button @click="delectAll">取消收藏</el-button>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -17,7 +20,14 @@
         class="collectionList"
         :data="colListData"
         style="width: 100%"
-        :default-sort = "{prop: 'quesTime', order: 'descending'}">
+        :default-sort = "{prop: 'quesTime', order: 'descending'}"
+        @selection-change="handleSelectionChange"
+      >
+
+        <el-table-column
+          type="selection"
+        >
+        </el-table-column>
 
         <el-table-column
           label="问题id"
@@ -112,6 +122,7 @@
         total: null,
         page:1,
         id:'',
+        multipleSelection: []
       }
     },
     /*mounted() {
@@ -188,7 +199,6 @@
         });
         console.log("colUserId:",this.id)
         console.log("colQuesId:",val)
-        //location.reload()
 
       },
       checkDetail(val){
@@ -205,8 +215,6 @@
         else if(row.quesAnsState === 2){
           return '已关闭'
         }
-        //return row.quesAnsState == 0 ? '未解决' : row.quesAnsState == 1 ? '已解决' : row.quesAnsState == 2 ? '已关闭';
-        //return '已解决'
       },
       formatState(row, column) {
         if (row.quesState === 0) {
@@ -216,7 +224,41 @@
         } else if (row.quesState === 2) {
           return '因用户被拉黑而被屏蔽'
         }
-      }
+      },
+      delectAll(){
+        if(this.multipleSelection.length==0){
+          alert("您没有选择任何问题")
+        }
+        else {
+          console.log("要删除掉的收藏有",this.multipleSelection)
+          this.$confirm('此操作将删除收藏, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            for(var i=0;i<this.multipleSelection.length;i++){
+              console.log(this.multipleSelection[i].quesId)
+              this.$axios.post('http://localhost:8080/online_answer/user/deleteCollections',
+                qs.stringify({
+                  colUserId: this.id,
+                  colQuesId: this.multipleSelection[i].quesId,
+                })
+              ).then((response) => {
+                console.log(response.data.resultCode);
+              }).catch((error) => {
+                console.log(error);
+              });
+            }
+            alert("删除成功")
+            history.go(0)
+          }).catch(() => {
+          });
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+        console.log("this.multipleSelection",this.multipleSelection)
+      },
     },
   }
 </script>
