@@ -7,8 +7,8 @@
           <div class="question_con clearfix" style="height:207px;background: #fcfcff;border-top: 1px solid #f0f0f0;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;">
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{this.quesTitle}}</div>
-              <div class="q_cont" style="width:850px;font-size: 14px;color: #666;margin-top: -5px;line-height: 24px">{{this.quesContent}}</div>
-              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
+              <div v-html="this.quesContent" class="q_cont" style="width:850px;font-size: 14px;color: #666;line-height: 24px">{{this.quesContent}}</div>
+              <div  style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 5px;line-height: 20px;height: 20px">
                 <div class="q_userName" style="float: left">
                   {{this.quesUserName}}
                 </div>
@@ -30,7 +30,7 @@
                   问题已关闭
                 </div>
               </div>
-              <div class="q_time" style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 0px;line-height: 20px;padding:16px 0 10px ">
+              <div  style="width:850px;font-size: 12px;color: #999;vert-align: middle;margin-bottom: 5px;line-height: 20px;">
                 编辑于：{{this.quesTime| dateFmt('YYYY-MM-DD HH:mm:ss')}}
               </div>
               <!--div class="tags" style="width:850px">
@@ -38,7 +38,7 @@
                 <a href="">ajax</a>
                 <a href="">mysql</a>
               </div-->
-              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-top:10px;margin-bottom:10px;background: none;height: 30px;">
+              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-bottom:10px;background: none;height: 30px;">
                 <!--a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span-->
                 <a class="collection" style="float:left;color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
@@ -86,17 +86,16 @@
             </div>
           </div>
             <div class="answer_list" style="background: #fcfcff;">
-              <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;padding-top: 16px;">
+              <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
                   <ul class="answerlist"  style="margin:0px;list-style: none;padding:0;">
                     <li v-for="(item,index) in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0 || admin" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
                       <div class="list_con" style="text-align: left" >
-                        <div class="ans_content">
+                        <div v-html="item.answer.ansContent" class="ans_content">
                           <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
-                          {{item.answer.ansContent}}
                         </div>
-                        <div class="ans_time ans_userName" style="height:20px;font-size: 12px;color: #999;line-height: 20px;padding: 10px 0 0">
-                          <div style="float: left">{{item.ans_user_name}}</div>
+                        <div class="ans_time ans_userName" style="height:20px;font-size: 12px;color: #999;line-height: 20px;margin-bottom: 5px">
+                          <div style="float: left;">{{item.ans_user_name}}</div>
                           <div v-if="item.answer.ansState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
                             [已被屏蔽]
                           </div>
@@ -509,7 +508,7 @@
             if(this.quesState==0){
               if(this.quesAnsState==0){
                 this.answerForm.a_content = this.answerForm.a_contenttest.replace(/<[^>]+>/g, "")
-                console.log(this.answerForm.a_content)
+                console.log(this.answerForm.a_contenttest)
                 this.$refs.answerForm.validate((valid) => {
                   if (valid) {
                     this.$axios.post(
@@ -517,13 +516,13 @@
                       qs.stringify({
                         userId: this.$store.state.user.userId,
                         quesId: this.id,
-                        ansContent: this.answerForm.a_content,
+                        ansContent: this.answerForm.a_contenttest,
                       })
                     ).then(response => {
                       console.log(response)
                       console.log("回答成功")
                       alert(response.data.resultDesc)
-                      //history.go(0)
+                      history.go(0)
                       /*this.$router.push({
                         path: '/userGuide', query:{user_id: this.data.userId}
                       });*/
@@ -541,7 +540,6 @@
             else {
               alert("由于此问题已被屏蔽，已不能回答")
             }
-
           } else {
             this.$router.push('/userlogin')
           }

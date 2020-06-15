@@ -165,13 +165,13 @@
             console.log(this.questionForm.a_contenttest)
             console.log(this.questionForm.a_reward)
             this.questionForm.a_content=this.questionForm.a_contenttest.replace(/<[^>]+>/g,"")
-            console.log(this.questionForm.a_content)
+            console.log(this.questionForm.a_contenttest)
             this.$axios.post(
               'http://localhost:8080/online_answer/user/question',
               qs.stringify({
                 userId: this.id,
                 quesTitle: this.questionForm.a_title,
-                quesContent: this.questionForm.a_content,
+                quesContent: this.questionForm.a_contenttest,
                 quesReward: this.questionForm.a_reward,
               })
             ).then(response => {
