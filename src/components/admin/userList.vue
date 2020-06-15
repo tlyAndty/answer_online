@@ -16,6 +16,18 @@
         <div style="float: left">
           <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
         </div>
+        <div v-if="this.value[1]==0" style="float: right;margin-right: 10px;">
+          <el-button @click="rejectAll">批量拒绝</el-button>
+        </div>
+        <div v-if="this.value[1]==0" style="float: right;margin-right: 10px;">
+          <el-button @click="passAll">批量通过</el-button>
+        </div>
+        <div v-if="this.value[1]==1" style="float: right;margin-right: 10px;">
+          <el-button @click="blacklistAll">批量拉黑</el-button>
+        </div>
+        <div v-if="this.value[1]==2" style="float: right;margin-right: 10px;">
+          <el-button @click="unblacklistAll">批量取消拉黑</el-button>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -29,7 +41,12 @@
       class="userList"
       :data="uListData"
       style="width: 100%"
-      :default-sort = "{prop: 'addTime', order: 'descending'}">
+      :default-sort = "{prop: 'addTime', order: 'descending'}"
+      @selection-change="handleSelectionChange"
+      >
+
+        <el-table-column type="selection">
+        </el-table-column>
 
       <el-table-column
         label="用户id"
@@ -148,7 +165,8 @@
               label: '审核未通过'
             }]
           }],
-          value: ''
+          value: '',
+          multipleSelection: []
         }
       },
       created() {
@@ -309,17 +327,139 @@
           this.$router.push({path:'/userPage',query:{user_id:val}})
           console.log(val)
         },
+        passAll(){
+          if(this.multipleSelection.length==0){
+            alert("您没有选择任何用户")
+          }
+          else {
+            console.log("要通过的用户有",this.multipleSelection)
+            this.$confirm('此操作将通过用户申请, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              for(var i=0;i<this.multipleSelection.length;i++){
+                console.log(this.multipleSelection[i].userId)
+                this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+                  qs.stringify({
+                    userId: this.multipleSelection[i].userId,
+                    userState: '1',
+                  })
+                ).then((response) => {
+                  console.log(response.data.resultCode)
+                  console.log("修改成功")
+                }).catch((error) => {
+                  console.log(error);
+                });
+              }
+              alert("通过成功")
+              history.go(0)
+            }).catch(() => {
+            });
+          }
+        },
+        rejectAll(){
+          if(this.multipleSelection.length==0){
+            alert("您没有选择任何用户")
+          }
+          else {
+            console.log("要通过的用户有",this.multipleSelection)
+            this.$confirm('此操作将拒绝用户申请, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              for(var i=0;i<this.multipleSelection.length;i++){
+                console.log(this.multipleSelection[i].userId)
+                this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+                  qs.stringify({
+                    userId: this.multipleSelection[i].userId,
+                    userState: '3',
+                  })
+                ).then((response) => {
+                  console.log(response.data.resultCode)
+                  console.log("修改成功")
+                }).catch((error) => {
+                  console.log(error);
+                });
+              }
+              alert("拒绝成功")
+              history.go(0)
+            }).catch(() => {
+            });
+          }
+        },
+        blacklistAll(){
+          if(this.multipleSelection.length==0){
+            alert("您没有选择任何用户")
+          }
+          else {
+            console.log("要拉黑的用户有",this.multipleSelection)
+            this.$confirm('此操作将拉黑用户申请, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              for(var i=0;i<this.multipleSelection.length;i++){
+                console.log(this.multipleSelection[i].userId)
+                this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+                  qs.stringify({
+                    userId: this.multipleSelection[i].userId,
+                    userState: '2',
+                  })
+                ).then((response) => {
+                  console.log(response.data.resultCode)
+                  console.log("修改成功")
+                }).catch((error) => {
+                  console.log(error);
+                });
+              }
+              alert("拉黑成功")
+              history.go(0)
+            }).catch(() => {
+            });
+          }
+        },
+        unblacklistAll(){
+          if(this.multipleSelection.length==0){
+            alert("您没有选择任何用户")
+          }
+          else {
+            console.log("要取消拉黑的用户有",this.multipleSelection)
+            this.$confirm('此操作将取消拉黑用户, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              for(var i=0;i<this.multipleSelection.length;i++){
+                console.log(this.multipleSelection[i].userId)
+                this.$axios.post('http://localhost:8080/online_answer/admin/modifyUserState',
+                  qs.stringify({
+                    userId: this.multipleSelection[i].userId,
+                    userState: '1',
+                  })
+                ).then((response) => {
+                  console.log(response.data.resultCode)
+                  console.log("修改成功")
+                }).catch((error) => {
+                  console.log(error);
+                });
+              }
+              alert("取消拉黑成功")
+              history.go(0)
+            }).catch(() => {
+            });
+          }
+        },
+        handleSelectionChange(val) {
+          this.multipleSelection = val;
+          console.log("this.multipleSelection",this.multipleSelection)
+        },
         selectChange(value) {
           console.log("value0",value[0])
           console.log("value1",value[1])
           this.page = 1
           this.getuListData()
-          /*if(value[0]=='reportType'){
-            console.log("根据处理结果分类")
-          }
-          else if(value[0]=='reportState'){
-            console.log("根据处理结果分类")
-          }*/
         },
       },
     }
