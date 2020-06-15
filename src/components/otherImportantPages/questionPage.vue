@@ -58,7 +58,7 @@
                   </a>
                 </div>
                 <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
-                  <a class="reportQues" @click="reportQues(quesUserId,quesId)">
+                  <a class="reportQues" @click="reportQues(quesUserId,id)">
                     举报此问题
                   </a>
                 </div>
