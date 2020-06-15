@@ -15,6 +15,12 @@
         <div style="float: left">
           <a style="float: left;text-decoration: none;color: #999;margin-left: 10px;line-height: 40px" href="javascript:history.go(0)">重置</a>
         </div>
+        <div v-if="this.value[1]==0" style="float: right;margin-right: 10px;">
+          <el-button @click="blockAll">批量屏蔽</el-button>
+        </div>
+        <div v-if="this.value[1]==1" style="float: right;margin-right: 10px;">
+          <el-button @click="unblockAll">批量取消屏蔽</el-button>
+        </div>
         <div style="float: right;margin-right:20px;">
           <el-button style="float: left" @click="search">搜索</el-button>
         </div>
@@ -28,7 +34,12 @@
         class="commentList"
         :data="cListData"
         style="width: 100%"
-        :default-sort = "{prop: 'comTime', order: 'descending'}">
+        :default-sort = "{prop: 'comTime', order: 'descending'}"
+        @selection-change="handleSelectionChange"
+      >
+
+        <el-table-column type="selection">
+        </el-table-column>
 
         <el-table-column
           label="评论id"
@@ -147,7 +158,8 @@
             label: '因回答被屏蔽而被屏蔽'
           }]
         }],
-        value: ''
+        value: '',
+        multipleSelection:[],
       }
     },
     watch:{
@@ -232,10 +244,10 @@
       },
       unblockCom(val1,val2){
         if(val2==1){
-          this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
+          this.$axios.post('http://localhost:8080/online_answer/admin/modifyCommentState',
             qs.stringify({
-              ansId: val1,
-              ansState: '0',
+              comId: val1,
+              comState: '0',
             })
           ).then((response) => {
             console.log(response.data.resultCode)
@@ -252,10 +264,10 @@
         //location.reload()
       },
       blockCom(val){
-        this.$axios.post('http://localhost:8080/online_answer/admin/modifyAnswerState',
+        this.$axios.post('http://localhost:8080/online_answer/admin/modifyCommentState',
           qs.stringify({
-            ansId: val,
-            ansState: '1',
+            comId: val,
+            comState: '1',
           })
         ).then((response) => {
           console.log(response.data.resultCode)
@@ -280,17 +292,77 @@
           return '因回答被屏蔽而被屏蔽'
         }
       },
+      blockAll(){
+        if(this.multipleSelection.length==0){
+          alert("您没有选择任何评论")
+        }
+        else {
+          console.log("要屏蔽的评论有",this.multipleSelection)
+          this.$confirm('此操作将屏蔽评论, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            for(var i=0;i<this.multipleSelection.length;i++){
+              console.log(this.multipleSelection[i].comment.comId)
+              this.$axios.post('http://localhost:8080/online_answer/admin/modifyCommentState',
+                qs.stringify({
+                  comId: this.multipleSelection[i].comment.comId,
+                  comState: '1',
+                })
+              ).then((response) => {
+                console.log(response.data)
+                console.log("修改成功")
+              }).catch((error) => {
+                console.log(error);
+              });
+            }
+            alert("屏蔽成功")
+            history.go(0)
+          }).catch(() => {
+          });
+        }
+      },
+      unblockAll(){
+        if(this.multipleSelection.length==0){
+          alert("您没有选择任何评论")
+        }
+        else {
+          console.log("要取消屏蔽的评论有",this.multipleSelection)
+          this.$confirm('此操作将取消屏蔽评论, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            for(var i=0;i<this.multipleSelection.length;i++){
+              console.log(this.multipleSelection[i].comment.comId)
+              this.$axios.post('http://localhost:8080/online_answer/admin/modifyCommentState',
+                qs.stringify({
+                  comId: this.multipleSelection[i].comment.comId,
+                  comState: '0',
+                })
+              ).then((response) => {
+                console.log(response.data)
+                console.log("修改成功")
+              }).catch((error) => {
+                console.log(error);
+              });
+            }
+            alert("取消屏蔽成功")
+            history.go(0)
+          }).catch(() => {
+          });
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+        console.log("this.multipleSelection",this.multipleSelection)
+      },
       selectChange(value) {
         console.log("value0",value[0])
         console.log("value1",value[1])
         this.page = 1
         this.getcListData()
-        /*if(value[0]=='reportType'){
-          console.log("根据处理结果分类")
-        }
-        else if(value[0]=='reportState'){
-          console.log("根据处理结果分类")
-        }*/
       },
 
     },
