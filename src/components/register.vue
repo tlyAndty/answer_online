@@ -145,7 +145,7 @@ import {isValidConfirmCode} from '../js/rule'
               })
             ).then(response => {
               console.log(response)
-              console.log("注册成功，请等待审核")
+              alert("注册成功，请等待审核")
               const {data} = response
               console.log('data', data)
               this.data = data

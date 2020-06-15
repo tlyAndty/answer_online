@@ -27,7 +27,7 @@
                   <span>悬赏积分：{{item.question.quesReward}}</span>
                 </div>
                 <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
-                  <a class="reportQues" @click="reportQues(item.question.userId)">
+                  <a class="reportQues" @click="reportQues(item.question.userId,item.question.quesId)">
                     举报此问题
                   </a>
                 </div>
@@ -81,7 +81,7 @@
                   <span>[已被屏蔽]</span>
                 </div>
                 <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
-                  <a class="reportQues" @click="reportQues(item.question.userId)">
+                  <a class="reportQues" @click="reportQues(item.question.userId,item.question.quesId)">
                     举报此问题
                   </a>
                 </div>
@@ -282,9 +282,9 @@
           console.log(error)
         })
       },
-      reportQues(reportedUserid){
+      reportQues(reportedUserid,reportTypeId){
         if (this.$store.state.user){
-          this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'1'}})
+          this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'1',reportTypeId:reportTypeId}})
         } else{
           this.$router.push('/userlogin')
         }

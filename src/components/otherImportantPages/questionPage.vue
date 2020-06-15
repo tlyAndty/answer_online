@@ -58,7 +58,7 @@
                   </a>
                 </div>
                 <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
-                  <a class="reportQues" @click="reportQues(quesUserId)">
+                  <a class="reportQues" @click="reportQues(quesUserId,quesId)">
                     举报此问题
                   </a>
                 </div>
@@ -129,7 +129,7 @@
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
-                          <a v-if="!admin" class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId)">
+                          <a v-if="!admin" class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId,item.answer.ansId)">
                             举报此回答
                           </a>
                           <a v-if="item.answer.userId ==userId" class="del_answer" style="margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
@@ -170,7 +170,7 @@
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
                                 <div style="float: left">发布于：{{item1.comment.comTime}}</div>
                                 <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
-                                  <a class="reportCom" @click="reportCom(item1.comment.userId)">
+                                  <a class="reportCom" @click="reportCom(item1.comment.userId,item1.comment.comId)">
                                     举报此评论
                                   </a>
                                 </div>
@@ -901,25 +901,25 @@
             console.log(error)
           })
         },
-        reportQues(reportedUserid){
+        reportQues(reportedUserid,reportTypeId){
           if (this.$store.state.user){
-            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'1'}})
+            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'1',reportTypeId:reportTypeId}})
           } else{
             this.$router.push('/userlogin')
           }
           //alert("举报了")
         },
-        reportAns(reportedUserid){
+        reportAns(reportedUserid,reportTypeId){
           if (this.$store.state.user){
-            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'2'}})
+            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'2',reportTypeId:reportTypeId}})
           } else{
             this.$router.push('/userlogin')
           }
           //alert("举报了")
         },
-        reportCom(reportedUserid){
+        reportCom(reportedUserid,reportTypeId){
           if (this.$store.state.user){
-            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'3'}})
+            this.$router.push({path:'/reportPage',query:{reported_userid:reportedUserid,report_type:'3',reportTypeId:reportTypeId}})
           } else{
             this.$router.push('/userlogin')
           }
