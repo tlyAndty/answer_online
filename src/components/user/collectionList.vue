@@ -125,9 +125,6 @@
         multipleSelection: []
       }
     },
-    /*mounted() {
-      this.getqListData();
-    },*/
     watch:{
       '$route':'getParams'
     },
@@ -158,7 +155,6 @@
         }).catch((error) => {
           console.log(error);
         });
-
       },
       getlist(){
         let colListData = this.data.filter((item,index) =>
