@@ -303,10 +303,10 @@
             type: 'warning'
           }).then(() => {
             for(var i=0;i<this.multipleSelection.length;i++){
-              console.log(this.multipleSelection[i].userId)
+              console.log(this.multipleSelection[i].question.quesId)
               this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
                 qs.stringify({
-                  quesId: this.multipleSelection[i].quesId,
+                  quesId: this.multipleSelection[i].question.quesId,
                   quesState: '1',
                 })
               ).then((response) => {
@@ -334,10 +334,10 @@
             type: 'warning'
           }).then(() => {
             for(var i=0;i<this.multipleSelection.length;i++){
-              console.log(this.multipleSelection[i].userId)
+              console.log(this.multipleSelection[i].question.quesId)
               this.$axios.post('http://localhost:8080/online_answer/admin/modifyQuestionState',
                 qs.stringify({
-                  quesId: this.multipleSelection[i].quesId,
+                  quesId: this.multipleSelection[i].question.quesId,
                   quesState: '1',
                 })
               ).then((response) => {
