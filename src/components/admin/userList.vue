@@ -45,7 +45,10 @@
       @selection-change="handleSelectionChange"
       >
 
-        <el-table-column type="selection">
+        <el-table-column
+          type="selection"
+          v-if="this.value[1]==0||this.value[1]==1||this.value[1]==2"
+        >
         </el-table-column>
 
       <el-table-column
