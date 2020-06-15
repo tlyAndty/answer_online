@@ -4,7 +4,7 @@
     <!--router-link to="/" class="gobackLink"><< 返回列表</router--->
     <div class="main clearfix" style="margin: 0px;">
       <div class="q_info" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
-          <div class="question_con clearfix" style="height:207px;background: #fcfcff;border-top: 1px solid #f0f0f0;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;">
+          <div class="question_con clearfix" style="height:auto;background: #fcfcff;border-top: 1px solid #f0f0f0;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;">
             <div class="question_detail_con" style="margin: 20px 20px 0;position: relative;padding: 0px">
               <div class="q_title" style="width:850px;font-size: 22px;color: #333;margin-bottom:15px;margin-top: 10px ">{{this.quesTitle}}</div>
               <div v-html="this.quesContent" class="q_cont" style="width:850px;font-size: 14px;color: #666;line-height: 24px">{{this.quesContent}}</div>
@@ -38,7 +38,7 @@
                 <a href="">ajax</a>
                 <a href="">mysql</a>
               </div-->
-              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;margin-bottom:10px;background: none;height: 30px;">
+              <div class="q_share_bar_con" style="color: #999;width:850px;font-size: 12px;clear: both;background: none;height: 40px;">
                 <!--a class="bds_more" style="line-height:30px;padding-left:0;margin: 0px;background:none;text-decoration:none;color: #999;" href="javascript:;"  data-cmd="more">分享</a>
                 <span class="interval" style="margin: 10px;color: #cdcdcd;">|</span-->
                 <a class="collection" style="float:left;color: #999;text-decoration:none" data-bind-login="true" @click="Colquestion" href="javascript:;" rel="nofollow" title="收藏">
@@ -71,7 +71,7 @@
           <div class="answer_con clearfix" style="background: #fcfcff;">
             <div class="answer_sort_con  q_operate" style="height: 50px;line-height: 50px;border: 1px solid #f0f0f0;">
               <p style="margin-bottom: 0px;margin-top: 0px;margin-right:0px;margin-left: 20px;font-size: 16px;height: 50px;line-height: 50px;float: left;color: #333;">{{this.quesAnsNum}}个回答</p>
-              <div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
+              <!--div class="sort_style_operate_style" style="float: right;margin-right: 20px;height: 50px;line-height: 50px;position: relative;">
                 <el-dropdown style="height: 50px;line-height: 50px;font-size: 14px;color: #666;cursor: pointer;">
                   <span class="el-dropdown-link">
                     按赞数排序<i class="el-icon-arrow-down el-icon--right"></i>
@@ -82,7 +82,7 @@
                     <el-dropdown-item disabled>按赞数排序</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-              </div>
+              </div-->
             </div>
           </div>
             <div class="answer_list" style="background: #fcfcff;">

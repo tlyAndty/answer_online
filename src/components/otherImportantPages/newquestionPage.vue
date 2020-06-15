@@ -1,6 +1,6 @@
 <template>
   <div class="questionInfo" style="background: white;padding: 0px">
-    <router-link to="/" class="gobackLink"><< 返回列表</router-link>
+    <a href="javascript:history.back(-1)" style="text-decoration: none;color: #606266;"><img id="return" src="../../assets/左箭头.png"></a>
     <div class="main clearfix" style="margin: 0px;">
       <div class="q_info" style="margin-right: 100px;margin-left: 100px;margin-top: 10px" >
         <div id="question_form" style="background: #fcfcff;border: 1px solid #f0f0f0;">
@@ -55,6 +55,7 @@
                       <select class="ql-background" style="line-height: 24px" value="background" title="背景颜色"></select>
                       <select class="ql-align" style="line-height: 24px" value="align" title="对齐"></select>
                       <button class="ql-clean" title="还原"></button>
+                      <!--button class="ql-image" title="图片"></button-->
                     </div>
                   </quill-editor>
                   <span class="SizeTiShi" style="font-size: 14px;float:right;margin-right: 10px;margin-top: 10px">{{TiLength}}</span>
@@ -86,7 +87,6 @@
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
-
   import '../../assets/css/font.css'
 
   export default {
@@ -107,8 +107,8 @@
           theme: "snow", // or 'bubble'
           modules: {
             toolbar: {
-              container: '#toolbar'
-            }
+              container: '#toolbar',
+            },
           },
         },
         TiLength:0,
@@ -139,22 +139,6 @@
         this.id = this.$route.query.user_id
         console.log("传来的user参数=="+this.id)
       },
-      /*getData(id){
-        this.axios.get('http://localhost:8080/online_answer/common/viewQuestionInfo',
-          {
-            params:{
-              ques_id:this.id
-            }
-          })
-          .then((response)=>{
-            console.log(response);
-            this.list=response.data.result[0];
-            //console.log(response.data.result);
-          })
-          .catch((error)=>{
-            console.log(error);
-          });
-      },*/
       submit(formName) {
         //this.$router.push('/')
         this.$refs[formName].validate((valid) => {
