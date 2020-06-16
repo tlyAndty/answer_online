@@ -196,7 +196,7 @@
           }
           this.qListData = this.bqListData;
           console.log("this.bqListData",this.bqListData)
-          if(this.value){
+          /*if(this.value){
             if(this.testqListData.length==0){
               for(let item of this.qListData) {
                 //console.log("item:", this.value[0])
@@ -242,7 +242,7 @@
             this.data = this.testqListData
           }else {
             this.data = this.qListData
-          }
+          }*/
           //this.data = this.qListData
           this.getlist();
         }).catch((error) => {
