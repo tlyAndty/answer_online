@@ -96,8 +96,8 @@
                         </div>
                         <div class="ans_time ans_userName" style="height:20px;font-size: 12px;color: #999;line-height: 20px;margin-bottom: 5px">
                           <div style="float: left;">{{item.ans_user_name}}</div>
-                          <div v-if="item.answer.userId ==userId || item.answer.ansState==0 || admin" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
-                            <div v-if="item.answer.ansState!=0">[已被屏蔽]</div>
+                          <div v-if="item.answer.ansState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
+                            <div v-if="item.answer.userId ==userId || admin">[已被屏蔽]</div>
                           </div>
                         </div>
                         <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 20px;padding: 0 0 2px;height: 20px">
@@ -162,8 +162,8 @@
                                 <div v-if="item1.comment.ansComId!=0" style="float: left;margin-left: 10px">
                                   回复@{{item1.reply_user_name}}
                                 </div>
-                                <div v-if="item1.comment.userId ==userId || item1.comment.comState==0 || admin" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
-                                  <div v-if="item1.comment.comState!=0">[已被屏蔽]</div>
+                                <div v-if="item1.comment.comState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
+                                  <div v-if="item1.comment.userId ==userId || admin">[已被屏蔽]</div>
                                 </div>
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
