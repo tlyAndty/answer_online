@@ -181,14 +181,14 @@
           }
           for(let item of this.aListData) {
             if(item.ansState==0){
-              console.log(item.userId)
+              //console.log(item.userId)
               this.baListData.push(item)
-              console.log(item)
+              //console.log(item)
             }
           }
           this.aListData = this.baListData;
           console.log("this.baListData",this.baListData)
-          if(this.value){
+          /*if(this.value){
             if(this.testaListData.length==0){
               for(let item of this.aListData) {
                 //console.log("item:", this.value[0])
@@ -220,8 +220,15 @@
             this.data = this.testaListData
           }else {
             this.data = this.aListData
+          }*/
+          for(var i=0;i<this.aListData.length;i++){
+            var ansContenttest=this.aListData[i].ansContent.replace(/<[^>]+>/g, "")
+            console.log("ansContenttest",ansContenttest)
+            this.aListData[i].ansContent=ansContenttest
+            console.log("this.aListData[i].ansContent",this.aListData[i].ansContent)
           }
-          //this.data = this.aListData;
+          console.log("this.aListData",this.aListData)
+          this.data = this.aListData;
           this.getlist();
         }).catch((error) => {
           console.log(error);
