@@ -224,6 +224,7 @@
           })
         ).then((response) => {
           //console.log("firstlist:",response.data.data);
+          console.log("this.$store.state",this.$store.state)
           if(this.$store.state.user!=null){
             if(this.id == this.$store.state.user.userId){
               this.time_order_list = response.data.data;
@@ -238,7 +239,10 @@
               }
             }
           }
-          else {
+          else if(this.$store.state.admin!=null){
+            this.time_order_list = response.data.data;
+          }
+          else if(this.$store.state.user==null){
             for(let item of response.data.data) {
               if(item.question.quesState==0){
                 //console.log(item.userId)
@@ -270,7 +274,10 @@
               }
             }
           }
-          else {
+          else if(this.$store.state.admin!=null){
+            this.good_order_list = response.data.data;
+          }
+          else if(this.$store.state.user==null){
             for(let item of response.data.data) {
               if(item.question.quesState==0){
                 //console.log(item.userId)

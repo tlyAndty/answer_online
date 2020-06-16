@@ -128,7 +128,7 @@
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
-                          <a v-if="!admin " class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId,item.answer.ansId)">
+                          <a v-if="!admin&&item.answer.userId !=userId " class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId,item.answer.ansId)">
                             举报此回答
                           </a>
                           <a v-if="item.answer.userId ==userId" class="del_answer" style="margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
@@ -168,7 +168,7 @@
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
                                 <div style="float: left">发布于：{{item1.comment.comTime}}</div>
-                                <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
+                                <div v-if="!admin && item1.comment.userId !=userId" class="report" style="float: left;margin-left: 20px;">
                                   <a class="reportCom" @click="reportCom(item1.comment.userId,item1.comment.comId)">
                                     举报此评论
                                   </a>
