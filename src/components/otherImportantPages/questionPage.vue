@@ -57,7 +57,7 @@
                     将问题设为已解决
                   </a>
                 </div>
-                <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
+                <div v-if="!admin && this.quesUserId!=userId" class="report" style="float: left;margin-left: 20px;">
                   <a class="reportQues" @click="reportQues(quesUserId,id)">
                     举报此问题
                   </a>
@@ -85,19 +85,19 @@
               </div-->
             </div>
           </div>
-            <div class="answer_list" style="background: #fcfcff;">
+            <div class="answer_list" style="background: #fcfcff;height: auto">
               <div class="answer_detail_con" style="position: relative;height: auto;border-left: 1px solid #f0f0f0;border-right: 1px solid #f0f0f0;">
                 <div style="margin: 0;font-size: 14px;color: #666;line-height: 24px;word-break: break-all;word-wrap: break-word;">
-                  <ul class="answerlist"  style="margin:0px;list-style: none;padding:0;">
-                    <li v-for="(item,index) in answerlist" v-if="item.answer.userId ==userId || item.answer.ansState==0 || admin" :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;" >
+                  <ul class="answerlist_ul"  style="margin:0px;list-style: none;padding:0;">
+                    <li v-for="(item,index) in answerlist"  :key="item.answer.ansId" :class="item.answer.userId" style="background-color:#fcfcff;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;height: auto" >
                       <div class="list_con" style="text-align: left" >
-                        <div v-html="item.answer.ansContent" class="ans_content">
+                        <div v-html="item.answer.ansContent" class="ans_content" style="height: auto">
                           <!--el-input type="text" v-model="item.answer.ansContent" :readonly="true" @change="getcData(item.answer.ansId)"/-->
                         </div>
                         <div class="ans_time ans_userName" style="height:20px;font-size: 12px;color: #999;line-height: 20px;margin-bottom: 5px">
                           <div style="float: left;">{{item.ans_user_name}}</div>
-                          <div v-if="item.answer.ansState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
-                            [已被屏蔽]
+                          <div v-if="item.answer.userId ==userId || item.answer.ansState==0 || admin" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
+                            <div v-if="item.answer.ansState!=0">[已被屏蔽]</div>
                           </div>
                         </div>
                         <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 20px;padding: 0 0 2px;height: 20px">
@@ -128,7 +128,7 @@
                           <a v-if="admin && item.answer.ansState==0" class="blo_question" style="color: lightcoral;margin-left: 20px" @click="blockAnswer(item.answer.ansId)">
                             屏蔽
                           </a>
-                          <a v-if="!admin" class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId,item.answer.ansId)">
+                          <a v-if="!admin " class="reportAns" style="margin-left: 20px;" @click="reportAns(item.answer.userId,item.answer.ansId)">
                             举报此回答
                           </a>
                           <a v-if="item.answer.userId ==userId" class="del_answer" style="margin-left: 20px" @click="deleteAnswer(item.answer.ansId)">
@@ -153,7 +153,7 @@
                         </div>
                         <div class="show_comments">
                           <ul class="commentlist" v-for="item1 in item.comments" style="margin:0px;list-style: none;padding:0;">
-                            <li v-if="item1.comment.userId ==userId || item1.comment.comState==0 || admin" style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
+                            <li style="background-color:#fbfdf8;position: relative;padding: 18px 24px 13px 24px;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
                               <div>{{item1.comment.comContent}}</div>
                               <div style="height:12px;font-size: 12px;color: #999;margin-bottom: 10px;line-height: 12px;padding-top: 5px">
                                 <div style="float: left">
@@ -162,8 +162,8 @@
                                 <div v-if="item1.comment.ansComId!=0" style="float: left;margin-left: 10px">
                                   回复@{{item1.reply_user_name}}
                                 </div>
-                                <div v-if="item1.comment.comState!=0" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
-                                  [已被屏蔽]
+                                <div v-if="item1.comment.userId ==userId || item1.comment.comState==0 || admin" style="color:lightcoral;text-decoration:none;float: left;margin-left: 20px">
+                                  <div v-if="item1.comment.comState!=0">[已被屏蔽]</div>
                                 </div>
                               </div>
                               <div style="font-size: 12px;color: #999;margin-bottom: 4px;line-height: 12px;height: 12px">
@@ -441,7 +441,7 @@
             })
           ).then((response) => {
             console.log("quesId:" + this.id)
-            console.log("adata:", response.data.data);
+            console.log("this.answerlist:", response.data.data);
             this.answerlist = response.data.data
             for(var i=0;i < this.answerlist.length; i++){
               console.log("这是第",i,"个回答")

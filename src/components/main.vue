@@ -64,8 +64,11 @@
               <div class="list_title" >
                 <router-link  style="font-size: 20px;color: #333333;text-decoration:none;text-shadow: none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}">{{item.question.quesTitle}}</router-link>
               </div>
-              <div class="summary_oneline" style="margin-bottom: 4px;line-height: 24px;">
+              <div class="summary_oneline" style="margin-bottom: 4px;line-height: 14px;">
                 <router-link  v-html="item.question.quesContent" style="color: #8a8a8a;font-size: 12px;text-decoration:none" :to="{name:'questionPage',query:{ques_id:item.question.quesId}}"></router-link>
+              </div>
+              <div class="name" style="color: #8a8a8a;font-size: 12px;height: 18px">
+                <router-link  style="color: #8a8a8a;text-decoration:none" :to="{name:'userPage',query:{user_id:item.question.userId}}">{{item.user_name}}</router-link>
               </div>
               <div class="colNum" style="color: #8a8a8a;font-size: 12px;height: 15px">
                 <span style="float: left">收藏数：{{item.question.quesColNum}}</span>
@@ -221,7 +224,30 @@
           })
         ).then((response) => {
           //console.log("firstlist:",response.data.data);
-          this.time_order_list = response.data.data;
+          if(this.$store.state.user!=null){
+            if(this.id == this.$store.state.user.userId){
+              this.time_order_list = response.data.data;
+            }
+            else {
+              for(let item of response.data.data) {
+                if(item.question.quesState==0){
+                  //console.log(item.userId)
+                  this.time_order_list.push(item)
+                  //console.log(item)
+                }
+              }
+            }
+          }
+          else {
+            for(let item of response.data.data) {
+              if(item.question.quesState==0){
+                //console.log(item.userId)
+                this.time_order_list.push(item)
+                //console.log(item)
+              }
+            }
+          }
+          //this.time_order_list = response.data.data;
           console.log("time_order_list:",this.time_order_list)
         }).catch((error) => {
           console.log(error);
@@ -230,7 +256,30 @@
         this.$axios.post('http://localhost:8080/online_answer/common/selectAllByColNum'
         ).then((response) => {
           //console.log("firstlist:",response.data.data);
-          this.good_order_list = response.data.data;
+          if(this.$store.state.user!=null){
+            if(this.id == this.$store.state.user.userId){
+              this.good_order_list = response.data.data;
+            }
+            else {
+              for(let item of response.data.data) {
+                if(item.question.quesState==0){
+                  //console.log(item.userId)
+                  this.good_order_list.push(item)
+                  //console.log(item)
+                }
+              }
+            }
+          }
+          else {
+            for(let item of response.data.data) {
+              if(item.question.quesState==0){
+                //console.log(item.userId)
+                this.good_order_list.push(item)
+                //console.log(item)
+              }
+            }
+          }
+          //this.good_order_list = response.data.data;
           console.log("good_order_list:",this.good_order_list)
         }).catch((error) => {
           console.log(error);
