@@ -243,7 +243,7 @@
           }else {
             this.data = this.qListData
           }*/
-          //this.data = this.qListData
+          this.data = this.qListData
           this.getlist();
         }).catch((error) => {
           console.log(error);

@@ -213,8 +213,20 @@
               }
             }
             console.log("this.testaListData是",this.testaListData)
+            for(var i=0;i<this.testaListData.length;i++){
+              var ansContenttest=this.testaListData[i].ansContent.replace(/<[^>]+>/g, "")
+              console.log("ansContenttest",ansContenttest)
+              this.testaListData[i].ansContent=ansContenttest
+              console.log("this.testaListData[i].ansContent",this.testaListData[i].ansContent)
+            }
             this.data = this.testaListData
           }else {
+            for(var i=0;i<this.aListData.length;i++){
+              var ansContenttest=this.aListData[i].ansContent.replace(/<[^>]+>/g, "")
+              console.log("ansContenttest",ansContenttest)
+              this.aListData[i].ansContent=ansContenttest
+              console.log("this.aListData[i].ansContent",this.aListData[i].ansContent)
+            }
             this.data = this.aListData
           }
           //this.data = this.aListData;
