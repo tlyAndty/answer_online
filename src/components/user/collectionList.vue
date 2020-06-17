@@ -25,6 +25,11 @@
       >
 
         <el-table-column
+          type="selection"
+        >
+        </el-table-column>
+
+        <el-table-column
           label="问题id"
           header-align="left"
           align="left"
