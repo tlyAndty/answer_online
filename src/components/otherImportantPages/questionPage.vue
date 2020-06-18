@@ -381,7 +381,6 @@
             //console.log("得到的this.com_flag:", this.com_flag)
           }
         }
-
         this.getqData();
         this.getaData();
         //this.getcomflag();
