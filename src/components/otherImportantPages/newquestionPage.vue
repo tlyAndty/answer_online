@@ -162,7 +162,9 @@
               console.log(response.data)
               console.log("修改成功")
               alert(response.data.resultDesc)
-              this.$router.push({path:'/'})
+              if(response.data.resultCode==='2015'){
+                this.$router.push({path:'/'})
+              }
             }).catch(error => {
               console.log(error)
             })
