@@ -39,7 +39,7 @@
         <a id="logout_link1" href="/" @click="logout" style="color: white;text-decoration:none">登出</a>
       </div>
         <div v-else-if="admin" style="position: absolute;right: 15px;top: -15px ">
-          <router-link style="color:white;text-decoration:none;margin-right:20px" :to="{name:'newquestionPage',query:{user_id:admin.adminId}}">我要提问</router-link>
+          <!--router-link style="color:white;text-decoration:none;margin-right:20px" :to="{name:'newquestionPage',query:{user_id:admin.adminId}}">我要提问</router-link-->
           <!--span style="margin-right: 5px">{{admin.name}}</span-->
           <router-link style="margin-right: 5px;color: #ffffff;text-decoration:none" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">{{admin.name}}</router-link>
           <router-link style="margin-right: 15px;color: #ffffff;text-decoration:none;position: relative;top: 20px" :to="{name:'adminGuide',query:{admin_id:admin.adminId}}">
