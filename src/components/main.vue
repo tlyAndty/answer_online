@@ -26,7 +26,7 @@
                 <div class="reward" style="float: left;margin-left: 20px">
                   <span>悬赏积分：{{item.question.quesReward}}</span>
                 </div>
-                <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
+                <div v-if="!admin && item.question.userId!=id" class="report" style="float: left;margin-left: 20px;">
                   <a class="reportQues" @click="reportQues(item.question.userId,item.question.quesId)">
                     举报此问题
                   </a>
@@ -83,7 +83,7 @@
                 <div class="state" v-if="item.question.quesState!=0" style="float: left;margin-left: 20px;font-size: 12px;color: lightcoral">
                   <span>[已被屏蔽]</span>
                 </div>
-                <div v-if="!admin" class="report" style="float: left;margin-left: 20px;">
+                <div v-if="!admin && item.question.userId!=id" class="report" style="float: left;margin-left: 20px;">
                   <a class="reportQues" @click="reportQues(item.question.userId,item.question.quesId)">
                     举报此问题
                   </a>
